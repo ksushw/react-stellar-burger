@@ -17,15 +17,15 @@ export default function BurgerConstructor({ price, order, bun }) {
                     />
                 </div>
                 <ul className={styles.fill + ' custom-scroll'}>
-                    {order.map((ingridient) => {
-                        return (<li key={ingridient._id} className={styles.ingridient}>
-                            {(ingridient.type === 'bun') ? null : <DragIcon type="primary" />}
+                    {order.map((ingredient) => {
+                        return (<li key={ingredient._id} className={styles.ingredient}>
+                            {(ingredient.type === 'bun') ? null : <DragIcon type="primary" />}
                             <ConstructorElement
-                                type={ingridient.type}
-                                isLocked={(ingridient.type === 'bun') ? true : false}
-                                text={ingridient.name}
-                                price={ingridient.price}
-                                thumbnail={ingridient.image}
+                                type={ingredient.type}
+                                isLocked={(ingredient.type === 'bun') ? true : false}
+                                text={ingredient.name}
+                                price={ingredient.price}
+                                thumbnail={ingredient.image}
                                 extraClass={styles.element}
                             />
                         </li>)

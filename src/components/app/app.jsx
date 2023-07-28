@@ -3,46 +3,42 @@ import styles from "./app.module.css";
 import { useReducer, useState } from 'react';
 import { data } from "../../utils/data";
 import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingridients/burger-ingridients'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 
 
 
 function App() {
 
-  const defoultBun = data.find((elem) => {
+  const  defaultBun = data.find((elem) => {
     return elem.type === 'bun'
   })
 
   const [order, setOrder] = useState([]);
-  const [bun, setBun] = useState(defoultBun);
-  const [price, setPrice] = useReducer(countPrise, defoultBun.price);
+  const [bun, setBun] = useState( defaultBun);
+  const [price, setPrice] = useReducer(countPrise,  defaultBun.price);
 
   function countPrise(price, added) {
     return price + added;
   }
 
-  function changeOrder(newIngridient) {
-    if (newIngridient.type === 'bun') {
-      setPrice(newIngridient.price - bun.price)
-      setBun(newIngridient)
+  function changeOrder(newingredient) {
+    if (newingredient.type === 'bun') {
+      setPrice(newingredient.price - bun.price)
+      setBun(newingredient)
     } else {
-      setPrice(newIngridient.price)
-      setOrder([...order, newIngridient])
+      setPrice(newingredient.price)
+      setOrder([...order, newingredient])
     }
   }
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <pre style={{
-        margin: "auto",
-        fontSize: "1.5rem",
-        width: '100%', maxWidth: '1280px'
-      }}>
+      <pre className={styles.container}>
         <main className={styles.main}>
-          <BurgerIngredients data={data} onClickIngridient={changeOrder} order={order} bun={bun} />
-          <BurgerConstructor ingridients={data} price={price} order={order} bun={bun} />
+          <BurgerIngredients data={data} onClickingredient={changeOrder} order={order} bun={bun} />
+          <BurgerConstructor ingredients={data} price={price} order={order} bun={bun} />
         </main>
       </pre>
     </div>

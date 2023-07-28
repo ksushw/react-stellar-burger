@@ -6,7 +6,13 @@
   color: #f2f2f3;
 }
 
-
 .main {
   display: flex;
+}
+
+.container {
+  margin: auto;
+  font-size: 1.5rem;
+  width: 100%;
+  max-width: 1280px;
 }
