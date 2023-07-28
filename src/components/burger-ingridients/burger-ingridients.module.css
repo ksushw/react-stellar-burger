@@ -1,0 +1,43 @@
+.ingridients {
+    max-width: 600px;
+    width: calc(50% - 40px);
+
+}
+
+.navigation {
+    display: flex;
+
+}
+
+.container {
+    width: 100%;
+    height: calc(100vh - 324px);
+    overflow: auto
+}
+
+.division {
+    display: grid;
+    grid-template-columns: calc(50% - 12px) calc(50% - 12px);
+    width: 100%;
+    gap: 32px 24px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ingridient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.price {
+    display: flex;
+}
+
+.name {
+    white-space: break-spaces;
+    text-align: center;
+}
