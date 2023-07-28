@@ -1,0 +1,57 @@
+.container {
+    display: flex; 
+     
+    flex-wrap: wrap; 
+    justify-content: end;
+    width: calc(50% - 40px); 
+    max-width: 600px; 
+    box-sizing: border-box
+}
+
+.order {
+    display: flex; 
+    align-items: end; 
+    flex-direction: column; 
+    gap: 10px; 
+    max-height: 696px; 
+    height: calc(100vh - 360px); 
+    width: 100%;
+
+}
+
+.fill {
+    display: grid;
+    gap: 10px;
+    overflow: hidden auto; 
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bun {
+    display: grid; 
+    width: calc(100% - 32px)
+
+}
+
+.ingredient {
+    display: grid; 
+    align-items: center; 
+    grid-template-columns: min-content 1fr; 
+    gap: 8px; 
+    width: 100%
+}
+
+.price {
+
+    display: flex; 
+    align-items: center;
+    text-align: center;
+
+}
+
+
+.element {
+    white-space: break-spaces;
+}
