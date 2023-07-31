@@ -1,7 +1,6 @@
 .ingredients {
     max-width: 600px;
     width: calc(50% - 40px);
-
 }
 
 .navigation {
@@ -12,7 +11,8 @@
 .container {
     width: 100%;
     height: calc(100vh - 324px);
-    overflow: auto
+    overflow: auto;
+    position: relative;
 }
 
 .division {

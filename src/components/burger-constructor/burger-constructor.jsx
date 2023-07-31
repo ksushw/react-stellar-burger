@@ -6,7 +6,7 @@ export default function BurgerConstructor({ price, order, bun }) {
     return (
         <section className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}>
             <div className={styles.order}>
-                <div className={styles.bun} >
+                {bun && <div className={styles.bun} >
                     <ConstructorElement
                         type="top"
                         isLocked={true}
@@ -15,7 +15,7 @@ export default function BurgerConstructor({ price, order, bun }) {
                         thumbnail={bun.image}
                         extraClass={styles.element}
                     />
-                </div>
+                </div>}
                 <ul className={styles.fill + ' custom-scroll'}>
                     {order.map((ingredient) => {
                         return (<li key={ingredient._id} className={styles.ingredient}>
@@ -33,7 +33,7 @@ export default function BurgerConstructor({ price, order, bun }) {
 
                 </ul>
 
-                <div className={styles.bun}>
+                {bun && <div className={styles.bun}>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
@@ -42,7 +42,7 @@ export default function BurgerConstructor({ price, order, bun }) {
                         thumbnail={bun.image}
                         extraClass={styles.element}
                     />
-                </div>
+                </div>}
 
 
             </div>
