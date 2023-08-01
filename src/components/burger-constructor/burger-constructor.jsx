@@ -1,7 +1,7 @@
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./burger-constructor.module.css";
 
-export default function BurgerConstructor({ price, order, bun }) {
+export default function BurgerConstructor({ price, order, bun, openPopup }) {
 
     return (
         <section className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}>
@@ -16,7 +16,7 @@ export default function BurgerConstructor({ price, order, bun }) {
                         extraClass={styles.element}
                     />
                 </div>}
-                <ul className={styles.fill + ' custom-scroll'}>
+                {order && (<ul className={styles.fill + ' custom-scroll'}>
                     {order.map((ingredient) => {
                         return (<li key={ingredient._id} className={styles.ingredient}>
                             {(ingredient.type === 'bun') ? null : <DragIcon type="primary" />}
@@ -31,7 +31,7 @@ export default function BurgerConstructor({ price, order, bun }) {
                         </li>)
                     })}
 
-                </ul>
+                </ul>)}
 
                 {bun && <div className={styles.bun}>
                     <ConstructorElement
@@ -51,7 +51,7 @@ export default function BurgerConstructor({ price, order, bun }) {
                 <CurrencyIcon type="primary" />
             </div>
             <div className='mt-5'>
-                <Button htmlType="button" type="primary" size="large">
+                <Button htmlType="button" type="primary" size="large" onClick={() => { openPopup(true) }}>
                     Оформить заказ
                 </Button>
             </div>

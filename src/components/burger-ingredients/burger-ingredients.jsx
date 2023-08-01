@@ -3,11 +3,11 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientItem from '../ingredient-item/ingredient-item'
 import styles from "./burger-ingredients.module.css";
 
-export default function BurgerIngredients({ data, onClickingredient, bun, order }) {
+export default function BurgerIngredients({ data, onClickingredient, bun, order, openPopup }) {
 
 
 
-    
+
     // Позиция таба
     const [position, setPosition] = useState('bun');
 
@@ -68,7 +68,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order 
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'bun' && (
-                            <IngredientItem ingredient={ingredient} count={(ingredient == bun) && 1} onClickingredient={onClickingredient} />)
+                            <IngredientItem ingredient={ingredient} count={(ingredient == bun) && 1} onClick={onClickingredient} onDoubleClick={openPopup} />)
                     })}
                 </ul>
 
@@ -77,7 +77,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order 
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'sauce' && (
-                            <IngredientItem ingredient={ingredient} count={counter[ingredient.name]} onClickingredient={onClickingredient} />
+                            <IngredientItem ingredient={ingredient} count={counter[ingredient.name]} onClick={onClickingredient} onDoubleClick={openPopup} />
                         )
                     })}
                 </ul>
@@ -87,7 +87,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order 
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'main' && (
-                            <IngredientItem ingredient={ingredient} count={counter[ingredient.name]} onClickingredient={onClickingredient} />
+                            <IngredientItem ingredient={ingredient} count={counter[ingredient.name]} onClick={onClickingredient} onDoubleClick={openPopup} />
                         )
                     })}
                 </ul>

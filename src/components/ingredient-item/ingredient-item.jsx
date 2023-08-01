@@ -2,10 +2,14 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from "./ingredient-item.module.css"
 
 
-export default function IngredientItem({ ingredient, count, onClickingredient }) {
-
+export default function IngredientItem({ ingredient, count, onClick, onDoubleClick }) {
+    // onDoubleClick(ingredient)
+    function openModal(e) {
+        e.preventDefault(); 
+        onDoubleClick(ingredient)
+    }
     return (
-        <li onClick={() => onClickingredient(ingredient)} key={ingredient._id} className={styles.ingredient}>
+        <li onContextMenu={(e) => openModal(e)} onClick={() => onClick(ingredient)} key={ingredient._id} className={styles.ingredient}>
             {count && <Counter count={count} size="default" extraClass="m-1" />}
             <img className="ingredient__image" src={ingredient.image} alt={ingredient.name} />
             <div className={styles.price}>
