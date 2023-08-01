@@ -7,6 +7,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import IngridientDetails from '../ingredients-details/ingredients-details';
 import OrderDetails from '../order-details/order-details';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function App() {
 
@@ -22,7 +24,7 @@ function App() {
   const [visibleOrderDetails, changeVisibleOrderDetails] = useState(false);
 
   const urlDomen = `https://norma.nomoreparties.space/api/ingredients`;
-
+console.log(order)
   // Запрос апи
   useEffect(() => {
     const getProductData = async () => {
@@ -68,22 +70,25 @@ function App() {
 
   const { data, loading, success } = api;
   return (
-    <div className={styles.app} id="app">
-      <AppHeader />
-      <pre className={styles.container}>
-        <main className={styles.main}>
-          {!loading && success && (<BurgerIngredients data={data} onClickingredient={changeOrder} order={order} bun={bun} openPopup={changeVisibleIngDatails} />)}
-          {!loading && success && (<BurgerConstructor price={price} order={order} bun={bun} openPopup={changeVisibleOrderDetails} />)}
-        </main>
-      </pre>
-      {!loading && success && createPortal(
-        <>
-          <IngridientDetails ingridient={visibleIngDatails} changeVisibleIngDatails={changeVisibleIngDatails} />
-          <OrderDetails opened={visibleOrderDetails} changeVisibleIngDatails={changeVisibleOrderDetails} />
-        </>,
-        document.body
-      )}
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.app} id="app">
+        <AppHeader />
+        <pre className={styles.container}>
+          <main className={styles.main}>
+            {!loading && success && (<BurgerIngredients data={data} onClickingredient={changeOrder} order={order} bun={bun} openPopup={changeVisibleIngDatails} />)}
+            {!loading && success && (<BurgerConstructor price={price} order={order} bun={bun} openPopup={changeVisibleOrderDetails} setOrder={setOrder} />)}
+          </main>
+        </pre>
+        {!loading && success && createPortal(
+          <>
+            <IngridientDetails ingridient={visibleIngDatails} changeVisibleIngDatails={changeVisibleIngDatails} />
+            <OrderDetails opened={visibleOrderDetails} changeVisibleIngDatails={changeVisibleOrderDetails} />
+          </>,
+          document.body
+        )}
+      </div>
+    </DndProvider>
+
   );
 }
 

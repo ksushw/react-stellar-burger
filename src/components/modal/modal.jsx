@@ -26,7 +26,8 @@ export default function Modal({ children, title = '', changeVisible, changeVisib
                     </div>
                     {children}
                 </div>
-            </ModalOverlay>)}</>
+            </ModalOverlay>)}
+        </>
     )
 
 }

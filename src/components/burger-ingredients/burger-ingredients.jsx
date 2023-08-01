@@ -68,7 +68,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order,
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'bun' && (
-                            <IngredientItem ingredient={ingredient} count={(ingredient == bun) && 1} onClick={onClickingredient} onDoubleClick={openPopup} />)
+                            <IngredientItem ingredient={ingredient} key={ingredient._id} count={(ingredient == bun) && 1} onClick={onClickingredient} onContextMenu={openPopup} />)
                     })}
                 </ul>
 
@@ -77,7 +77,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order,
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'sauce' && (
-                            <IngredientItem ingredient={ingredient} count={counter[ingredient.name]} onClick={onClickingredient} onDoubleClick={openPopup} />
+                            <IngredientItem ingredient={ingredient} key={ingredient._id} count={counter[ingredient.name]} onClick={onClickingredient} onContextMenu={openPopup} />
                         )
                     })}
                 </ul>
@@ -87,7 +87,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order,
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'main' && (
-                            <IngredientItem ingredient={ingredient} count={counter[ingredient.name]} onClick={onClickingredient} onDoubleClick={openPopup} />
+                            <IngredientItem ingredient={ingredient} key={ingredient._id} count={counter[ingredient.name]} onClick={onClickingredient} onContextMenu={openPopup} />
                         )
                     })}
                 </ul>

@@ -1,7 +1,22 @@
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./burger-constructor.module.css";
 
-export default function BurgerConstructor({ price, order, bun, openPopup }) {
+import DragableEl from '../dragableEl'
+import update from 'immutability-helper'
+import { useCallback } from 'react'
+
+export default function BurgerConstructor({ price, order, bun, openPopup, setOrder }) {
+
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        setOrder((prevCards) =>
+          update(prevCards, {
+            $splice: [
+              [dragIndex, 1],
+              [hoverIndex, 0, prevCards[dragIndex]],
+            ],
+          }),
+        )
+      }, [])
 
     return (
         <section className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}>
@@ -17,17 +32,19 @@ export default function BurgerConstructor({ price, order, bun, openPopup }) {
                     />
                 </div>}
                 {order && (<ul className={styles.fill + ' custom-scroll'}>
-                    {order.map((ingredient) => {
-                        return (<li key={ingredient._id} className={styles.ingredient}>
-                            {(ingredient.type === 'bun') ? null : <DragIcon type="primary" />}
-                            <ConstructorElement
-                                type={ingredient.type}
-                                isLocked={(ingredient.type === 'bun') ? true : false}
-                                text={ingredient.name}
-                                price={ingredient.price}
-                                thumbnail={ingredient.image}
-                                extraClass={styles.element}
-                            />
+                    {order.map((ingredient, index) => {
+                        return (<li key={index} >
+                            {/* {(ingredient.type === 'bun') ? null : <DragIcon type="primary" />} */}
+                            <DragableEl id={index}  index={index} moveCard={moveCard} className={styles.ingredient}>
+                                <ConstructorElement
+                                    type={ingredient.type}
+                                    isLocked={(ingredient.type === 'bun') ? true : false}
+                                    text={ingredient.name}
+                                    price={ingredient.price}
+                                    thumbnail={ingredient.image}
+                                    extraClass={styles.element}
+                                />
+                            </DragableEl>
                         </li>)
                     })}
 
