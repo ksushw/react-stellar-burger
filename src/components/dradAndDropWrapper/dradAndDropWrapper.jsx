@@ -4,9 +4,9 @@ import { ItemTypes } from './ItemTypes'
 import { useRef } from 'react';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function DragableEl({ children, id, index, moveCard, className }) {
+export default function DradAndDropWrapper({ children, id, index, moveCard, className }) {
     const ref = useRef(null)
-    console.log(ref)
+    
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         collect(monitor) {

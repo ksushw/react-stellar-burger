@@ -1,7 +1,7 @@
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./burger-constructor.module.css";
 
-import DragableEl from '../dragableEl'
+import DradAndDropWrapper from '../dradAndDropWrapper/dradAndDropWrapper'
 import update from 'immutability-helper'
 import { useCallback } from 'react'
 
@@ -35,7 +35,7 @@ export default function BurgerConstructor({ price, order, bun, openPopup, setOrd
                     {order.map((ingredient, index) => {
                         return (<li key={index} >
                             {/* {(ingredient.type === 'bun') ? null : <DragIcon type="primary" />} */}
-                            <DragableEl id={index}  index={index} moveCard={moveCard} className={styles.ingredient}>
+                            <DradAndDropWrapper id={index}  index={index} moveCard={moveCard} className={styles.ingredient}>
                                 <ConstructorElement
                                     type={ingredient.type}
                                     isLocked={(ingredient.type === 'bun') ? true : false}
@@ -44,7 +44,7 @@ export default function BurgerConstructor({ price, order, bun, openPopup, setOrd
                                     thumbnail={ingredient.image}
                                     extraClass={styles.element}
                                 />
-                            </DragableEl>
+                            </DradAndDropWrapper>
                         </li>)
                     })}
 

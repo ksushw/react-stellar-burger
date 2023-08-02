@@ -5,9 +5,6 @@ import styles from "./burger-ingredients.module.css";
 
 export default function BurgerIngredients({ data, onClickingredient, bun, order, openPopup }) {
 
-
-
-
     // Позиция таба
     const [position, setPosition] = useState('bun');
 
