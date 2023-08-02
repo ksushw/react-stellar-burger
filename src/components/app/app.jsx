@@ -24,7 +24,6 @@ function App() {
   const [visibleOrderDetails, changeVisibleOrderDetails] = useState(false);
 
   const urlDomen = `https://norma.nomoreparties.space/api/ingredients`;
-console.log(order)
   // Запрос апи
   useEffect(() => {
     const getProductData = async () => {

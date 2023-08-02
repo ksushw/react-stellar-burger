@@ -1,4 +1,8 @@
 .modal {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    translate: -50% -50%;
     width: 720px;
     box-sizing: border-box;
     background-color: #1C1C21;
