@@ -3,8 +3,7 @@ import styles from "./ingredient-item.module.css"
 import {ingredientPropType} from '../../utils/prop-types'
 
 
-export default function IngredientItem({ ingredient, count, onClick, onContextMenu }) {
-    // onDoubleClick(ingredient)
+export default function IngredientItem({ ingredient, count, onClick, onContextMenu }) { 
     function openModal(e) {
         e.preventDefault(); 
         onContextMenu(ingredient)

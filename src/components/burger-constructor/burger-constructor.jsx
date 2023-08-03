@@ -7,6 +7,17 @@ import { useCallback } from 'react'
 
 export default function BurgerConstructor({ price, order, bun, openPopup, setOrder }) {
 
+function makeOrder() {
+    openPopup(true);
+    setOrder([]);
+}
+
+function removeIngridient(index) {
+   const newOrder = Object.assign([], order);
+   newOrder.splice(index, 1)
+   setOrder(newOrder) 
+}
+    
     const moveCard = useCallback((dragIndex, hoverIndex) => {
         setOrder((prevCards) =>
           update(prevCards, {
@@ -43,6 +54,7 @@ export default function BurgerConstructor({ price, order, bun, openPopup, setOrd
                                     price={ingredient.price}
                                     thumbnail={ingredient.image}
                                     extraClass={styles.element}
+                                    handleClose={() => removeIngridient(index)}
                                 />
                             </DradAndDropWrapper>
                         </li>)
@@ -68,12 +80,10 @@ export default function BurgerConstructor({ price, order, bun, openPopup, setOrd
                 <CurrencyIcon type="primary" />
             </div>
             <div className='mt-5'>
-                <Button htmlType="button" type="primary" size="large" onClick={() => { openPopup(true) }}>
+                <Button htmlType="button" type="primary" size="large" onClick={makeOrder}>
                     Оформить заказ
                 </Button>
             </div>
-
-
         </section>
     )
 }

@@ -20,7 +20,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order,
             setPosition('sauce')
         } else {
             setPosition('main')
-        }
+        } 
     }
 
     // Скролл до нужного блока

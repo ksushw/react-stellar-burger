@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import IngridientDetails from '../ingredients-details/ingredients-details';
+import IngredientDetails from '../ingredients-details/ingredients-details';
 import OrderDetails from '../order-details/order-details';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -20,21 +20,24 @@ function App() {
   const [bun, setBun] = useState('');
   const [price, setPrice] = useReducer(countPrise, 0);
 
-  const [visibleIngDatails, changeVisibleIngDatails] = useState(null);
-  const [visibleOrderDetails, changeVisibleOrderDetails] = useState(false);
+  const [visibleIngDetails, setVisibleIngDetails] = useState(null);
+  const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
-  const urlDomen = `https://norma.nomoreparties.space/api/ingredients`;
+  const urlDomain = `https://norma.nomoreparties.space/api/ingredients`;
   // Запрос апи
   useEffect(() => {
     const getProductData = async () => {
       setApi({ ...api, loading: true });
-      const res = await fetch(urlDomen)
-        .then(res => res.json())
+      const res = await fetch(urlDomain)
+        .then(res => {
+           if (!res.ok) {
+            return Promise.reject(`Ошибка: ${res.status}`);
+           }
+          return res.json()
+        })
         .then(data => {
           setApi({ ...data, loading: false })
-          const bun = defaultBun(data.data);
-          setBun(bun);
-          setPrice(bun.price)
+          setDefaultBun(data.data)
         })
         .catch((e) => console.error(e));
     }
@@ -42,12 +45,13 @@ function App() {
   }, [])
 
   // Булка по умолчанию
-  const defaultBun = (data) => {
-    return data.find((elem) => {
+  const setDefaultBun = (data) => {
+    const bun = data.find((elem) => {
       return elem.type === 'bun'
     })
+    setBun(bun);
+    setPrice(bun.price)
   }
-
 
   // Добовляет в стоимость цену нового ингридиента
   function countPrise(price, added) {
@@ -74,14 +78,14 @@ function App() {
         <AppHeader />
         <pre className={styles.container}>
           <main className={styles.main}>
-            {!loading && success && (<BurgerIngredients data={data} onClickingredient={changeOrder} order={order} bun={bun} openPopup={changeVisibleIngDatails} />)}
-            {!loading && success && (<BurgerConstructor price={price} order={order} bun={bun} openPopup={changeVisibleOrderDetails} setOrder={setOrder} />)}
+            {!loading && success && (<BurgerIngredients data={data} onClickingredient={changeOrder} order={order} bun={bun} openPopup={setVisibleIngDetails} />)}
+            {!loading && success && (<BurgerConstructor price={price} order={order} bun={bun} openPopup={setVisibleOrderDetails} setOrder={setOrder} />)}
           </main>
         </pre>
         {!loading && success && createPortal(
           <>
-            <IngridientDetails ingridient={visibleIngDatails} changeVisibleIngDatails={changeVisibleIngDatails} />
-            <OrderDetails opened={visibleOrderDetails} changeVisibleIngDatails={changeVisibleOrderDetails} />
+            <IngredientDetails ingridient={visibleIngDetails} setVisible={setVisibleIngDetails} />
+            <OrderDetails visible={visibleOrderDetails} setVisible={setVisibleOrderDetails} />
           </>,
           document.body
         )}
