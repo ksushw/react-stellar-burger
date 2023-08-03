@@ -65,7 +65,7 @@ export default function BurgerIngredients({ data, onClickingredient, bun, order,
                 <ul className={styles.division}>
                     {data.map((ingredient) => {
                         return ingredient.type === 'bun' && (
-                            <IngredientItem ingredient={ingredient} key={ingredient._id} count={(ingredient == bun) && 1} onClick={onClickingredient} onContextMenu={openPopup} />)
+                            <IngredientItem ingredient={ingredient} key={ingredient._id} count={(ingredient.name === bun.name) && 1} onClick={onClickingredient} onContextMenu={openPopup} />)
                     })}
                 </ul>
 

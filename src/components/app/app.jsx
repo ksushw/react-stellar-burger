@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     const getProductData = async () => {
       setApi({ ...api, loading: true });
-      const res = await fetch(urlDomain)
+      await fetch(urlDomain)
         .then(res => {
            if (!res.ok) {
             return Promise.reject(`Ошибка: ${res.status}`);
@@ -42,7 +42,7 @@ function App() {
         .catch((e) => console.error(e));
     }
     getProductData();
-  }, [])
+  }, [ urlDomain ])
 
   // Булка по умолчанию
   const setDefaultBun = (data) => {
