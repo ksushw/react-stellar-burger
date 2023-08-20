@@ -2,15 +2,43 @@ import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-de
 import styles from "./burger-constructor.module.css";
 import DradAndDropWrapper from '../dradAndDropWrapper/dradAndDropWrapper'
 import update from 'immutability-helper'
-import { useCallback, useContext } from 'react'
-import { TotalPriceContext, OrderContext } from '../../services/appContext'
+import { useCallback, useContext, useState } from 'react'
+import { TotalPriceContext, OrderContext, MakedOrderContext } from '../../services/appContext'
 
 export default function BurgerConstructor({ openPopup }) {
 
     const { price, setPrice } = useContext(TotalPriceContext);
-    const { order, setOrder } = useContext(OrderContext)
+    const { order, setOrder } = useContext(OrderContext);
+
+    const { setOrderInfo } = useContext(MakedOrderContext);
+
+    const sendOrder = async () => {
+        const orderIds = [order.bun._id]
+        order.filling.map((ingridient) => orderIds.push(ingridient._id));
+        await fetch(`https://norma.nomoreparties.space/api/orders`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "ingredients": orderIds
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    return Promise.reject(`Ошибка: ${res.status}`);
+                }
+                return res.json()
+            })
+            .then(data => {
+               
+                setOrderInfo({...data})
+            })
+            .catch((e) => console.error(e));
+    }
 
     function makeOrder() {
+        sendOrder();
         openPopup(true);
         setOrder({
             ...order,
@@ -27,7 +55,6 @@ export default function BurgerConstructor({ openPopup }) {
         })
         setPrice({ type: 'minus', price: ingredient.price })
     }
-
 
     // const moveCard = useCallback((dragIndex, hoverIndex) => {
     //     setOrder((prevCards) =>
@@ -82,7 +109,6 @@ export default function BurgerConstructor({ openPopup }) {
                         extraClass={styles.element}
                     />
                 </div>}
-
 
             </div>
             <div className={styles.price + ' mr-10'}>

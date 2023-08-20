@@ -9,7 +9,7 @@ import IngredientDetails from '../ingredients-details/ingredients-details';
 import OrderDetails from '../order-details/order-details';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { TotalPriceContext, DataContext, OrderContext } from '../../services/appContext'
+import { TotalPriceContext, DataContext, OrderContext, MakedOrderContext } from '../../services/appContext'
 
 function App() {
 
@@ -22,6 +22,9 @@ function App() {
     bun: {},
     filling: []
   });
+
+  const [ orderInfo, setOrderInfo ] = useState({});
+
 
   const [price, setPrice] = useReducer(countPrise, 0);
 
@@ -44,6 +47,7 @@ function App() {
         .then(data => {
           setApi({ ...data, loading: false })
           setDefaultBun(data.data)
+          console.log(data.data)
         })
         .catch((e) => console.error(e));
     }
@@ -77,26 +81,27 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <div className={styles.app} id="app">
         <AppHeader />
-
-        <DataContext.Provider value={{ api, setApi }}>
-          <OrderContext.Provider value={{ order, setOrder }}>
-            <TotalPriceContext.Provider value={{ price, setPrice }}>
-              <pre className={styles.container}>
-                <main className={styles.main}>
-                  {!loading && success && (<BurgerIngredients openPopup={setVisibleIngDetails} />)}
-                  {!loading && success && (<BurgerConstructor openPopup={setVisibleOrderDetails} />)}
-                </main>
-              </pre>
-            </TotalPriceContext.Provider>
-          </OrderContext.Provider>
-        </DataContext.Provider>
-        {!loading && success && createPortal(
-          <>
-            <IngredientDetails ingridient={visibleIngDetails} setVisible={setVisibleIngDetails} />
-            <OrderDetails visible={visibleOrderDetails} setVisible={setVisibleOrderDetails} />
-          </>,
-          document.body
-        )}
+        <MakedOrderContext.Provider value={{ orderInfo, setOrderInfo }}>
+          <DataContext.Provider value={{ api, setApi }}>
+            <OrderContext.Provider value={{ order, setOrder }}>
+              <TotalPriceContext.Provider value={{ price, setPrice }}>
+                <pre className={styles.container}>
+                  <main className={styles.main}>
+                    {!loading && success && (<BurgerIngredients openPopup={setVisibleIngDetails} />)}
+                    {!loading && success && (<BurgerConstructor openPopup={setVisibleOrderDetails} />)}
+                  </main>
+                </pre>
+              </TotalPriceContext.Provider>
+            </OrderContext.Provider>
+          </DataContext.Provider>
+          {!loading && success && createPortal(
+            <>
+              <IngredientDetails ingridient={visibleIngDetails} setVisible={setVisibleIngDetails} />
+              <OrderDetails visible={visibleOrderDetails} setVisible={setVisibleOrderDetails} />
+            </>,
+            document.body
+          )}
+        </MakedOrderContext.Provider>
       </div>
     </DndProvider>
 
