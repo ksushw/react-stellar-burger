@@ -1,24 +1,24 @@
 import styles from "./modal-overlay.module.css";
 
 export default function ModalOverlay({ children, onClick, visible }) {
-function closeModal(e) {
-    if(e.target === document.querySelector(`.${styles.modalOverlay}`)) {
-        onClick(false)
+  function closeModal(e) {
+    if (e.target === document.querySelector(`.${styles.modalOverlay}`)) {
+      onClick(false);
     }
-}
+  }
 
-    return (
+  return (
+    <>
+      {visible && (
         <>
-            {visible && (<>
-                <div className={styles.modalOverlay + ' ' + styles.modalOverlayOpen} onClick={(e) => closeModal(e)} >
-                {children}
-            </div>
-              </>
-            )}
+          <div
+            className={styles.modalOverlay + " " + styles.modalOverlayOpen}
+            onClick={(e) => closeModal(e)}
+          >
+            {children}
+          </div>
         </>
-    )
-
+      )}
+    </>
+  );
 }
-
-
-
