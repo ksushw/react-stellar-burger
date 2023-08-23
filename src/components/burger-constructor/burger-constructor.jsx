@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import {
   ConstructorElement,
   Button,
@@ -5,52 +6,34 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import DradAndDropWrapper from "../dradAndDropWrapper/dradAndDropWrapper";
-import update from "immutability-helper";
-import { useCallback, useContext, useState } from "react";
+import OrderDetails from "../order-details/order-details";
+import { useContext, useState } from "react";
 import {
   TotalPriceContext,
   OrderContext,
   MakedOrderContext,
 } from "../../services/appContext";
 
-export default function BurgerConstructor({ openPopup }) {
+import { sendOrder } from "../../utils/api";
+
+export default function BurgerConstructor({}) {
   const { price, setPrice } = useContext(TotalPriceContext);
   const { order, setOrder } = useContext(OrderContext);
 
   const { setOrderInfo } = useContext(MakedOrderContext);
+  const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
-  const sendOrder = async () => {
+  const makeOrder = async () => {
     const orderIds = [order.bun._id];
     order.filling.map((ingridient) => orderIds.push(ingridient._id));
-    await fetch(`https://norma.nomoreparties.space/api/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ingredients: orderIds,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setOrderInfo({ ...data });
-      })
-      .catch((e) => console.error(e));
-  };
-
-  function makeOrder() {
-    sendOrder();
-    openPopup(true);
+    const orderInfo = await sendOrder(orderIds);
+    setOrderInfo({ ...orderInfo });
+    setVisibleOrderDetails(true);
     setOrder({
       ...order,
       filling: [],
     });
-  }
+  };
 
   function removeIngridient(ingredient, index) {
     const newFilling = Object.assign([], order.filling);
@@ -61,17 +44,6 @@ export default function BurgerConstructor({ openPopup }) {
     });
     setPrice({ type: "minus", price: ingredient.price });
   }
-
-  // const moveCard = useCallback((dragIndex, hoverIndex) => {
-  //     setOrder((prevCards) =>
-  //         update(prevCards, {
-  //             $splice: [
-  //                 [dragIndex, 1],
-  //                 [hoverIndex, 0, prevCards[dragIndex]],
-  //             ],
-  //         }),
-  //     )
-  // }, [])
 
   return (
     <section
@@ -143,6 +115,14 @@ export default function BurgerConstructor({ openPopup }) {
           Оформить заказ
         </Button>
       </div>
+
+      {createPortal(
+        <OrderDetails
+          visible={visibleOrderDetails}
+          setVisible={setVisibleOrderDetails}
+        />,
+        document.body,
+      )}
     </section>
   );
 }

@@ -1,12 +1,11 @@
 import styles from "./ingredients-details.module.css";
 import Modal from "../modal/modal";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 
 export default function IngredientDetails({ ingridient, setVisible }) {
   const visibleBoolean = Boolean(ingridient);
 
   return (
-    <ModalOverlay onClick={() => setVisible()} visible={visibleBoolean}>
+    <>
       <Modal
         title="Детали ингредиента"
         visible={visibleBoolean}
@@ -79,6 +78,6 @@ export default function IngredientDetails({ ingridient, setVisible }) {
           </>
         )}
       </Modal>
-    </ModalOverlay>
+    </>
   );
 }

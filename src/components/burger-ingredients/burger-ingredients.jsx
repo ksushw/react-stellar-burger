@@ -1,5 +1,7 @@
+import { createPortal } from "react-dom";
 import { useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import IngredientDetails from "../ingredients-details/ingredients-details";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import styles from "./burger-ingredients.module.css";
 import { useContext } from "react";
@@ -9,16 +11,18 @@ import {
   TotalPriceContext,
 } from "../../services/appContext";
 
-export default function BurgerIngredients({ openPopup }) {
+export default function BurgerIngredients() {
   //Данные с апи
-  const { api } = useContext(DataContext);
-  const data = api.data;
+  const { data } = useContext(DataContext);
+  const ingredients = data.ingredients;
 
   //get order context
   const { order, setOrder } = useContext(OrderContext);
 
   //Change order function
   const { setPrice } = useContext(TotalPriceContext);
+
+  const [visibleIngDetails, setVisibleIngDetails] = useState(null);
 
   // Добавление нового элемента в стейт
   function changeOrder(newingredient) {
@@ -113,7 +117,7 @@ export default function BurgerIngredients({ openPopup }) {
           Булки
         </p>
         <ul className={styles.division}>
-          {data.map((ingredient) => {
+          {ingredients.map((ingredient) => {
             return (
               ingredient.type === "bun" && (
                 <IngredientItem
@@ -121,7 +125,7 @@ export default function BurgerIngredients({ openPopup }) {
                   key={ingredient._id}
                   count={ingredient.name === order.bun.name && 1}
                   onClick={changeOrder}
-                  onContextMenu={openPopup}
+                  onContextMenu={setVisibleIngDetails}
                 />
               )
             );
@@ -132,7 +136,7 @@ export default function BurgerIngredients({ openPopup }) {
           Соусы
         </p>
         <ul className={styles.division}>
-          {data.map((ingredient) => {
+          {ingredients.map((ingredient) => {
             return (
               ingredient.type === "sauce" && (
                 <IngredientItem
@@ -140,7 +144,7 @@ export default function BurgerIngredients({ openPopup }) {
                   key={ingredient._id}
                   count={counter[ingredient.name]}
                   onClick={changeOrder}
-                  onContextMenu={openPopup}
+                  onContextMenu={setVisibleIngDetails}
                 />
               )
             );
@@ -151,7 +155,7 @@ export default function BurgerIngredients({ openPopup }) {
           Начинки
         </p>
         <ul className={styles.division}>
-          {data.map((ingredient) => {
+          {ingredients.map((ingredient) => {
             return (
               ingredient.type === "main" && (
                 <IngredientItem
@@ -159,13 +163,21 @@ export default function BurgerIngredients({ openPopup }) {
                   key={ingredient._id}
                   count={counter[ingredient.name]}
                   onClick={changeOrder}
-                  onContextMenu={openPopup}
+                  onContextMenu={setVisibleIngDetails}
                 />
               )
             );
           })}
         </ul>
       </div>
+      {createPortal(
+        <IngredientDetails
+          ingridient={visibleIngDetails}
+          setVisible={setVisibleIngDetails}
+        />,
+
+        document.body,
+      )}
     </section>
   );
 }

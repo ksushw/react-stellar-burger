@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 
 export default function Modal({ children, title = "", visible, setVisible }) {
   function closeByEscape(e) {
@@ -27,6 +28,7 @@ export default function Modal({ children, title = "", visible, setVisible }) {
     <>
       {visible && (
         <>
+          <ModalOverlay onClick={close}></ModalOverlay>
           <div className={styles.modal}>
             <div className={styles.title}>
               <h2 className="text text_type_main-large">{title}</h2>
