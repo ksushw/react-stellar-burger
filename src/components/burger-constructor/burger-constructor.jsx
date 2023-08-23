@@ -16,7 +16,7 @@ import {
 
 import { sendOrder } from "../../utils/api";
 
-export default function BurgerConstructor({}) {
+export default function BurgerConstructor() {
   const { price, setPrice } = useContext(TotalPriceContext);
   const { order, setOrder } = useContext(OrderContext);
 
