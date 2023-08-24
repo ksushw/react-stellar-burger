@@ -28,7 +28,7 @@ export default function Modal({ children, title = "", visible, setVisible }) {
     <>
       {visible && (
         <>
-          <ModalOverlay onClick={close}></ModalOverlay>
+          <ModalOverlay onClick={close} />
           <div className={styles.modal}>
             <div className={styles.title}>
               <h2 className="text text_type_main-large">{title}</h2>

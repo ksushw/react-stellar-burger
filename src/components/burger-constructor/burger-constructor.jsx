@@ -7,6 +7,8 @@ import {
 import styles from "./burger-constructor.module.css";
 import DradAndDropWrapper from "../dradAndDropWrapper/dradAndDropWrapper";
 import OrderDetails from "../order-details/order-details";
+import Modal from "../modal/modal";
+
 import { useContext, useState } from "react";
 import {
   TotalPriceContext,
@@ -117,10 +119,12 @@ export default function BurgerConstructor() {
       </div>
 
       {createPortal(
-        <OrderDetails
+        <Modal
           visible={visibleOrderDetails}
           setVisible={setVisibleOrderDetails}
-        />,
+        >
+          <OrderDetails />
+        </Modal>,
         document.body,
       )}
     </section>

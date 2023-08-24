@@ -13,7 +13,7 @@ import {
   MakedOrderContext,
 } from "../../services/appContext";
 
-import { getProductData as getApi } from "../../utils/api";
+import { getIngridients } from "../../utils/api";
 
 function countPrise(price, action) {
   switch (action.type) {
@@ -42,13 +42,13 @@ function App() {
   useEffect(() => {
     setData({ ...data, loading: true });
     const getProductData = async () => {
-      const api = await getApi();
+      const data = await getIngridients();
       setData({
-        ingredients: api.data,
+        ingredients: data.data,
         loading: false,
-        success: api.success,
+        success: data.success,
       });
-      setDefaultBun(api.data);
+      setDefaultBun(data.data);
     };
 
     getProductData();

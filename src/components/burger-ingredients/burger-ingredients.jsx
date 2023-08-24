@@ -1,15 +1,15 @@
 import { createPortal } from "react-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredients-details/ingredients-details";
 import IngredientItem from "../ingredient-item/ingredient-item";
-import styles from "./burger-ingredients.module.css";
-import { useContext } from "react";
 import {
   DataContext,
   OrderContext,
   TotalPriceContext,
 } from "../../services/appContext";
+import Modal from "../modal/modal";
 
 export default function BurgerIngredients() {
   //Данные с апи
@@ -171,11 +171,16 @@ export default function BurgerIngredients() {
         </ul>
       </div>
       {createPortal(
-        <IngredientDetails
-          ingridient={visibleIngDetails}
+        <Modal
+          title="Детали ингредиента"
+          visible={visibleIngDetails}
           setVisible={setVisibleIngDetails}
-        />,
-
+        >
+          <IngredientDetails
+            ingridient={visibleIngDetails}
+            setVisible={setVisibleIngDetails}
+          />
+        </Modal>,
         document.body,
       )}
     </section>

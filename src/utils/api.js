@@ -12,7 +12,7 @@ const _getResponseData = (res) => {
   return res.json();
 };
 
-export const getProductData = () => {
+export const getIngridients = () => {
   return fetch(`${config.baseUrl}/ingredients`, {
     headers: config.headers,
   }).then(_getResponseData);
