@@ -1,7 +1,11 @@
 import styles from "./ingredients-details.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
+import { useSelector } from "react-redux";
 
-export default function IngredientDetails({ ingridient }) {
+export default function IngredientDetails() {
+  const ingridient = useSelector(
+    (store) => store.ingridientReducer.selectedOrderPopupIng,
+  );
   return (
     <>
       {ingridient && (

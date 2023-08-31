@@ -1,20 +1,20 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
-import { useContext } from "react";
-import { MakedOrderContext } from "../../services/appContext";
-
+import { useSelector } from "react-redux";
 export default function OrderDetails() {
-  const { orderInfo } = useContext(MakedOrderContext);
+  const { order, orderRequest, orderFailed } = useSelector((store) => ({
+    order: store.ingridientReducer.order,
+    orderRequest: store.ingridientReducer.orderRequest,
+    orderFailed: store.ingridientReducer.orderFailed,
+  }));
 
   return (
     <>
-      {orderInfo.success && (
+      {!orderRequest && !orderFailed && (
         <>
-          {orderInfo.order.number && (
-            <p className={styles.number + " text text_type_digits-large mb-8"}>
-              {orderInfo.order.number}
-            </p>
-          )}
+          <p className={styles.number + " text text_type_digits-large mb-8"}>
+            {order}
+          </p>
           <p className="text text_type_main-medium">идентификатор заказа</p>
           <img src={done} alt="Галочка" className="mt-15 mb-15" />
           <p className="text text_type_main-small mb-2">

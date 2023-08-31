@@ -1,47 +1,50 @@
 import { createPortal } from "react-dom";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredients-details/ingredients-details";
 import IngredientItem from "../ingredient-item/ingredient-item";
-import {
-  DataContext,
-  OrderContext,
-  TotalPriceContext,
-} from "../../services/appContext";
 import Modal from "../modal/modal";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  ADD_FILLING,
+  CHANGE_BUN,
+  OPEN_INFO_POPUP,
+} from "../../services/actions/action";
+import { useEffect } from "react";
+import { getIngridients } from "../../utils/api";
 
 export default function BurgerIngredients() {
-  //Данные с апи
-  const { data } = useContext(DataContext);
-  const ingredients = data.ingredients;
+  const [visibleIngDetails, setVisibleIngDetails] = useState(false);
+  const [position, setPosition] = useState("bun");
 
-  //get order context
-  const { order, setOrder } = useContext(OrderContext);
+  const { items, itemsRequest, itemsFailed, filling, bun } = useSelector(
+    (store) => ({
+      bun: store.ingridientReducer.bun,
+      filling: store.ingridientReducer.fillings,
+      items: store.ingridientReducer.items,
+      itemsRequest: store.ingridientReducer.itemsRequest,
+      itemsFailed: store.ingridientReducer.itemsFailed,
+    }),
+  );
+  const dispatch = useDispatch();
 
-  //Change order function
-  const { setPrice } = useContext(TotalPriceContext);
+  useEffect(() => {
+    dispatch(getIngridients());
+  }, []);
 
-  const [visibleIngDetails, setVisibleIngDetails] = useState(null);
-
+  function openPopup(ingredient) {
+    dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
+    setVisibleIngDetails(true);
+  }
   // Добавление нового элемента в стейт
   function changeOrder(newingredient) {
     if (newingredient.type === "bun") {
-      setPrice({ type: "plus", price: newingredient.price - order.bun.price });
-      setOrder({ ...order, bun: newingredient });
+      dispatch({ type: CHANGE_BUN, bun: newingredient });
     } else {
-      setPrice({ type: "plus", price: newingredient.price });
-      let newOrder = [...order.filling];
-      newOrder.push(newingredient);
-      setOrder({
-        ...order,
-        filling: newOrder,
-      });
+      dispatch({ type: ADD_FILLING, item: newingredient });
     }
   }
-
-  // Позиция таба
-  const [position, setPosition] = useState("bun");
 
   //Определяет активный таб
   function changePosition() {
@@ -68,9 +71,9 @@ export default function BurgerIngredients() {
 
   // Количество ингридиентов определяет
   function count() {
-    if (order.filling) {
+    if (filling !== []) {
       const amount = {};
-      order.filling.map((ingredient) =>
+      filling.map((ingredient) =>
         amount[ingredient.name]
           ? (amount[ingredient.name] = amount[ingredient.name] + 1)
           : (amount[ingredient.name] = 1),
@@ -113,62 +116,66 @@ export default function BurgerIngredients() {
         id="container"
         onScroll={changePosition}
       >
-        <p className="text text_type_main-medium pt-10 pb-6" id="buns">
-          Булки
-        </p>
-        <ul className={styles.division}>
-          {ingredients.map((ingredient) => {
-            return (
-              ingredient.type === "bun" && (
-                <IngredientItem
-                  ingredient={ingredient}
-                  key={ingredient._id}
-                  count={ingredient.name === order.bun.name && 1}
-                  onClick={changeOrder}
-                  onContextMenu={setVisibleIngDetails}
-                />
-              )
-            );
-          })}
-        </ul>
+        {!itemsRequest && !itemsFailed && (
+          <>
+            <p className="text text_type_main-medium pt-10 pb-6" id="buns">
+              Булки
+            </p>
+            <ul className={styles.division}>
+              {items.map((ingredient) => {
+                return (
+                  ingredient.type === "bun" && (
+                    <IngredientItem
+                      ingredient={ingredient}
+                      key={ingredient._id}
+                      count={ingredient.name === bun.name && 1}
+                      onClick={changeOrder}
+                      onContextMenu={openPopup}
+                    />
+                  )
+                );
+              })}
+            </ul>
 
-        <p className="text text_type_main-medium  pt-10 pb-6" id="sauce">
-          Соусы
-        </p>
-        <ul className={styles.division}>
-          {ingredients.map((ingredient) => {
-            return (
-              ingredient.type === "sauce" && (
-                <IngredientItem
-                  ingredient={ingredient}
-                  key={ingredient._id}
-                  count={counter[ingredient.name]}
-                  onClick={changeOrder}
-                  onContextMenu={setVisibleIngDetails}
-                />
-              )
-            );
-          })}
-        </ul>
+            <p className="text text_type_main-medium  pt-10 pb-6" id="sauce">
+              Соусы
+            </p>
+            <ul className={styles.division}>
+              {items.map((ingredient) => {
+                return (
+                  ingredient.type === "sauce" && (
+                    <IngredientItem
+                      ingredient={ingredient}
+                      key={ingredient._id}
+                      count={counter[ingredient.name]}
+                      onClick={changeOrder}
+                      onContextMenu={openPopup}
+                    />
+                  )
+                );
+              })}
+            </ul>
 
-        <p className="text text_type_main-medium pt-10 pb-6" id="main">
-          Начинки
-        </p>
-        <ul className={styles.division}>
-          {ingredients.map((ingredient) => {
-            return (
-              ingredient.type === "main" && (
-                <IngredientItem
-                  ingredient={ingredient}
-                  key={ingredient._id}
-                  count={counter[ingredient.name]}
-                  onClick={changeOrder}
-                  onContextMenu={setVisibleIngDetails}
-                />
-              )
-            );
-          })}
-        </ul>
+            <p className="text text_type_main-medium pt-10 pb-6" id="main">
+              Начинки
+            </p>
+            <ul className={styles.division}>
+              {items.map((ingredient) => {
+                return (
+                  ingredient.type === "main" && (
+                    <IngredientItem
+                      ingredient={ingredient}
+                      key={ingredient._id}
+                      count={counter[ingredient.name]}
+                      onClick={changeOrder}
+                      onContextMenu={openPopup}
+                    />
+                  )
+                );
+              })}
+            </ul>
+          </>
+        )}
       </div>
       {createPortal(
         <Modal
@@ -176,10 +183,7 @@ export default function BurgerIngredients() {
           visible={visibleIngDetails}
           setVisible={setVisibleIngDetails}
         >
-          <IngredientDetails
-            ingridient={visibleIngDetails}
-            setVisible={setVisibleIngDetails}
-          />
+          <IngredientDetails />
         </Modal>,
         document.body,
       )}

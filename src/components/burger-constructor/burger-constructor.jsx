@@ -9,42 +9,36 @@ import DradAndDropWrapper from "../dradAndDropWrapper/dradAndDropWrapper";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 
-import { useContext, useState } from "react";
-import {
-  TotalPriceContext,
-  OrderContext,
-  MakedOrderContext,
-} from "../../services/appContext";
+import { useState } from "react";
 
 import { sendOrder } from "../../utils/api";
 
+import { useSelector, useDispatch } from "react-redux";
+import { REMOVE_FILLING, DELETE_FILLING } from "../../services/actions/action";
 export default function BurgerConstructor() {
-  const { price, setPrice } = useContext(TotalPriceContext);
-  const { order, setOrder } = useContext(OrderContext);
-
-  const { setOrderInfo } = useContext(MakedOrderContext);
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
+  const { price, filling, bun } = useSelector((store) => ({
+    price: store.ingridientReducer.price,
+    bun: store.ingridientReducer.bun,
+    filling: store.ingridientReducer.fillings,
+    items: store.ingridientReducer.items,
+    itemsRequest: store.ingridientReducer.itemsRequest,
+    itemsFailed: store.ingridientReducer.itemsFailed,
+  }));
+
+  const dispatch = useDispatch();
+
   const makeOrder = async () => {
-    const orderIds = [order.bun._id];
-    order.filling.map((ingridient) => orderIds.push(ingridient._id));
-    const orderInfo = await sendOrder(orderIds);
-    setOrderInfo({ ...orderInfo });
+    const orderIds = [bun._id];
+    filling.map((ingridient) => orderIds.push(ingridient._id));
+    dispatch(sendOrder(orderIds));
     setVisibleOrderDetails(true);
-    setOrder({
-      ...order,
-      filling: [],
-    });
+    dispatch({ type: REMOVE_FILLING });
   };
 
   function removeIngridient(ingredient, index) {
-    const newFilling = Object.assign([], order.filling);
-    newFilling.splice(index, 1);
-    setOrder({
-      ...order,
-      filling: newFilling,
-    });
-    setPrice({ type: "minus", price: ingredient.price });
+    dispatch({ type: DELETE_FILLING, index: index, price: ingredient.price });
   }
 
   return (
@@ -52,21 +46,21 @@ export default function BurgerConstructor() {
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
     >
       <div className={styles.order}>
-        {order.bun && (
+        {bun && (
           <div className={styles.bun}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${order.bun.name} (верх)`}
-              price={order.bun.price}
-              thumbnail={order.bun.image}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
               extraClass={styles.element}
             />
           </div>
         )}
-        {order.filling && (
+        {filling && (
           <ul className={styles.fill + " custom-scroll"}>
-            {order.filling.map((ingredient, index) => {
+            {filling.map((ingredient, index) => {
               return (
                 <li key={index}>
                   <DradAndDropWrapper
@@ -90,14 +84,14 @@ export default function BurgerConstructor() {
           </ul>
         )}
 
-        {order.bun && (
+        {bun && (
           <div className={styles.bun}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${order.bun.name} (низ)`}
-              price={order.bun.price}
-              thumbnail={order.bun.image}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
               extraClass={styles.element}
             />
           </div>
