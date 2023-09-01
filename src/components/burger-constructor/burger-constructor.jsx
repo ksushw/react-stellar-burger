@@ -8,8 +8,9 @@ import styles from "./burger-constructor.module.css";
 import DradAndDropWrapper from "../dradAndDropWrapper/dradAndDropWrapper";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
+import update from "immutability-helper";
 
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import { sendOrder } from "../../utils/api";
 
@@ -19,6 +20,7 @@ import {
   DELETE_FILLING,
   ADD_FILLING,
   CHANGE_BUN,
+  EDIT_ORDER_DND,
 } from "../../services/actions/action";
 import { useDrop } from "react-dnd";
 export default function BurgerConstructor() {
@@ -31,7 +33,11 @@ export default function BurgerConstructor() {
     items: store.ingridientReducer.items,
   }));
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [order, setOrder] = useState(false);
+  useEffect(() => {
+    setOrder(filling);
+  }, [filling]);
+  const [, dropTarget] = useDrop({
     accept: "ingridientItem",
     drop(item) {
       handleDrop(item);
@@ -60,7 +66,17 @@ export default function BurgerConstructor() {
   function removeIngridient(ingredient, index) {
     dispatch({ type: DELETE_FILLING, index: index, price: ingredient.price });
   }
-
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    setOrder((prevCards) =>
+      update(prevCards, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, prevCards[dragIndex]],
+        ],
+      }),
+    );
+    dispatch({ type: EDIT_ORDER_DND, order: order });
+  }, []);
   return (
     <section
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
@@ -79,15 +95,16 @@ export default function BurgerConstructor() {
             />
           </div>
         )}
-        {filling && (
+        {order && (
           <ul className={styles.fill + " custom-scroll"}>
-            {filling.map((ingredient, index) => {
+            {order.map((ingredient, index) => {
               return (
                 <li key={index}>
                   <DradAndDropWrapper
-                    id={index}
+                    id={ingredient._id}
                     index={index}
                     className={styles.ingredient}
+                    moveCard={moveCard}
                   >
                     <ConstructorElement
                       type={ingredient.type}

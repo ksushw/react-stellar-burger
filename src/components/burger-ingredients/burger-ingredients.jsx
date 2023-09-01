@@ -39,7 +39,6 @@ export default function BurgerIngredients() {
     const sausePosition = document.querySelector(`#sauce`).offsetTop;
     const mainPosition = document.querySelector(`#main`).offsetTop;
     const scrollPosition = document.querySelector("#container").scrollTop;
-
     if (scrollPosition + 200 < sausePosition) {
       setPosition("bun");
     } else if (scrollPosition + 200 < mainPosition) {

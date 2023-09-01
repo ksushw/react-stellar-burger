@@ -19,7 +19,7 @@ export default function IngredientItem({
 
   const id = ingredient._id;
 
-  const [{ isDrag }, useRef] = useDrag({
+  const [, useRef] = useDrag({
     type: "ingridientItem",
     item: { id },
     collect: (monitor) => ({
@@ -35,9 +35,7 @@ export default function IngredientItem({
       draggable={true}
       ref={useRef}
     >
-      {count && !isDrag && (
-        <Counter count={count} size="default" extraClass="m-1" />
-      )}
+      {count && <Counter count={count} size="default" extraClass="m-1" />}
       <img
         className="ingredient__image"
         src={ingredient.image}

@@ -10,7 +10,9 @@ import {
   SEND_ORDER_REQUEST,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED,
+  EDIT_ORDER_DND,
 } from "../actions/action";
+import update from "immutability-helper";
 
 const initialState = {
   items: [],
@@ -110,6 +112,12 @@ export const ingridientReducer = (state = initialState, action) => {
         ...state,
         orderRequest: false,
         orderFailed: true,
+      };
+    }
+    case EDIT_ORDER_DND: {
+      return {
+        ...state,
+        order: action.order,
       };
     }
     default: {
