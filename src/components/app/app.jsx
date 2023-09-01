@@ -8,6 +8,7 @@ import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { rootReducer } from "../../services/reducers";
 import thunk from "redux-thunk";
+import { useState, useEffect } from "react";
 
 function App() {
   const composeEnhancers =

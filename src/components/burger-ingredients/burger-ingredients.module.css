@@ -1,6 +1,7 @@
 .ingredients {
   max-width: 600px;
   width: calc(50% - 40px);
+  background-color: transparent;
 }
 
 .navigation {

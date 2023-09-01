@@ -6,11 +6,7 @@ import IngredientDetails from "../ingredients-details/ingredients-details";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  ADD_FILLING,
-  CHANGE_BUN,
-  OPEN_INFO_POPUP,
-} from "../../services/actions/action";
+import { OPEN_INFO_POPUP } from "../../services/actions/action";
 import { useEffect } from "react";
 import { getIngridients } from "../../utils/api";
 
@@ -36,14 +32,6 @@ export default function BurgerIngredients() {
   function openPopup(ingredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
     setVisibleIngDetails(true);
-  }
-  // Добавление нового элемента в стейт
-  function changeOrder(newingredient) {
-    if (newingredient.type === "bun") {
-      dispatch({ type: CHANGE_BUN, bun: newingredient });
-    } else {
-      dispatch({ type: ADD_FILLING, item: newingredient });
-    }
   }
 
   //Определяет активный таб
@@ -129,8 +117,7 @@ export default function BurgerIngredients() {
                       ingredient={ingredient}
                       key={ingredient._id}
                       count={ingredient.name === bun.name && 1}
-                      onClick={changeOrder}
-                      onContextMenu={openPopup}
+                      onClick={openPopup}
                     />
                   )
                 );
@@ -148,8 +135,7 @@ export default function BurgerIngredients() {
                       ingredient={ingredient}
                       key={ingredient._id}
                       count={counter[ingredient.name]}
-                      onClick={changeOrder}
-                      onContextMenu={openPopup}
+                      onClick={openPopup}
                     />
                   )
                 );
@@ -167,8 +153,7 @@ export default function BurgerIngredients() {
                       ingredient={ingredient}
                       key={ingredient._id}
                       count={counter[ingredient.name]}
-                      onClick={changeOrder}
-                      onContextMenu={openPopup}
+                      onClick={openPopup}
                     />
                   )
                 );

@@ -14,18 +14,38 @@ import { useState } from "react";
 import { sendOrder } from "../../utils/api";
 
 import { useSelector, useDispatch } from "react-redux";
-import { REMOVE_FILLING, DELETE_FILLING } from "../../services/actions/action";
+import {
+  REMOVE_FILLING,
+  DELETE_FILLING,
+  ADD_FILLING,
+  CHANGE_BUN,
+} from "../../services/actions/action";
+import { useDrop } from "react-dnd";
 export default function BurgerConstructor() {
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
-  const { price, filling, bun } = useSelector((store) => ({
+  const { items, price, filling, bun } = useSelector((store) => ({
     price: store.ingridientReducer.price,
     bun: store.ingridientReducer.bun,
     filling: store.ingridientReducer.fillings,
     items: store.ingridientReducer.items,
-    itemsRequest: store.ingridientReducer.itemsRequest,
-    itemsFailed: store.ingridientReducer.itemsFailed,
   }));
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingridientItem",
+    drop(item) {
+      handleDrop(item);
+    },
+  });
+
+  const handleDrop = (item) => {
+    const newingredient = items.filter((element) => element._id == item.id)[0];
+    if (newingredient.type === "bun") {
+      dispatch({ type: CHANGE_BUN, bun: newingredient });
+    } else {
+      dispatch({ type: ADD_FILLING, item: newingredient });
+    }
+  };
 
   const dispatch = useDispatch();
 
@@ -44,6 +64,7 @@ export default function BurgerConstructor() {
   return (
     <section
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
+      ref={dropTarget}
     >
       <div className={styles.order}>
         {bun && (
