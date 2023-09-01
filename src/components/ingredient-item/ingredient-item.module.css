@@ -1,16 +1,16 @@
 .ingredient {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
 }
 
 .price {
-    display: flex;
+  display: flex;
 }
 
 .name {
-    white-space: break-spaces;
-    text-align: center;
+  white-space: break-spaces;
+  text-align: center;
 }

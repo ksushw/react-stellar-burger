@@ -1,0 +1,12 @@
+.title {
+  line-height: 40px;
+}
+
+.nutrients {
+  display: flex;
+  gap: 20px;
+}
+
+.nutrient {
+  text-align: center;
+}

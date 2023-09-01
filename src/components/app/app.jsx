@@ -1,47 +1,92 @@
 import styles from "./app.module.css";
 
-import { useReducer, useState } from 'react';
-import { data } from "../../utils/data";
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
+import { useReducer, useState, useEffect } from "react";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import {
+  TotalPriceContext,
+  DataContext,
+  OrderContext,
+  MakedOrderContext,
+} from "../../services/appContext";
 
+import { getIngridients } from "../../utils/api";
 
+function countPrise(price, action) {
+  switch (action.type) {
+    case "plus":
+      return price + action.price;
+    case "minus":
+      return price - action.price;
+  }
+}
 
 function App() {
+  const [data, setData] = useState({
+    ingredients: {},
+    loading: true,
+  });
 
-  const  defaultBun = data.find((elem) => {
-    return elem.type === 'bun'
-  })
+  const [order, setOrder] = useState({
+    bun: {},
+    filling: [],
+  });
 
-  const [order, setOrder] = useState([]);
-  const [bun, setBun] = useState( defaultBun);
-  const [price, setPrice] = useReducer(countPrise,  defaultBun.price);
+  const [orderInfo, setOrderInfo] = useState({});
+  const [price, setPrice] = useReducer(countPrise, 0);
 
-  function countPrise(price, added) {
-    return price + added;
-  }
+  // Запрос апи
+  useEffect(() => {
+    setData({ ...data, loading: true });
+    const getProductData = async () => {
+      const data = await getIngridients();
+      setData({
+        ingredients: data.data,
+        loading: false,
+        success: data.success,
+      });
+      setDefaultBun(data.data);
+    };
 
-  function changeOrder(newingredient) {
-    if (newingredient.type === 'bun') {
-      setPrice(newingredient.price - bun.price)
-      setBun(newingredient)
-    } else {
-      setPrice(newingredient.price)
-      setOrder([...order, newingredient])
-    }
-  }
+    getProductData();
+  }, []);
 
+  // Булка по умолчанию
+  const setDefaultBun = (data) => {
+    const bun = data.find((elem) => {
+      return elem.type === "bun";
+    });
+    setOrder({
+      ...order,
+      bun: bun,
+    });
+    setPrice({ type: "plus", price: bun.price });
+  };
+
+  const { loading, success } = data;
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <pre className={styles.container}>
-        <main className={styles.main}>
-          <BurgerIngredients data={data} onClickingredient={changeOrder} order={order} bun={bun} />
-          <BurgerConstructor ingredients={data} price={price} order={order} bun={bun} />
-        </main>
-      </pre>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.app} id="app">
+        <AppHeader />
+        <MakedOrderContext.Provider value={{ orderInfo, setOrderInfo }}>
+          <DataContext.Provider value={{ data, setData }}>
+            <OrderContext.Provider value={{ order, setOrder }}>
+              <TotalPriceContext.Provider value={{ price, setPrice }}>
+                <pre className={styles.container}>
+                  <main className={styles.main}>
+                    {!loading && success && <BurgerIngredients />}
+                    {!loading && success && <BurgerConstructor />}
+                  </main>
+                </pre>
+              </TotalPriceContext.Provider>
+            </OrderContext.Provider>
+          </DataContext.Provider>
+        </MakedOrderContext.Provider>
+      </div>
+    </DndProvider>
   );
 }
 
