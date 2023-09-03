@@ -36,10 +36,12 @@ export default function BurgerConstructor() {
     shallowEqual,
   );
 
-  const [order, setOrder] = useState(false);
+  const [order, setOrder] = useState([]);
+
   useEffect(() => {
     setOrder(filling);
   }, [filling]);
+
   const [, dropTarget] = useDrop({
     accept: "ingridientItem",
     drop(item) {
@@ -69,17 +71,21 @@ export default function BurgerConstructor() {
   function removeIngridient(ingredient, index) {
     dispatch({ type: DELETE_FILLING, index: index, price: ingredient.price });
   }
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    setOrder((prevCards) =>
-      update(prevCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex]],
-        ],
-      }),
-    );
-    dispatch({ type: EDIT_ORDER_DND, order: order });
-  }, []);
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      setOrder((prevCards) =>
+        update(prevCards, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevCards[dragIndex]],
+          ],
+        }),
+      );
+      dispatch({ type: EDIT_ORDER_DND, order: order });
+    },
+    [order],
+  );
+
   return (
     <section
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
