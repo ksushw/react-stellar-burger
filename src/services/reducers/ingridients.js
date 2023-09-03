@@ -110,6 +110,7 @@ export const ingridientReducer = (state = initialState, action) => {
     case SEND_ORDER_FAILED: {
       return {
         ...state,
+        order: initialState.order,
         orderRequest: false,
         orderFailed: true,
       };
@@ -117,7 +118,7 @@ export const ingridientReducer = (state = initialState, action) => {
     case EDIT_ORDER_DND: {
       return {
         ...state,
-        order: action.order,
+        fillings: action.order,
       };
     }
     default: {

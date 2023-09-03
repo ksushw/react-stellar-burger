@@ -5,7 +5,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredients-details/ingredients-details";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import Modal from "../modal/modal";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/action";
 import { useEffect } from "react";
 import { getIngridients } from "../../utils/api";
@@ -13,6 +13,13 @@ import { getIngridients } from "../../utils/api";
 export default function BurgerIngredients() {
   const [visibleIngDetails, setVisibleIngDetails] = useState(false);
   const [position, setPosition] = useState("bun");
+  const [buns, setBuns] = useState([]);
+  const [sauses, setSauses] = useState([]);
+  const [main, setMain] = useState([]);
+
+  useEffect(() => {
+    dispatch(getIngridients());
+  }, []);
 
   const { items, itemsRequest, itemsFailed, filling, bun } = useSelector(
     (store) => ({
@@ -22,17 +29,21 @@ export default function BurgerIngredients() {
       itemsRequest: store.ingridientReducer.itemsRequest,
       itemsFailed: store.ingridientReducer.itemsFailed,
     }),
+    shallowEqual,
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getIngridients());
-  }, []);
-
+    setBuns(items.filter((item) => item.type === "bun"));
+    setMain(items.filter((item) => item.type === "main"));
+    setSauses(items.filter((item) => item.type === "sauce"));
+  }, [items]);
   function openPopup(ingredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
     setVisibleIngDetails(true);
   }
+
+  console.log(buns);
 
   //Определяет активный таб
   function changePosition() {
@@ -109,16 +120,14 @@ export default function BurgerIngredients() {
               Булки
             </p>
             <ul className={styles.division}>
-              {items.map((ingredient) => {
+              {buns.map((ingredient) => {
                 return (
-                  ingredient.type === "bun" && (
-                    <IngredientItem
-                      ingredient={ingredient}
-                      key={ingredient._id}
-                      count={ingredient.name === bun.name && 1}
-                      onClick={openPopup}
-                    />
-                  )
+                  <IngredientItem
+                    ingredient={ingredient}
+                    key={ingredient._id}
+                    count={ingredient.name === bun.name && 1}
+                    onClick={openPopup}
+                  />
                 );
               })}
             </ul>
@@ -127,16 +136,14 @@ export default function BurgerIngredients() {
               Соусы
             </p>
             <ul className={styles.division}>
-              {items.map((ingredient) => {
+              {sauses.map((ingredient) => {
                 return (
-                  ingredient.type === "sauce" && (
-                    <IngredientItem
-                      ingredient={ingredient}
-                      key={ingredient._id}
-                      count={counter[ingredient.name]}
-                      onClick={openPopup}
-                    />
-                  )
+                  <IngredientItem
+                    ingredient={ingredient}
+                    key={ingredient._id}
+                    count={counter[ingredient.name]}
+                    onClick={openPopup}
+                  />
                 );
               })}
             </ul>
@@ -145,16 +152,14 @@ export default function BurgerIngredients() {
               Начинки
             </p>
             <ul className={styles.division}>
-              {items.map((ingredient) => {
+              {main.map((ingredient) => {
                 return (
-                  ingredient.type === "main" && (
-                    <IngredientItem
-                      ingredient={ingredient}
-                      key={ingredient._id}
-                      count={counter[ingredient.name]}
-                      onClick={openPopup}
-                    />
-                  )
+                  <IngredientItem
+                    ingredient={ingredient}
+                    key={ingredient._id}
+                    count={counter[ingredient.name]}
+                    onClick={openPopup}
+                  />
                 );
               })}
             </ul>
