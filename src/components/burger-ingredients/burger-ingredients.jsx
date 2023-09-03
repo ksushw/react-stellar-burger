@@ -8,9 +8,7 @@ import Modal from "../modal/modal";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
 import { CHANGE_BUN } from "../../services/actions/constructor";
-
 import { useEffect } from "react";
-import { getIngridients } from "../../utils/api";
 
 export default function BurgerIngredients() {
   const [visibleIngDetails, setVisibleIngDetails] = useState(false);
@@ -18,10 +16,6 @@ export default function BurgerIngredients() {
   const [buns, setBuns] = useState([]);
   const [sauses, setSauses] = useState([]);
   const [main, setMain] = useState([]);
-
-  useEffect(() => {
-    dispatch(getIngridients());
-  }, []);
 
   const { items, itemsRequest, itemsFailed, filling, bun } = useSelector(
     (store) => ({

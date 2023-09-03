@@ -12,7 +12,7 @@ import update from "immutability-helper";
 
 import { useState, useCallback, useEffect } from "react";
 
-import { sendOrder } from "../../utils/api";
+import { sendOrder } from "../../services/actions/order";
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {

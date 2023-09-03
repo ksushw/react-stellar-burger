@@ -4,36 +4,27 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { compose, createStore, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
-import { rootReducer } from "../../services/reducers";
-import thunk from "redux-thunk";
-import { useState, useEffect } from "react";
+import { getIngridients } from "../../services/actions/ingridients";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
-  const composeEnhancers =
-    typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-      : compose;
-
-  const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-  const store = createStore(rootReducer, enhancer);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngridients());
+  }, []);
   return (
-    <Provider store={store}>
-      <DndProvider backend={HTML5Backend}>
-        <div className={styles.app} id="app">
-          <AppHeader />
-          <pre className={styles.container}>
-            <main className={styles.main}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          </pre>
-        </div>
-      </DndProvider>
-    </Provider>
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.app} id="app">
+        <AppHeader />
+        <pre className={styles.container}>
+          <main className={styles.main}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </pre>
+      </div>
+    </DndProvider>
   );
 }
 
