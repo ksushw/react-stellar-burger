@@ -6,7 +6,9 @@ import IngredientDetails from "../ingredients-details/ingredients-details";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import Modal from "../modal/modal";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import { OPEN_INFO_POPUP } from "../../services/actions/action";
+import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
+import { CHANGE_BUN } from "../../services/actions/constructor";
+
 import { useEffect } from "react";
 import { getIngridients } from "../../utils/api";
 
@@ -23,8 +25,8 @@ export default function BurgerIngredients() {
 
   const { items, itemsRequest, itemsFailed, filling, bun } = useSelector(
     (store) => ({
-      bun: store.ingridientReducer.bun,
-      filling: store.ingridientReducer.fillings,
+      bun: store.constructorReducer.bun,
+      filling: store.constructorReducer.fillings,
       items: store.ingridientReducer.items,
       itemsRequest: store.ingridientReducer.itemsRequest,
       itemsFailed: store.ingridientReducer.itemsFailed,
@@ -37,13 +39,17 @@ export default function BurgerIngredients() {
     setBuns(items.filter((item) => item.type === "bun"));
     setMain(items.filter((item) => item.type === "main"));
     setSauses(items.filter((item) => item.type === "sauce"));
+    const defoultBun = items.find((elem) => {
+      return elem.type === "bun";
+    });
+    if (defoultBun) {
+      dispatch({ type: CHANGE_BUN, bun: defoultBun });
+    }
   }, [items]);
   function openPopup(ingredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
     setVisibleIngDetails(true);
   }
-
-  console.log(buns);
 
   //Определяет активный таб
   function changePosition() {

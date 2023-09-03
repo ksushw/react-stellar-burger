@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function IngredientDetails() {
   const ingridient = useSelector(
-    (store) => store.ingridientReducer.selectedOrderPopupIng,
+    (store) => store.infoPopupReducer.selectedOrderPopupIng,
   );
   return (
     <>

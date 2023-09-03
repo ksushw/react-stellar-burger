@@ -2,10 +2,13 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
+} from "../services/actions/ingridients";
+
+import {
   SEND_ORDER_REQUEST,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED,
-} from "../services/actions/action";
+} from "../services/actions/order";
 
 const config = {
   baseUrl: "https://norma.nomoreparties.space/api",

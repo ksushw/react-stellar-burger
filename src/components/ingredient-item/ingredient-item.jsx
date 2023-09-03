@@ -6,17 +6,7 @@ import styles from "./ingredient-item.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
 
-export default function IngredientItem({
-  ingredient,
-  count,
-  onClick,
-  onContextMenu,
-}) {
-  function openModal(e) {
-    e.preventDefault();
-    onContextMenu(ingredient);
-  }
-
+export default function IngredientItem({ ingredient, count, onClick }) {
   const id = ingredient._id;
 
   const [, useRef] = useDrag({
@@ -29,7 +19,6 @@ export default function IngredientItem({
 
   return (
     <li
-      onContextMenu={(e) => openModal(e)}
       onClick={() => onClick(ingredient)}
       className={styles.ingredient}
       draggable={true}

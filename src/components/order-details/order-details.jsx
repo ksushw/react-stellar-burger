@@ -3,9 +3,9 @@ import done from "../../images/done.png";
 import { useSelector } from "react-redux";
 export default function OrderDetails() {
   const { order, orderRequest, orderFailed } = useSelector((store) => ({
-    order: store.ingridientReducer.order,
-    orderRequest: store.ingridientReducer.orderRequest,
-    orderFailed: store.ingridientReducer.orderFailed,
+    order: store.orderReducer.order,
+    orderRequest: store.orderReducer.orderRequest,
+    orderFailed: store.orderReducer.orderFailed,
   }));
 
   return (

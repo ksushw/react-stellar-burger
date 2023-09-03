@@ -21,16 +21,16 @@ import {
   ADD_FILLING,
   CHANGE_BUN,
   EDIT_ORDER_DND,
-} from "../../services/actions/action";
+} from "../../services/actions/constructor";
 import { useDrop } from "react-dnd";
 export default function BurgerConstructor() {
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
   const { items, price, filling, bun } = useSelector(
     (store) => ({
-      price: store.ingridientReducer.price,
-      bun: store.ingridientReducer.bun,
-      filling: store.ingridientReducer.fillings,
+      price: store.constructorReducer.price,
+      bun: store.constructorReducer.bun,
+      filling: store.constructorReducer.fillings,
       items: store.ingridientReducer.items,
     }),
     shallowEqual,
@@ -78,7 +78,6 @@ export default function BurgerConstructor() {
         ],
       }),
     );
-    console.log(order);
     dispatch({ type: EDIT_ORDER_DND, order: order });
   }, []);
   return (
