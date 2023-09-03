@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import { ingridientReducer } from "./ingridients";
+import { ingredientReducer } from "./ingredients";
 import { constructorReducer } from "./constructor";
 import { orderReducer } from "./order";
 import { infoPopupReducer } from "./infoPopup";
 
 export const rootReducer = combineReducers({
-  ingridientReducer,
+  ingredientReducer,
   constructorReducer,
   orderReducer,
   infoPopupReducer,

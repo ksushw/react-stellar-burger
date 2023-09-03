@@ -3,7 +3,7 @@ import { ItemTypes } from "./ItemTypes";
 import { useRef } from "react";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function DradAndDropWrapper({
+export default function DragAndDropWrapper({
   children,
   id,
   index,

@@ -3,20 +3,20 @@ import { ingredientPropType } from "../../utils/prop-types";
 import { useSelector } from "react-redux";
 
 export default function IngredientDetails() {
-  const ingridient = useSelector(
+  const ingredient = useSelector(
     (store) => store.infoPopupReducer.selectedOrderPopupIng,
   );
   return (
     <>
-      {ingridient && (
+      {ingredient && (
         <>
           <img
-            src={ingridient.image_large}
-            alt={ingridient.name}
+            src={ingredient.image_large}
+            alt={ingredient.name}
             className="mb-4"
           />
           <p className={styles.title + "text text_type_main-medium mb-8"}>
-            {ingridient.name}
+            {ingredient.name}
           </p>
           <div className={styles.nutrients}>
             <div>
@@ -29,7 +29,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingridient.calories}
+                {ingredient.calories}
               </p>
             </div>
             <div>
@@ -42,7 +42,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingridient.proteins}
+                {ingredient.proteins}
               </p>
             </div>
             <div>
@@ -55,7 +55,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingridient.fat}
+                {ingredient.fat}
               </p>
             </div>
             <div>
@@ -68,7 +68,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingridient.carbohydrates}
+                {ingredient.carbohydrates}
               </p>
             </div>
           </div>
@@ -79,5 +79,5 @@ export default function IngredientDetails() {
 }
 
 IngredientDetails.propTypes = {
-  ingridient: ingredientPropType,
+  ingredient: ingredientPropType,
 };

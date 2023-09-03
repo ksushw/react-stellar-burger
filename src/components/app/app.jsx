@@ -4,14 +4,14 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { getIngridients } from "../../services/actions/ingridients";
+import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getIngridients());
+    dispatch(getIngredients());
   }, []);
   return (
     <DndProvider backend={HTML5Backend}>

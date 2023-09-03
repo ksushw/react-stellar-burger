@@ -16,7 +16,7 @@ const _getResponseData = (res) => {
   return res.json();
 };
 
-export function getIngridients() {
+export function getIngredients() {
   return function (dispatch) {
     dispatch({
       type: GET_ITEMS_REQUEST,

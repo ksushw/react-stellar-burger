@@ -10,7 +10,7 @@ export default function IngredientItem({ ingredient, count, onClick }) {
   const id = ingredient._id;
 
   const [, useRef] = useDrag({
-    type: "ingridientItem",
+    type: "ingredientItem",
     item: { id },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),

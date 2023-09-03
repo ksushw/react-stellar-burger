@@ -5,7 +5,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import DradAndDropWrapper from "../dradAndDropWrapper/dradAndDropWrapper";
+import DragAndDropWrapper from "../DragAndDropWrapper/DragAndDropWrapper";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import update from "immutability-helper";
@@ -31,7 +31,7 @@ export default function BurgerConstructor() {
       price: store.constructorReducer.price,
       bun: store.constructorReducer.bun,
       filling: store.constructorReducer.fillings,
-      items: store.ingridientReducer.items,
+      items: store.ingredientReducer.items,
     }),
     shallowEqual,
   );
@@ -43,7 +43,7 @@ export default function BurgerConstructor() {
   }, [filling]);
 
   const [, dropTarget] = useDrop({
-    accept: "ingridientItem",
+    accept: "ingredientItem",
     drop(item) {
       handleDrop(item);
     },
@@ -62,13 +62,13 @@ export default function BurgerConstructor() {
 
   const makeOrder = async () => {
     const orderIds = [bun._id];
-    filling.map((ingridient) => orderIds.push(ingridient._id));
+    filling.map((ingredient) => orderIds.push(ingredient._id));
     dispatch(sendOrder(orderIds));
     setVisibleOrderDetails(true);
     dispatch({ type: REMOVE_FILLING });
   };
 
-  function removeIngridient(ingredient, index) {
+  function removeIngredient(ingredient, index) {
     dispatch({ type: DELETE_FILLING, index: index, price: ingredient.price });
   }
   const moveCard = useCallback(
@@ -109,7 +109,7 @@ export default function BurgerConstructor() {
             {order.map((ingredient, index) => {
               return (
                 <li key={index}>
-                  <DradAndDropWrapper
+                  <DragAndDropWrapper
                     id={ingredient._id}
                     index={index}
                     className={styles.ingredient}
@@ -122,9 +122,9 @@ export default function BurgerConstructor() {
                       price={ingredient.price}
                       thumbnail={ingredient.image}
                       extraClass={styles.element}
-                      handleClose={() => removeIngridient(ingredient, index)}
+                      handleClose={() => removeIngredient(ingredient, index)}
                     />
-                  </DradAndDropWrapper>
+                  </DragAndDropWrapper>
                 </li>
               );
             })}

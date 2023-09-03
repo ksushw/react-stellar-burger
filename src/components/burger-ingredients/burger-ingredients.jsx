@@ -21,9 +21,9 @@ export default function BurgerIngredients() {
     (store) => ({
       bun: store.constructorReducer.bun,
       filling: store.constructorReducer.fillings,
-      items: store.ingridientReducer.items,
-      itemsRequest: store.ingridientReducer.itemsRequest,
-      itemsFailed: store.ingridientReducer.itemsFailed,
+      items: store.ingredientReducer.items,
+      itemsRequest: store.ingredientReducer.itemsRequest,
+      itemsFailed: store.ingredientReducer.itemsFailed,
     }),
     shallowEqual,
   );
