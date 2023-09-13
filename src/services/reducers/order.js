@@ -27,9 +27,7 @@ export const orderReducer = (state = initialState, action) => {
     }
     case SEND_ORDER_FAILED: {
       return {
-        ...state,
-        order: initialState.order,
-        orderRequest: false,
+        ...initialState,
         orderFailed: true,
       };
     }
