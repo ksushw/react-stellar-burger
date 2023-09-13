@@ -5,74 +5,115 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import DradAndDropWrapper from "../dradAndDropWrapper/dradAndDropWrapper";
+import DragAndDropWrapper from "../DragAndDropWrapper/DragAndDropWrapper";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
+import update from "immutability-helper";
 
-import { useContext, useState } from "react";
+import { useState, useCallback, useEffect } from "react";
+
+import { sendOrder } from "../../services/actions/order";
+
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
-  TotalPriceContext,
-  OrderContext,
-  MakedOrderContext,
-} from "../../services/appContext";
-
-import { sendOrder } from "../../utils/api";
-
+  REMOVE_FILLING,
+  DELETE_FILLING,
+  ADD_FILLING,
+  CHANGE_BUN,
+  EDIT_ORDER_DND,
+} from "../../services/actions/constructor";
+import { useDrop } from "react-dnd";
 export default function BurgerConstructor() {
-  const { price, setPrice } = useContext(TotalPriceContext);
-  const { order, setOrder } = useContext(OrderContext);
-
-  const { setOrderInfo } = useContext(MakedOrderContext);
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
-  const makeOrder = async () => {
-    const orderIds = [order.bun._id];
-    order.filling.map((ingridient) => orderIds.push(ingridient._id));
-    const orderInfo = await sendOrder(orderIds);
-    setOrderInfo({ ...orderInfo });
-    setVisibleOrderDetails(true);
-    setOrder({
-      ...order,
-      filling: [],
-    });
+  const { items, price, filling, bun } = useSelector(
+    (store) => ({
+      price: store.constructorReducer.price,
+      bun: store.constructorReducer.bun,
+      filling: store.constructorReducer.fillings,
+      items: store.ingredientReducer.items,
+    }),
+    shallowEqual,
+  );
+
+  const [order, setOrder] = useState([]);
+
+  useEffect(() => {
+    setOrder(filling);
+  }, [filling]);
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredientItem",
+    drop(item) {
+      handleDrop(item);
+    },
+  });
+
+  const handleDrop = (item) => {
+    const newIngredient = items.filter((element) => element._id == item.id)[0];
+    if (newIngredient.type === "bun") {
+      dispatch({ type: CHANGE_BUN, bun: newIngredient });
+    } else {
+      dispatch({ type: ADD_FILLING, item: newIngredient });
+    }
   };
 
-  function removeIngridient(ingredient, index) {
-    const newFilling = Object.assign([], order.filling);
-    newFilling.splice(index, 1);
-    setOrder({
-      ...order,
-      filling: newFilling,
-    });
-    setPrice({ type: "minus", price: ingredient.price });
+  const dispatch = useDispatch();
+
+  const makeOrder = async () => {
+    const orderIds = [bun._id];
+    filling.map((ingredient) => orderIds.push(ingredient._id));
+    dispatch(sendOrder(orderIds));
+    setVisibleOrderDetails(true);
+    dispatch({ type: REMOVE_FILLING });
+  };
+
+  function removeIngredient(ingredient, index) {
+    dispatch({ type: DELETE_FILLING, index: index, price: ingredient.price });
   }
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      setOrder((prevCards) =>
+        update(prevCards, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevCards[dragIndex]],
+          ],
+        }),
+      );
+      dispatch({ type: EDIT_ORDER_DND, order: order });
+    },
+    [order],
+  );
 
   return (
     <section
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
+      ref={dropTarget}
     >
       <div className={styles.order}>
-        {order.bun && (
+        {bun && (
           <div className={styles.bun}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${order.bun.name} (верх)`}
-              price={order.bun.price}
-              thumbnail={order.bun.image}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
               extraClass={styles.element}
             />
           </div>
         )}
-        {order.filling && (
+        {order && (
           <ul className={styles.fill + " custom-scroll"}>
-            {order.filling.map((ingredient, index) => {
+            {order.map((ingredient, index) => {
               return (
                 <li key={index}>
-                  <DradAndDropWrapper
-                    id={index}
+                  <DragAndDropWrapper
+                    id={ingredient._id}
                     index={index}
                     className={styles.ingredient}
+                    moveCard={moveCard}
                   >
                     <ConstructorElement
                       type={ingredient.type}
@@ -81,23 +122,23 @@ export default function BurgerConstructor() {
                       price={ingredient.price}
                       thumbnail={ingredient.image}
                       extraClass={styles.element}
-                      handleClose={() => removeIngridient(ingredient, index)}
+                      handleClose={() => removeIngredient(ingredient, index)}
                     />
-                  </DradAndDropWrapper>
+                  </DragAndDropWrapper>
                 </li>
               );
             })}
           </ul>
         )}
 
-        {order.bun && (
+        {bun && (
           <div className={styles.bun}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${order.bun.name} (низ)`}
-              price={order.bun.price}
-              thumbnail={order.bun.image}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
               extraClass={styles.element}
             />
           </div>

@@ -4,6 +4,7 @@
   align-items: center;
   gap: 8px;
   position: relative;
+  background-color: transparent;
 }
 
 .price {

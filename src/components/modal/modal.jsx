@@ -4,12 +4,6 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 export default function Modal({ children, title = "", visible, setVisible }) {
-  function closeByEscape(e) {
-    if (e.key === "Escape") {
-      close();
-    }
-  }
-
   useEffect(() => {
     if (visible) {
       document.addEventListener("keyup", closeByEscape);
@@ -22,6 +16,12 @@ export default function Modal({ children, title = "", visible, setVisible }) {
   function close() {
     setVisible(false);
     document.removeEventListener("keyup", closeByEscape);
+  }
+
+  function closeByEscape(e) {
+    if (e.key === "Escape") {
+      close();
+    }
   }
 
   return (
