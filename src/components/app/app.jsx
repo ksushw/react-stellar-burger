@@ -8,6 +8,8 @@ import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -15,15 +17,24 @@ function App() {
   }, []);
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className={styles.app} id="app">
-        <AppHeader />
-        <pre className={styles.container}>
-          <main className={styles.main}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </pre>
-      </div>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className={styles.app} id="app">
+                <AppHeader />
+                <pre className={styles.container}>
+                  <main className={styles.main}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                  </main>
+                </pre>
+              </div>
+            }
+          />
+        </Routes>
+      </Router>
     </DndProvider>
   );
 }
