@@ -24,3 +24,7 @@
 .profile {
   align-self: flex-end;
 }
+
+.logo {
+  translate: -85.5px;
+}
