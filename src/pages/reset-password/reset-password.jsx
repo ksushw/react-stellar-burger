@@ -6,36 +6,68 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { resetPassvordApi } from "../../components/api/api";
+
+function sdfg(e, setFunction) {
+  setFunction(e.target.value);
+}
 
 export default function ResetPassword() {
-  function sdfg(e) {
-    console.log(e);
+  const [newPassword, setNewPassword] = useState("");
+  const [code, setcode] = useState("");
+
+  async function addNewPassword(event) {
+    event.preventDefault();
+    resetPassvordApi(newPassword, code);
   }
+
+  // function reg() {
+  //   fetch("https://norma.nomoreparties.space/api/auth/register", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: "xenianevarenyh@yandex.ru",
+  //       password: "password",
+  //       name: "Username",
+  //     }),
+  //   }).then((res) => {
+  //     console.log(res);
+  //   });
+  // }
+
+  // useEffect(() => {
+  //   reg();
+  // }, []);
+
   return (
     <>
       <AppHeader></AppHeader>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
-        <form className={styles.form + " mb-20"}>
+        <form className={styles.form + " mb-20"} onSubmit={addNewPassword}>
           <PasswordInput
-            onChange={sdfg}
+            onChange={(e) => sdfg(e, setNewPassword)}
             placeholder="Введите новый пароль"
-            // value=""
             name={"password"}
             extraClass="mt-6"
+            value={newPassword}
           />
           <Input
             type={"text"}
-            placeholder="Введите новый пароль"
-            onChange={sdfg}
+            placeholder="Введите код из письма"
+            onChange={(e) => sdfg(e, setcode)}
             name={"name"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
             extraClass="mt-6"
+            value={code}
           />
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="medium"
             extraClass="mt-6"

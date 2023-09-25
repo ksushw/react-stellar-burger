@@ -5,32 +5,56 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { autorizationRequest } from "../../services/actions/registration";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
+function sdfg(e, setFunction) {
+  setFunction(e.target.value);
+}
 export default function Login() {
-  function sdfg(e) {
-    console.log(e);
+  const [email, setNewEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { user, refreshToken } = useSelector(
+    (store) => store.regisrationReducer,
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  async function makeRegistration(event) {
+    event.preventDefault();
+    dispatch(autorizationRequest(email, password));
   }
+
+  useEffect(() => {
+    if (refreshToken !== "") {
+      navigate("/");
+    }
+  }, [refreshToken]);
   return (
     <>
       <AppHeader></AppHeader>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Вход</p>
-        <form className={styles.form + " mb-20"}>
+        <form className={styles.form + " mb-20"} onSubmit={makeRegistration}>
           <EmailInput
-            onChange={sdfg}
+            onChange={(e) => sdfg(e, setNewEmail)}
             name={"email"}
             isIcon={false}
             extraClass="mt-6"
+            value={email}
           />
           <PasswordInput
-            onChange={sdfg}
-            // value=""
+            onChange={(e) => sdfg(e, setPassword)}
+            value={password}
             name={"password"}
             extraClass="mt-6"
           />
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="medium"
             extraClass="mt-6"

@@ -18,7 +18,6 @@
   display: flex;
   cursor: pointer;
   text-decoration: none;
-  color: white;
 }
 
 .profile {
@@ -27,4 +26,8 @@
 
 .logo {
   translate: -85.5px;
+}
+
+.active {
+  color: white;
 }

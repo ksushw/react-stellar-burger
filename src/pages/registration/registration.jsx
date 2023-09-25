@@ -6,37 +6,73 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./registration.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { registrationRequest } from "../../services/actions/registration";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+
+function sdfg(e, setFunction) {
+  setFunction(e.target.value);
+}
 
 export default function Registration() {
-  function sdfg(e) {
-    console.log(e);
+  const [email, setNewEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  const dispatch = useDispatch();
+
+  async function makeRegistration(event) {
+    event.preventDefault();
+    dispatch(registrationRequest(email, password, name));
   }
+
+  const { user, refreshToken } = useSelector(
+    (store) => store.regisrationReducer,
+  );
+
+  console.log(user);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (refreshToken !== "") {
+      navigate("/");
+    }
+  }, [refreshToken]);
+
   return (
     <>
       <AppHeader></AppHeader>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Регистрация</p>
-        <form className={styles.form + " mb-20"}>
+        <form className={styles.form + " mb-20"} onSubmit={makeRegistration}>
           <Input
             type={"text"}
             placeholder={"Имя"}
-            onChange={sdfg}
+            onChange={(e) => sdfg(e, setName)}
             name={"name"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
             extraClass="mt-6"
+            value={name}
           />
           <EmailInput
-            onChange={sdfg}
+            onChange={(e) => sdfg(e, setNewEmail)}
             name={"email"}
             isIcon={false}
             extraClass="mt-6"
+            value={email}
           />
-          <PasswordInput onChange={sdfg} name={"password"} extraClass="mt-6" />
+          <PasswordInput
+            onChange={(e) => sdfg(e, setPassword)}
+            name={"password"}
+            extraClass="mt-6"
+            value={password}
+          />
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="medium"
             extraClass="mt-6"
