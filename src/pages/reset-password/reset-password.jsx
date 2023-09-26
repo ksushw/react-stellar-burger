@@ -5,7 +5,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { resetPassvordApi } from "../../components/api/api";
 
@@ -16,10 +16,13 @@ function sdfg(e, setFunction) {
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [code, setcode] = useState("");
-
+  const navigate = useNavigate();
   async function addNewPassword(event) {
     event.preventDefault();
-    resetPassvordApi(newPassword, code);
+    const res = await resetPassvordApi(newPassword, code);
+    if (res) {
+      navigate("/");
+    }
   }
 
   // function reg() {

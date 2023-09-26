@@ -2,6 +2,9 @@ import {
   REGISTRATION_REQUEST,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILED,
+  REGISTRATION_OUT,
+  REFRESH,
+  REFRESH_FAILED,
 } from "../actions/registration";
 
 const initialState = {
@@ -33,6 +36,25 @@ export const regisrationReducer = (state = initialState, action) => {
       return {
         ...initialState,
         autorizationFailed: true,
+      };
+    }
+    case REGISTRATION_OUT: {
+      return {
+        ...initialState,
+      };
+    }
+    case REFRESH: {
+      return {
+        ...state,
+        accessToken: action.data.accessToken,
+        refreshToken: action.data.refreshToken,
+      };
+    }
+    case REFRESH_FAILED: {
+      return {
+        ...state,
+        accessToken: "",
+        refreshToken: "",
       };
     }
     default: {

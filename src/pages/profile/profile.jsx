@@ -3,14 +3,31 @@ import {
   EmailInput,
   PasswordInput,
   Input,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logOut } from "../../components/api/api";
+import { REGISTRATION_OUT } from "../../services/actions/registration";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Profile() {
   function sdfg(e) {
     console.log(e);
   }
+  const navigate = useNavigate();
+  const { refreshToken, user } = useSelector(
+    (store) => store.regisrationReducer,
+  );
+  const dispatch = useDispatch();
+  async function logout(e) {
+    const res = await logOut(refreshToken);
+    if (res) {
+      dispatch({ type: REGISTRATION_OUT });
+      navigate("/login");
+    }
+  }
+
   return (
     <>
       <AppHeader></AppHeader>
@@ -37,11 +54,11 @@ export default function Profile() {
           </Link>
 
           <Link
-            to="/login"
             className={
               styles.link +
               " text text_type_main-medium text_color_inactive pt-4 pb-4"
             }
+            onClick={(e) => logout(e)}
           >
             Выход
           </Link>
@@ -59,7 +76,7 @@ export default function Profile() {
           <Input
             type={"text"}
             placeholder="Имя"
-            value="vladimir"
+            value={user.name}
             onChange={sdfg}
             name={"name"}
             error={false}
@@ -69,7 +86,7 @@ export default function Profile() {
           />
           <EmailInput
             onChange={sdfg}
-            value={"mail@stellar.burgers"}
+            value={user.email}
             name={"email"}
             placeholder="Логин"
             isIcon={true}

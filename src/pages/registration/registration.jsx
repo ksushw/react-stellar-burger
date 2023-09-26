@@ -31,8 +31,6 @@ export default function Registration() {
     (store) => store.regisrationReducer,
   );
 
-  console.log(user);
-
   const navigate = useNavigate();
 
   useEffect(() => {
