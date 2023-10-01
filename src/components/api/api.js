@@ -1,5 +1,9 @@
 import { _getResponseData } from "../../utils/get-response-data";
 import { config } from "../../utils/config";
+import { getCookie } from "../../utils/getCookie";
+import { errorHandler } from "../../utils/erorHandler";
+
+errorHandler();
 
 export async function resetPassvordApi(newPassword, code) {
   return fetch(`${config.baseUrl}/password-reset/reset`, {
@@ -23,12 +27,12 @@ export async function resetPassvordApi(newPassword, code) {
     });
 }
 
-export async function logOut(token) {
+export async function logOut() {
   return fetch(`${config.baseUrl}/auth/logout`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
-      token: token,
+      token: getCookie("refreshToken"),
     }),
   })
     .then(_getResponseData)
@@ -38,6 +42,21 @@ export async function logOut(token) {
       } else {
         return false;
       }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export async function userInfoRequest() {
+  return window
+    .fetchAuth(`${config.baseUrl}/auth/user`, {
+      method: "GET",
+      headers: config.headers,
+    })
+    .then(_getResponseData)
+    .then((res) => {
+      return res.user;
     })
     .catch((err) => {
       console.log(err);

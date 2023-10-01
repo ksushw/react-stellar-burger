@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { resetPassvordApi } from "../../components/api/api";
 
 function sdfg(e, setFunction) {
@@ -24,26 +24,6 @@ export default function ResetPassword() {
       navigate("/");
     }
   }
-
-  // function reg() {
-  //   fetch("https://norma.nomoreparties.space/api/auth/register", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email: "xenianevarenyh@yandex.ru",
-  //       password: "password",
-  //       name: "Username",
-  //     }),
-  //   }).then((res) => {
-  //     console.log(res);
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   reg();
-  // }, []);
 
   return (
     <>

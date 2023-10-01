@@ -1,12 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../utils/getCookie";
+import { setCookie } from "../../utils/setCookie";
 
 export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const REGISTRATION_OUT = "REGISTRATION_OUT";
-
-export const REFRESH = "REFRESH";
-export const REFRESH_FAILED = "REFRESH_FAILED";
 
 const config = {
   baseUrl: "https://norma.nomoreparties.space/api",
@@ -43,41 +41,11 @@ export function registrationRequest(email, password, name) {
             type: REGISTRATION_SUCCESS,
             data: res,
           });
-        } else {
-          dispatch({
-            type: REGISTRATION_FAILED,
-            message: res.message,
+          setCookie("accessToken", res.accessToken.replace(/Bearer /, ""), {
+            expires: 60 * 19,
           });
-        }
-      })
-      .catch((err) => {
-        dispatch({
-          type: REGISTRATION_FAILED,
-        });
-        console.error(err);
-      });
-  };
-}
-
-export function autorizationReques(email, password) {
-  return function (dispatch) {
-    dispatch({
-      type: REGISTRATION_REQUEST,
-    });
-    fetch(`${config.baseUrl}/auth/login`, {
-      method: "POST",
-      headers: config.headers,
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then(_getResponseData)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch({
-            type: REGISTRATION_SUCCESS,
-            data: res,
+          setCookie("refreshToken", res.refreshToken, {
+            expires: 60 * 60 * 24 * 30,
           });
         } else {
           dispatch({
@@ -115,6 +83,13 @@ export function autorizationRequest(email, password) {
             type: REGISTRATION_SUCCESS,
             data: res,
           });
+
+          setCookie("accessToken", res.accessToken.replace(/Bearer /, ""), {
+            expires: 60 * 19,
+          });
+          setCookie("refreshToken", res.refreshToken, {
+            expires: 60 * 60 * 24 * 30,
+          });
         } else {
           dispatch({
             type: REGISTRATION_FAILED,
@@ -131,33 +106,28 @@ export function autorizationRequest(email, password) {
   };
 }
 
-export function refreshToken(reToken) {
-  return function (dispatch) {
-    fetch(`${config.baseUrl}/auth/token`, {
-      method: "POST",
-      headers: config.headers,
-      body: JSON.stringify({
-        token: reToken,
-      }),
-    })
-      .then(_getResponseData)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch({
-            type: REFRESH,
-            data: res,
-          });
-        } else {
-          dispatch({
-            type: REFRESH_FAILED,
-          });
-        }
-      })
-      .catch((err) => {
-        dispatch({
-          type: REFRESH_FAILED,
+export async function refreshToken() {
+  const res = await fetch(`${config.baseUrl}/auth/token`, {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      token: getCookie("refreshToken"),
+    }),
+  })
+    .then(_getResponseData)
+    .then((res) => {
+      if (res && res.success) {
+        setCookie("accessToken", res.accessToken.replace(/Bearer /, ""), {
+          expires: 60 * 19,
         });
-        console.error(err);
-      });
-  };
+        setCookie("refreshToken", res.refreshToken, {
+          expires: 60 * 60 * 24 * 30,
+        });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  return res;
 }

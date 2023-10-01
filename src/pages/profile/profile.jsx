@@ -3,29 +3,38 @@ import {
   EmailInput,
   PasswordInput,
   Input,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { logOut } from "../../components/api/api";
+import { useDispatch } from "react-redux";
+import { useProvideAuth } from "../../components/useAuth/useAuth";
+import { userInfoRequest } from "../../components/api/api";
 import { REGISTRATION_OUT } from "../../services/actions/registration";
-import { useDispatch, useSelector } from "react-redux";
 
 export default function Profile() {
+  const [user, setUser] = useState({ name: "", email: "" });
+
+  async function getData() {
+    const user = await userInfoRequest();
+    setUser(user);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   function sdfg(e) {
-    console.log(e);
+    setUser(e.target.value);
   }
   const navigate = useNavigate();
-  const { refreshToken, user } = useSelector(
-    (store) => store.regisrationReducer,
-  );
+
+  const { signOut } = useProvideAuth();
+
   const dispatch = useDispatch();
-  async function logout(e) {
-    const res = await logOut(refreshToken);
-    if (res) {
-      dispatch({ type: REGISTRATION_OUT });
-      navigate("/login");
-    }
+  async function logout() {
+    await signOut();
+    navigate("/login", { replace: "false" });
   }
 
   return (
@@ -94,7 +103,7 @@ export default function Profile() {
           />
           <PasswordInput
             onChange={sdfg}
-            value={"********"}
+            value="********"
             name={"password"}
             icon="EditIcon"
             extraClass="mt-6"

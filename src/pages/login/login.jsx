@@ -7,8 +7,8 @@ import {
 import styles from "./login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { autorizationRequest } from "../../services/actions/registration";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector } from "react-redux";
+import { useProvideAuth } from "../../components/useAuth/useAuth";
 
 function sdfg(e, setFunction) {
   setFunction(e.target.value);
@@ -17,23 +17,22 @@ export default function Login() {
   const [email, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, refreshToken } = useSelector(
-    (store) => store.regisrationReducer,
-  );
+  const { user } = useSelector((store) => store.regisrationReducer);
 
-  const dispatch = useDispatch();
+  const { signIn } = useProvideAuth();
+
   const navigate = useNavigate();
 
   async function makeRegistration(event) {
     event.preventDefault();
-    dispatch(autorizationRequest(email, password));
+    signIn(email, password);
   }
 
   useEffect(() => {
-    if (refreshToken !== "") {
-      navigate("/");
+    if (user.name) {
+      navigate("/", { replace: "false" });
     }
-  }, [refreshToken]);
+  }, [user, navigate]);
   return (
     <>
       <AppHeader></AppHeader>
