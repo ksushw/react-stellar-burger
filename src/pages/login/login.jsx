@@ -5,7 +5,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useProvideAuth } from "../../components/useAuth/useAuth";
@@ -17,7 +17,7 @@ export default function Login() {
   const [email, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user } = useSelector((store) => store.regisrationReducer);
+  const { user, isAuth } = useSelector((store) => store.regisrationReducer);
 
   const { signIn } = useProvideAuth();
 
@@ -33,7 +33,15 @@ export default function Login() {
       navigate("/", { replace: "false" });
     }
   }, [user, navigate]);
-  return (
+
+  useEffect(() => {
+    if (isAuth) {
+      return <Navigate to="/" replace />;
+    }
+  }, [isAuth]);
+  return isAuth ? (
+    <Navigate to="/" replace />
+  ) : (
     <>
       <AppHeader></AppHeader>
       <div className={styles.container}>
@@ -63,13 +71,13 @@ export default function Login() {
         </form>
         <p className="text text_type_main-default text_color_inactive">
           Вы — новый пользователь?
-          <Link className="ml-2" to="/registration">
+          <Link className="ml-2" to="registration">
             Зарегистрироваться
           </Link>
         </p>
         <p className="text text_type_main-default text_color_inactive">
           Забыли пароль?
-          <Link className="ml-2 mt-1" to="/fogote-password">
+          <Link className="ml-2 mt-1" to="fogote-password">
             Восстановить пароль
           </Link>
         </p>

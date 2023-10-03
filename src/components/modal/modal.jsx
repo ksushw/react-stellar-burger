@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-
+import { createPortal } from "react-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 export default function Modal({ children, title = "", visible, setVisible }) {
   useEffect(() => {
     if (visible) {
@@ -12,9 +13,13 @@ export default function Modal({ children, title = "", visible, setVisible }) {
       document.removeEventListener("keyup", closeByEscape);
     };
   }, [visible]);
-
+  const navigate = useNavigate();
   function close() {
-    setVisible(false);
+    if (setVisible) {
+      setVisible(false);
+    }
+
+    navigate("/");
     document.removeEventListener("keyup", closeByEscape);
   }
 
@@ -26,18 +31,20 @@ export default function Modal({ children, title = "", visible, setVisible }) {
 
   return (
     <>
-      {visible && (
-        <>
-          <ModalOverlay onClick={close} />
-          <div className={styles.modal}>
-            <div className={styles.title}>
-              <h2 className="text text_type_main-large">{title}</h2>
-              <CloseIcon type="primary" onClick={close} />
+      {visible &&
+        createPortal(
+          <>
+            <ModalOverlay onClick={close} />
+            <div className={styles.modal}>
+              <div className={styles.title}>
+                <h2 className="text text_type_main-large">{title}</h2>
+                <CloseIcon type="primary" onClick={close} />
+              </div>
+              {children}
             </div>
-            {children}
-          </div>
-        </>
-      )}
+          </>,
+          document.body,
+        )}
     </>
   );
 }

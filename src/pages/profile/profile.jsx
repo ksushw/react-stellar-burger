@@ -3,35 +3,69 @@ import {
   EmailInput,
   PasswordInput,
   Input,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useProvideAuth } from "../../components/useAuth/useAuth";
-import { userInfoRequest } from "../../components/api/api";
-import { REGISTRATION_OUT } from "../../services/actions/registration";
+import {
+  userInfoRequest,
+  userInfoChangeRequest,
+} from "../../components/api/api";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { REGISTRATION_SET_DATA } from "../../services/actions/registration";
 
 export default function Profile() {
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [name, setName] = useState("email");
+  const [email, setEmail] = useState("email");
+  const [password, setPassword] = useState("");
+  const [isEdited, setIsEdited] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const { userData } = useSelector(
+    (store) => ({
+      userData: store.regisrationReducer.user,
+    }),
+    shallowEqual,
+  );
 
   async function getData() {
     const user = await userInfoRequest();
-    setUser(user);
+    dispatch({ type: REGISTRATION_SET_DATA, user: user });
+    setName(user.name);
+    setEmail(user.email);
   }
 
   useEffect(() => {
     getData();
   }, []);
 
-  function sdfg(e) {
-    setUser(e.target.value);
+  function sdfg(e, setter) {
+    setIsEdited(true);
+    setter(e.target.value);
   }
+
+  function reset() {
+    setName(userData.name);
+    setEmail(userData.email);
+    setIsEdited(false);
+  }
+
+  async function changeData(e) {
+    e.preventDefault();
+    const user = await userInfoChangeRequest({ name: name, email: email });
+    dispatch({ type: REGISTRATION_SET_DATA, user: user });
+    setName(user.name);
+    setEmail(user.email);
+    setIsEdited(false);
+  }
+
   const navigate = useNavigate();
 
   const { signOut } = useProvideAuth();
 
-  const dispatch = useDispatch();
   async function logout() {
     await signOut();
     navigate("/login", { replace: "false" });
@@ -81,12 +115,15 @@ export default function Profile() {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
-        <form className={styles.form + " mb-20"}>
+        <form
+          className={styles.form + " mb-20"}
+          onSubmit={(e) => changeData(e)}
+        >
           <Input
             type={"text"}
             placeholder="Имя"
-            value={user.name}
-            onChange={sdfg}
+            value={name}
+            onChange={(e) => sdfg(e, setName)}
             name={"name"}
             error={false}
             errorText={"Ошибка"}
@@ -94,20 +131,35 @@ export default function Profile() {
             icon="EditIcon"
           />
           <EmailInput
-            onChange={sdfg}
-            value={user.email}
+            onChange={(e) => sdfg(e, setEmail)}
+            value={email}
             name={"email"}
             placeholder="Логин"
             isIcon={true}
             extraClass="mt-6"
           />
           <PasswordInput
-            onChange={sdfg}
-            value="********"
+            onChange={(e) => sdfg(e, setPassword)}
+            value={password}
             name={"password"}
             icon="EditIcon"
             extraClass="mt-6"
           />
+          {isEdited && (
+            <div className="mt-6">
+              <Button
+                type="secondary"
+                size="medium"
+                htmlType="reset"
+                onClick={reset}
+              >
+                Отмена
+              </Button>
+              <Button type="primary" size="medium" htmlType="submit">
+                Сохранить
+              </Button>
+            </div>
+          )}
         </form>
       </div>
     </>

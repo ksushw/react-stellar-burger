@@ -17,7 +17,9 @@ import ResetPassword from "../../pages/reset-password/reset-password";
 import History from "../../pages/history/history";
 import Profile from "../../pages/profile/profile";
 import Feed from "../../pages/feed/feed";
-
+import Modal from "../../components/modal/modal";
+import IngredientDetails from "../ingredients-details/ingredients-details";
+import { ProtectedRouteElement } from "../protected-route/protected-route";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,20 +38,38 @@ function App() {
                   <AppHeader />
                   <pre className={styles.container}>
                     <main className={styles.main}>
-                      <BurgerIngredients />
+                      <BurgerIngredients path="ingridients"></BurgerIngredients>
                       <BurgerConstructor />
                     </main>
                   </pre>
                 </div>
               }
-            />
+            >
+              <Route
+                path=":ingridientId"
+                element={
+                  <Modal title="Детали ингредиента" visible={true}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+            </Route>
             <Route path="/login" element={<Login />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/fogote-password" element={<FogotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/orders" element={<History />} />
-            <Route path="/feed" element={<Feed />} />
+            <Route path="/login/registration" element={<Registration />} />
+            <Route path="/login/fogote-password" element={<FogotPassword />} />
+            <Route path="/login/reset-password" element={<ResetPassword />} />
+            <Route
+              path="/profile"
+              element={<ProtectedRouteElement element={<Profile />} />}
+            />
+            <Route
+              path="/profile/orders"
+              element={<ProtectedRouteElement element={<History />} />}
+            />
+            <Route
+              path="/feed"
+              element={<ProtectedRouteElement element={<Feed />} />}
+            />
           </Routes>
         </Router>
       </pre>

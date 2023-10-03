@@ -9,11 +9,9 @@ import { autorizationRequest } from "../../services/actions/registration";
 export function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const { refreshToken, userData } = useSelector(
+  const { userData } = useSelector(
     (store) => ({
-      refreshToken: store.regisrationReducer.refreshToken,
       userData: store.regisrationReducer.user,
-      accessToken: store.regisrationReducer.accessToken,
     }),
     shallowEqual,
   );
@@ -26,7 +24,7 @@ export function useProvideAuth() {
   };
 
   const signOut = async () => {
-    const res = await logOut(refreshToken);
+    const res = await logOut();
     if (res) {
       dispatch({ type: REGISTRATION_OUT });
       setCookie("accessToken", "", {

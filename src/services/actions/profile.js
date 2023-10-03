@@ -1,6 +1,7 @@
 export const RESTORE_PASSWORD_REQUEST = "RESTORE_PASSWORD_REQUEST";
 export const RESTORE_PASSWORD_SUCCESS = "RESTORE_PASSWORD_SUCCESS";
 export const RESTORE_PASSWORD_FAILED = "RESTORE_PASSWORD_FAILED";
+export const RESTORE_PASSWORD_CLEAN = "RESTORE_PASSWORD_CLEAN";
 
 const config = {
   baseUrl: "https://norma.nomoreparties.space/api",

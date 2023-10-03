@@ -10,15 +10,17 @@ import { useState, useEffect } from "react";
 
 import {
   profileDataChange,
-  RESTORE_PASSWORD_SUCCESS,
+  RESTORE_PASSWORD_CLEAN,
 } from "../../services/actions/profile";
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 export default function FogotPassword() {
   const [email, setEmail] = useState("");
-  const changePasswordMessage = useSelector(
-    (store) => store.changePasswordReducer.changePasswordMessage,
+  const { isPasswordChanged, changePasswordMessage } = useSelector(
+    (store) => ({
+      isPasswordChanged: store.changePasswordReducer.isPasswordChanged,
+    }),
     shallowEqual,
   );
   function changeEmail(e) {
@@ -33,14 +35,13 @@ export default function FogotPassword() {
   };
 
   useEffect(() => {
-    if (changePasswordMessage !== "") {
+    if (isPasswordChanged) {
       dispatch({
-        type: RESTORE_PASSWORD_SUCCESS,
-        message: "",
+        type: RESTORE_PASSWORD_CLEAN,
       });
-      navigate("/reset-password");
+      navigate("/login/reset-password", { replace: "true" });
     }
-  }, [changePasswordMessage]);
+  }, [isPasswordChanged]);
 
   return (
     <>

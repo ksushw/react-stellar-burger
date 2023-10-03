@@ -2,10 +2,12 @@ import {
   RESTORE_PASSWORD_REQUEST,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILED,
+  RESTORE_PASSWORD_CLEAN,
 } from "../actions/profile";
 
 const initialState = {
-  changePasswordMessage: "xuy",
+  changePasswordMessage: "",
+  isPasswordChanged: false,
   changePasswordRequest: false,
   changePasswordFailed: false,
 };
@@ -24,12 +26,18 @@ export const changePasswordReducer = (state = initialState, action) => {
         changePasswordMessage: action.message,
         changePasswordRequest: false,
         changePasswordFailed: false,
+        isPasswordChanged: true,
       };
     }
     case RESTORE_PASSWORD_FAILED: {
       return {
         ...initialState,
         orderFailed: true,
+      };
+    }
+    case RESTORE_PASSWORD_CLEAN: {
+      return {
+        ...initialState,
       };
     }
     default: {

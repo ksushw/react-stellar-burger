@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,6 +8,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
 import { CHANGE_BUN } from "../../services/actions/constructor";
 import { useEffect } from "react";
+import { Outlet, NavLink } from "react-router-dom";
 
 export default function BurgerIngredients() {
   const [visibleIngDetails, setVisibleIngDetails] = useState(false);
@@ -122,12 +122,18 @@ export default function BurgerIngredients() {
             <ul className={styles.division}>
               {buns.map((ingredient) => {
                 return (
-                  <IngredientItem
-                    ingredient={ingredient}
-                    key={ingredient._id}
-                    count={ingredient.name === bun.name && 1}
-                    onClick={openPopup}
-                  />
+                  <NavLink
+                    to={`/ingridients/${ingredient._id}`}
+                    className={styles.chat}
+                    activeClassName={styles.activeChat}
+                  >
+                    <IngredientItem
+                      ingredient={ingredient}
+                      key={ingredient._id}
+                      count={ingredient.name === bun.name && 1}
+                      onClick={openPopup}
+                    />
+                  </NavLink>
                 );
               })}
             </ul>
@@ -166,16 +172,17 @@ export default function BurgerIngredients() {
           </>
         )}
       </div>
-      {createPortal(
-        <Modal
-          title="Детали ингредиента"
-          visible={visibleIngDetails}
-          setVisible={setVisibleIngDetails}
-        >
-          <IngredientDetails />
-        </Modal>,
-        document.body,
-      )}
+      {/* {createPortal(  */}
+      <Outlet />
+      {/* <Modal
+        title="Детали ингредиента"
+        visible={visibleIngDetails}
+        setVisible={setVisibleIngDetails}
+      >
+        <IngredientDetails />
+      </Modal> */}
+      {/* , document.body */}
+      {/* )} */}
     </section>
   );
 }

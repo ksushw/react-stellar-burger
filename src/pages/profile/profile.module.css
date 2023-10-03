@@ -24,3 +24,10 @@
 .whiteText {
   color: white;
 }
+
+.form {
+  width: 480px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+}

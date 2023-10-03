@@ -5,9 +5,10 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { resetPassvordApi } from "../../components/api/api";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 function sdfg(e, setFunction) {
   setFunction(e.target.value);
@@ -17,6 +18,14 @@ export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [code, setcode] = useState("");
   const navigate = useNavigate();
+
+  // const { isPasswordChanged } = useSelector(
+  //   (store) => ({
+  //     isPasswordChanged: store.changePasswordReducer.isPasswordChanged,
+  //   }),
+  //   shallowEqual
+  // );
+
   async function addNewPassword(event) {
     event.preventDefault();
     const res = await resetPassvordApi(newPassword, code);
@@ -24,6 +33,10 @@ export default function ResetPassword() {
       navigate("/");
     }
   }
+
+  // if (!isPasswordChanged) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   return (
     <>

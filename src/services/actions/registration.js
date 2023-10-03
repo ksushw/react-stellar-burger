@@ -5,6 +5,7 @@ export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const REGISTRATION_OUT = "REGISTRATION_OUT";
+export const REGISTRATION_SET_DATA = "REGISTRATION_SET_DATA";
 
 const config = {
   baseUrl: "https://norma.nomoreparties.space/api",

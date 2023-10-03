@@ -27,17 +27,15 @@ export default function Registration() {
     dispatch(registrationRequest(email, password, name));
   }
 
-  const { user, refreshToken } = useSelector(
-    (store) => store.regisrationReducer,
-  );
+  const user = useSelector((store) => store.regisrationReducer.user);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (refreshToken !== "") {
+    if (user.name) {
       navigate("/");
     }
-  }, [refreshToken]);
+  }, [user]);
 
   return (
     <>

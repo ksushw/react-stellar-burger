@@ -9,9 +9,9 @@ export async function errorHandler() {
     if (!response.ok && (response.status === 404 || response.status === 403)) {
       await responseNewToken();
       response = await fetch(link, {
-        method: "GET",
+        ...config,
         headers: {
-          "Content-Type": "application/json",
+          ...config.headers,
           authorization: "Bearer " + getCookie("accessToken"),
         },
       });

@@ -3,10 +3,12 @@ import {
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILED,
   REGISTRATION_OUT,
+  REGISTRATION_SET_DATA,
 } from "../actions/registration";
 
 const initialState = {
   user: {},
+  isAuth: false,
   autorizationRequest: false,
   autorizationFailed: false,
 };
@@ -24,6 +26,13 @@ export const regisrationReducer = (state = initialState, action) => {
         ...state,
         user: action.data.user,
         autorizationRequest: false,
+        isAuth: true,
+      };
+    }
+    case REGISTRATION_SET_DATA: {
+      return {
+        ...state,
+        user: action.user,
       };
     }
     case REGISTRATION_FAILED: {
@@ -35,6 +44,7 @@ export const regisrationReducer = (state = initialState, action) => {
     case REGISTRATION_OUT: {
       return {
         ...initialState,
+        isAuth: false,
       };
     }
 

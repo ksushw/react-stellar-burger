@@ -62,3 +62,19 @@ export async function userInfoRequest() {
       console.log(err);
     });
 }
+
+export async function userInfoChangeRequest(info) {
+  return window
+    .fetchAuth(`${config.baseUrl}/auth/user`, {
+      method: "PATCH",
+      headers: config.headers,
+      body: JSON.stringify(info),
+    })
+    .then(_getResponseData)
+    .then((res) => {
+      return res.user;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

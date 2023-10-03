@@ -1,11 +1,13 @@
 import styles from "./ingredients-details.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
 import { useSelector } from "react-redux";
-
+import { createPortal } from "react-dom";
 export default function IngredientDetails() {
   const ingredient = useSelector(
     (store) => store.infoPopupReducer.selectedOrderPopupIng,
   );
+
+  console.log(ingredient);
   return (
     <>
       {ingredient && (
@@ -78,6 +80,6 @@ export default function IngredientDetails() {
   );
 }
 
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropType,
-};
+// IngredientDetails.propTypes = {
+//   ingredient: ingredientPropType,
+// };
