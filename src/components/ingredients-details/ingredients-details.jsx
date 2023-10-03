@@ -1,24 +1,33 @@
 import styles from "./ingredients-details.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { createPortal } from "react-dom";
+import { Outlet, NavLink, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 export default function IngredientDetails() {
-  const ingredient = useSelector(
-    (store) => store.infoPopupReducer.selectedOrderPopupIng,
+  const { ingredients } = useSelector(
+    (store) => ({
+      ingredients: store.ingredientReducer.items,
+    }),
+    shallowEqual,
   );
+  const { ingridientId } = useParams();
+  const [item, setItem] = useState({});
 
-  console.log(ingredient);
+  useEffect(() => {
+    const item = ingredients.find((item) => {
+      return item._id === ingridientId;
+    });
+    setItem(item);
+  });
+
   return (
     <>
-      {ingredient && (
+      {item && (
         <>
-          <img
-            src={ingredient.image_large}
-            alt={ingredient.name}
-            className="mb-4"
-          />
+          <img src={item.image_large} alt={item.name} className="mb-4" />
           <p className={styles.title + "text text_type_main-medium mb-8"}>
-            {ingredient.name}
+            {item.name}
           </p>
           <div className={styles.nutrients}>
             <div>
@@ -31,7 +40,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingredient.calories}
+                {item.calories}
               </p>
             </div>
             <div>
@@ -44,7 +53,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingredient.proteins}
+                {item.proteins}
               </p>
             </div>
             <div>
@@ -57,7 +66,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingredient.fat}
+                {item.fat}
               </p>
             </div>
             <div>
@@ -70,7 +79,7 @@ export default function IngredientDetails() {
                   " text text_type_digits-default text_color_inactive"
                 }
               >
-                {ingredient.carbohydrates}
+                {item.carbohydrates}
               </p>
             </div>
           </div>
