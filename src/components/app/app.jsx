@@ -38,7 +38,7 @@ function App() {
                   <AppHeader />
                   <pre className={styles.container}>
                     <main className={styles.main}>
-                      <BurgerIngredients path="ingridients"></BurgerIngredients>
+                      <BurgerIngredients></BurgerIngredients>
                       <BurgerConstructor />
                     </main>
                   </pre>
@@ -46,7 +46,7 @@ function App() {
               }
             >
               <Route
-                path=":ingridientId"
+                path="ingridients/:ingridientId"
                 element={
                   <Modal title="Детали ингредиента" visible={true}>
                     <IngredientDetails />

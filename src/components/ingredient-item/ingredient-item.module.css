@@ -5,6 +5,8 @@
   gap: 8px;
   position: relative;
   background-color: transparent;
+  color: white;
+  text-decoration: none;
 }
 
 .price {

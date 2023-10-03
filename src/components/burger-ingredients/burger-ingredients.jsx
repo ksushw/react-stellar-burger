@@ -123,9 +123,9 @@ export default function BurgerIngredients() {
               {buns.map((ingredient) => {
                 return (
                   <NavLink
-                    to={`/ingridients/${ingredient._id}`}
-                    className={styles.chat}
-                    activeClassName={styles.activeChat}
+                    to={`ingridients/${ingredient._id}`}
+                    // activeClassName={styles.activeChat}
+                    key={ingredient._id}
                   >
                     <IngredientItem
                       ingredient={ingredient}
@@ -144,12 +144,18 @@ export default function BurgerIngredients() {
             <ul className={styles.division}>
               {sauses.map((ingredient) => {
                 return (
-                  <IngredientItem
-                    ingredient={ingredient}
+                  <NavLink
+                    to={`ingridients/${ingredient._id}`}
+                    // activeClassName={styles.activeChat}
                     key={ingredient._id}
-                    count={counter[ingredient.name]}
-                    onClick={openPopup}
-                  />
+                  >
+                    <IngredientItem
+                      ingredient={ingredient}
+                      key={ingredient._id}
+                      count={counter[ingredient.name]}
+                      onClick={openPopup}
+                    />
+                  </NavLink>
                 );
               })}
             </ul>
@@ -160,12 +166,18 @@ export default function BurgerIngredients() {
             <ul className={styles.division}>
               {main.map((ingredient) => {
                 return (
-                  <IngredientItem
-                    ingredient={ingredient}
+                  <NavLink
+                    to={`ingridients/${ingredient._id}`}
+                    // activeClassName={styles.activeChat}
                     key={ingredient._id}
-                    count={counter[ingredient.name]}
-                    onClick={openPopup}
-                  />
+                  >
+                    <IngredientItem
+                      ingredient={ingredient}
+                      key={ingredient._id}
+                      count={counter[ingredient.name]}
+                      onClick={openPopup}
+                    />
+                  </NavLink>
                 );
               })}
             </ul>
