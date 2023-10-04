@@ -36,9 +36,6 @@ export default function FogotPassword() {
 
   useEffect(() => {
     if (isPasswordChanged) {
-      dispatch({
-        type: RESTORE_PASSWORD_CLEAN,
-      });
       navigate("/login/reset-password", { replace: "true" });
     }
   }, [isPasswordChanged, dispatch, navigate]);

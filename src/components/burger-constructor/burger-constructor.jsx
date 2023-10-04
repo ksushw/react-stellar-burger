@@ -23,15 +23,17 @@ import {
   EDIT_ORDER_DND,
 } from "../../services/actions/constructor";
 import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router-dom";
 export default function BurgerConstructor() {
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
-  const { items, price, filling, bun } = useSelector(
+  const { items, price, filling, bun, isAuth } = useSelector(
     (store) => ({
       price: store.constructorReducer.price,
       bun: store.constructorReducer.bun,
       filling: store.constructorReducer.fillings,
       items: store.ingredientReducer.items,
+      isAuth: store.regisrationReducer.isAuth,
     }),
     shallowEqual,
   );
@@ -59,13 +61,17 @@ export default function BurgerConstructor() {
   };
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const makeOrder = async () => {
-    const orderIds = [bun._id];
-    filling.map((ingredient) => orderIds.push(ingredient._id));
-    dispatch(sendOrder(orderIds));
-    setVisibleOrderDetails(true);
-    dispatch({ type: REMOVE_FILLING });
+    if (isAuth) {
+      const orderIds = [bun._id];
+      filling.map((ingredient) => orderIds.push(ingredient._id));
+      dispatch(sendOrder(orderIds));
+      setVisibleOrderDetails(true);
+      dispatch({ type: REMOVE_FILLING });
+    } else {
+      navigate("/login");
+    }
   };
 
   function removeIngredient(ingredient, index) {
