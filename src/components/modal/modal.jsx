@@ -4,7 +4,14 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { createPortal } from "react-dom";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-export default function Modal({ children, title = "", visible, setVisible }) {
+import AppHeader from "../app-header/app-header";
+export default function Modal({
+  children,
+  title = "",
+  visible,
+  setVisible,
+  isWindow,
+}) {
   useEffect(() => {
     if (visible) {
       document.addEventListener("keyup", closeByEscape);
@@ -34,11 +41,15 @@ export default function Modal({ children, title = "", visible, setVisible }) {
       {visible &&
         createPortal(
           <>
-            <ModalOverlay onClick={close} />
-            <div className={styles.modal}>
+            {!isWindow && <ModalOverlay onClick={close} />}
+
+            <div
+              className={styles.modal + " " + (isWindow && styles.modal_window)}
+            >
+              {isWindow && <AppHeader />}
               <div className={styles.title}>
                 <h2 className="text text_type_main-large">{title}</h2>
-                <CloseIcon type="primary" onClick={close} />
+                {!isWindow && <CloseIcon type="primary" onClick={close} />}
               </div>
               {children}
             </div>

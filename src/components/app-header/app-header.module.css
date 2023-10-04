@@ -2,6 +2,7 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  background: var(--interface-modal-bg, #1c1c21);
 }
 
 .container {

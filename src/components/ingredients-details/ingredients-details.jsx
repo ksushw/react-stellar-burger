@@ -1,12 +1,12 @@
 import styles from "./ingredients-details.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
 import { useSelector, shallowEqual } from "react-redux";
-import { createPortal } from "react-dom";
-import { Outlet, NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 export default function IngredientDetails() {
   const { ingredients } = useSelector(
     (store) => ({
+      ingredient: store.infoPopupReducer.selectedOrderPopupIng,
       ingredients: store.ingredientReducer.items,
     }),
     shallowEqual,
@@ -88,7 +88,3 @@ export default function IngredientDetails() {
     </>
   );
 }
-
-// IngredientDetails.propTypes = {
-//   ingredient: ingredientPropType,
-// };

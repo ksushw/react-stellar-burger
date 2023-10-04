@@ -3,7 +3,7 @@ import styles from "./app.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredients } from "../../services/actions/ingredients";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -20,11 +20,16 @@ import Feed from "../../pages/feed/feed";
 import Modal from "../../components/modal/modal";
 import IngredientDetails from "../ingredients-details/ingredients-details";
 import { ProtectedRouteElement } from "../protected-route/protected-route";
+import { CLOSE_INFO_POPUP } from "../../services/actions/infoPopup";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  const selectedOrderPopupIng = useSelector(
+    (store) => store.infoPopupReducer.selectedOrderPopupIng,
+  );
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -48,7 +53,14 @@ function App() {
               <Route
                 path="ingridients/:ingridientId"
                 element={
-                  <Modal title="Детали ингредиента" visible={true}>
+                  <Modal
+                    title="Детали ингредиента"
+                    visible={true}
+                    setVisible={() => {
+                      dispatch({ type: CLOSE_INFO_POPUP });
+                    }}
+                    isWindow={!selectedOrderPopupIng}
+                  >
                     <IngredientDetails />
                   </Modal>
                 }

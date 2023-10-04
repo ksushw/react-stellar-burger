@@ -1,4 +1,4 @@
-import { OPEN_INFO_POPUP } from "../actions/infoPopup";
+import { OPEN_INFO_POPUP, CLOSE_INFO_POPUP } from "../actions/infoPopup";
 
 const initialState = {
   selectedOrderPopupIng: false,
@@ -9,7 +9,12 @@ export const infoPopupReducer = (state = initialState, action) => {
     case OPEN_INFO_POPUP: {
       return {
         ...state,
-        selectedOrderPopupIng: action.ingredient,
+        selectedOrderPopupIng: true,
+      };
+    }
+    case CLOSE_INFO_POPUP: {
+      return {
+        ...initialState,
       };
     }
     default: {

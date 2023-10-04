@@ -24,12 +24,7 @@ export default function Profile() {
 
   const dispatch = useDispatch();
 
-  const { userData } = useSelector(
-    (store) => ({
-      userData: store.regisrationReducer.user,
-    }),
-    shallowEqual,
-  );
+  const userData = useSelector((store) => store.regisrationReducer.user);
 
   async function getData() {
     const user = await userInfoRequest();
