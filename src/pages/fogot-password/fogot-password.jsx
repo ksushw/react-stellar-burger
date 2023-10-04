@@ -17,7 +17,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 export default function FogotPassword() {
   const [email, setEmail] = useState("");
-  const { isPasswordChanged, changePasswordMessage } = useSelector(
+  const { isPasswordChanged } = useSelector(
     (store) => ({
       isPasswordChanged: store.changePasswordReducer.isPasswordChanged,
     }),
@@ -41,7 +41,7 @@ export default function FogotPassword() {
       });
       navigate("/login/reset-password", { replace: "true" });
     }
-  }, [isPasswordChanged]);
+  }, [isPasswordChanged, dispatch, navigate]);
 
   return (
     <>

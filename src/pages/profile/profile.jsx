@@ -13,7 +13,7 @@ import {
   userInfoRequest,
   userInfoChangeRequest,
 } from "../../components/api/api";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REGISTRATION_SET_DATA } from "../../services/actions/registration";
 
 export default function Profile() {
@@ -35,7 +35,7 @@ export default function Profile() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   function sdfg(e, setter) {
     setIsEdited(true);

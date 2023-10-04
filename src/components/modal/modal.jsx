@@ -3,7 +3,7 @@ import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { createPortal } from "react-dom";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 export default function Modal({
   children,
@@ -19,7 +19,7 @@ export default function Modal({
     return () => {
       document.removeEventListener("keyup", closeByEscape);
     };
-  }, [visible]);
+  }, [visible, closeByEscape]);
   const navigate = useNavigate();
   function close() {
     if (setVisible) {

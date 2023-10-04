@@ -1,5 +1,4 @@
 import styles from "./ingredients-details.module.css";
-import { ingredientPropType } from "../../utils/prop-types";
 import { useSelector, shallowEqual } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";

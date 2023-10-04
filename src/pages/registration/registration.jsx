@@ -9,7 +9,7 @@ import styles from "./registration.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { registrationRequest } from "../../services/actions/registration";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function sdfg(e, setFunction) {
   setFunction(e.target.value);
@@ -35,7 +35,7 @@ export default function Registration() {
     if (user.name) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <>

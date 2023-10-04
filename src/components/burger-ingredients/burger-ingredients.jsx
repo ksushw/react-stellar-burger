@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredients-details/ingredients-details";
+
 import IngredientItem from "../ingredient-item/ingredient-item";
-import Modal from "../modal/modal";
+
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
 import { CHANGE_BUN } from "../../services/actions/constructor";
@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 
 export default function BurgerIngredients() {
-  const [visibleIngDetails, setVisibleIngDetails] = useState(false);
   const [position, setPosition] = useState("bun");
   const [buns, setBuns] = useState([]);
   const [sauses, setSauses] = useState([]);
@@ -39,13 +38,11 @@ export default function BurgerIngredients() {
     if (defoultBun) {
       dispatch({ type: CHANGE_BUN, bun: defoultBun });
     }
-  }, [items]);
+  }, [items, dispatch]);
   function openPopup(ingredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
-    setVisibleIngDetails(true);
   }
 
-  //Определяет активный таб
   function changePosition() {
     const sausePosition = document.querySelector(`#sauce`).offsetTop;
     const mainPosition = document.querySelector(`#main`).offsetTop;
@@ -59,7 +56,6 @@ export default function BurgerIngredients() {
     }
   }
 
-  // Скролл до нужного блока
   function scroll(id) {
     document.querySelector(`#${id}`).scrollIntoView({
       behavior: "smooth",
@@ -67,7 +63,6 @@ export default function BurgerIngredients() {
     });
   }
 
-  // Количество ингридиентов определяет
   function count() {
     if (filling !== []) {
       const amount = {};
@@ -80,7 +75,6 @@ export default function BurgerIngredients() {
     }
   }
 
-  // Объект с числом ингридиентов в заказе
   const counter = count();
 
   return (
@@ -124,7 +118,6 @@ export default function BurgerIngredients() {
                 return (
                   <NavLink
                     to={`ingridients/${ingredient._id}`}
-                    // activeClassName={styles.activeChat}
                     key={ingredient._id}
                   >
                     <IngredientItem
@@ -146,7 +139,6 @@ export default function BurgerIngredients() {
                 return (
                   <NavLink
                     to={`ingridients/${ingredient._id}`}
-                    // activeClassName={styles.activeChat}
                     key={ingredient._id}
                   >
                     <IngredientItem
@@ -168,7 +160,6 @@ export default function BurgerIngredients() {
                 return (
                   <NavLink
                     to={`ingridients/${ingredient._id}`}
-                    // activeClassName={styles.activeChat}
                     key={ingredient._id}
                   >
                     <IngredientItem
