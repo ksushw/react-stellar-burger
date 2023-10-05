@@ -1,4 +1,3 @@
-import AppHeader from "../../components/app-header/app-header";
 import {
   PasswordInput,
   Button,
@@ -49,7 +48,6 @@ export default function ResetPassword() {
 
   return (
     <>
-      <AppHeader></AppHeader>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <form className={styles.form + " mb-20"} onSubmit={addNewPassword}>

@@ -1,11 +1,9 @@
-import AppHeader from "../../components/app-header/app-header";
 import styles from "./feed.module.css";
 import CartList from "../../components/card-list/card-list";
 
 export default function Feed() {
   return (
     <>
-      <AppHeader></AppHeader>
       <div className={styles.container + " pl-5 pr-5"}>
         <h2 className={styles.title + " text text_type_main-large mt-10 mb-5"}>
           Лента заказов

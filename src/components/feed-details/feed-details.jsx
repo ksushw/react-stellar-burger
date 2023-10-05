@@ -1,4 +1,3 @@
-import AppHeader from "../../components/app-header/app-header";
 import {
   FormattedDate,
   CurrencyIcon,
@@ -10,7 +9,6 @@ export default function FeedDetails({ open }) {
     <>
       {open && (
         <div className={styles.window}>
-          <AppHeader></AppHeader>
           jghhghhjbgjhgjkg
           <div className={styles.container + " pl-5 pr-5 custom-scroll"}>
             <p className={styles.number + " text text_type_digits-medium"}>

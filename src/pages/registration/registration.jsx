@@ -1,4 +1,3 @@
-import AppHeader from "../../components/app-header/app-header";
 import {
   EmailInput,
   PasswordInput,
@@ -39,7 +38,6 @@ export default function Registration() {
 
   return (
     <>
-      <AppHeader></AppHeader>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Регистрация</p>
         <form className={styles.form + " mb-20"} onSubmit={makeRegistration}>

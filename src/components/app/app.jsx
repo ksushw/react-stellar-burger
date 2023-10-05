@@ -35,12 +35,12 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <pre className={styles.container}>
         <Router>
+          <AppHeader />
           <Routes>
             <Route
               path="/"
               element={
                 <div className={styles.app} id="app">
-                  <AppHeader />
                   <pre className={styles.container}>
                     <main className={styles.main}>
                       <BurgerIngredients></BurgerIngredients>

@@ -1,4 +1,3 @@
-import AppHeader from "../../components/app-header/app-header";
 import {
   FormattedDate,
   CurrencyIcon,
@@ -12,7 +11,6 @@ import FeedDetails from "../../components/feed-details/feed-details";
 export default function History() {
   return (
     <>
-      <AppHeader></AppHeader>
       <div className={styles.container + " pl-5 pr-5"}>
         <div className={styles.navigation}>
           <Link

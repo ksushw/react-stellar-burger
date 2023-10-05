@@ -4,7 +4,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import AppHeader from "../app-header/app-header";
+
 export default function Modal({
   children,
   title = "",
@@ -46,7 +46,6 @@ export default function Modal({
             <div
               className={styles.modal + " " + (isWindow && styles.modal_window)}
             >
-              {isWindow && <AppHeader />}
               <div className={styles.title}>
                 <h2 className="text text_type_main-large">{title}</h2>
                 {!isWindow && <CloseIcon type="primary" onClick={close} />}

@@ -1,4 +1,3 @@
-import AppHeader from "../../components/app-header/app-header";
 import {
   EmailInput,
   PasswordInput,
@@ -65,7 +64,6 @@ export default function Profile() {
 
   return (
     <>
-      <AppHeader></AppHeader>
       <div className={styles.container + " pl-5 pr-5"}>
         <div className={styles.navigation}>
           <Link

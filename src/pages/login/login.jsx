@@ -1,4 +1,3 @@
-import AppHeader from "../../components/app-header/app-header";
 import {
   EmailInput,
   PasswordInput,
@@ -43,7 +42,6 @@ export default function Login() {
     <Navigate to="/" replace />
   ) : (
     <>
-      <AppHeader></AppHeader>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Вход</p>
         <form className={styles.form + " mb-20"} onSubmit={makeRegistration}>
