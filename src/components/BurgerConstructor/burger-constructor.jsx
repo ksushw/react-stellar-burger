@@ -6,8 +6,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import DragAndDropWrapper from "../DragAndDropWrapper/DragAndDropWrapper";
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
+import OrderDetails from "../OrderDetails/order-details";
+import Modal from "../Modal/modal";
 import update from "immutability-helper";
 
 import { useState, useCallback, useEffect } from "react";

@@ -5,8 +5,8 @@ import {
 import styles from "./history.module.css";
 import { Link } from "react-router-dom";
 import { createPortal } from "react-dom";
-import CartList from "../../components/card-list/card-list";
-import FeedDetails from "../../components/feed-details/feed-details";
+import CartList from "../../components/CardList/card-list";
+import FeedDetails from "../../components/FeedDetails/feed-details";
 
 export default function History() {
   return (

@@ -1,5 +1,5 @@
 import styles from "./feed.module.css";
-import CartList from "../../components/card-list/card-list";
+import CartList from "../../components/CardList/card-list";
 
 export default function Feed() {
   return (

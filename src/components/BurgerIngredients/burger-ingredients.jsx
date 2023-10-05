@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import IngredientItem from "../ingredient-item/ingredient-item";
+import IngredientItem from "../IngredientItem/ingredient-item";
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
@@ -41,6 +41,7 @@ export default function BurgerIngredients() {
   }, [items, dispatch]);
   function openPopup(ingredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
+    sessionStorage.setItem("modal", "true");
   }
 
   function changePosition() {
@@ -175,17 +176,7 @@ export default function BurgerIngredients() {
           </>
         )}
       </div>
-      {/* {createPortal(  */}
       <Outlet />
-      {/* <Modal
-        title="Детали ингредиента"
-        visible={visibleIngDetails}
-        setVisible={setVisibleIngDetails}
-      >
-        <IngredientDetails />
-      </Modal> */}
-      {/* , document.body */}
-      {/* )} */}
     </section>
   );
 }

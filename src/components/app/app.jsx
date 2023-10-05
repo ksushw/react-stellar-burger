@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import AppHeader from "../AppHeader/app-header";
+import BurgerIngredients from "../BurgerIngredients/burger-ingredients";
+import BurgerConstructor from "../BurgerConstructor/burger-constructor";
 import Login from "../../pages/login/login";
 import Registration from "../../pages/registration/registration";
 import FogotPassword from "../../pages/fogot-password/fogot-password";
@@ -17,25 +17,30 @@ import ResetPassword from "../../pages/reset-password/reset-password";
 import History from "../../pages/history/history";
 import Profile from "../../pages/profile/profile";
 import Feed from "../../pages/feed/feed";
-import Modal from "../../components/modal/modal";
-import IngredientDetails from "../ingredients-details/ingredients-details";
-import { ProtectedRouteElement } from "../protected-route/protected-route";
+import Modal from "../Modal/modal";
+import IngridientPage from "../../pages/ingridient-page/ingridient-page";
+import IngredientDetails from "../IngredientsDetails/ingredients-details";
+import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
 import { CLOSE_INFO_POPUP } from "../../services/actions/infoPopup";
+import IngredientDetailsPage from "../../pages/ingridientPage/ingridiet-page";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const selectedOrderPopupIng = useSelector(
-    (store) => store.infoPopupReducer.selectedOrderPopupIng,
-  );
+  const selectedOrderPopupIng = sessionStorage.getItem("modal");
+  console.log(selectedOrderPopupIng);
+  // useSelector(
+  //   (store) => store.infoPopupReducer.selectedOrderPopupIng
+  // );
 
   return (
     <DndProvider backend={HTML5Backend}>
       <pre className={styles.container}>
         <Router>
           <AppHeader />
+
           <Routes>
             <Route
               path="/"
@@ -53,19 +58,24 @@ function App() {
               <Route
                 path="ingridients/:ingridientId"
                 element={
-                  <Modal
-                    title="Детали ингредиента"
-                    visible={true}
-                    setVisible={() => {
-                      dispatch({ type: CLOSE_INFO_POPUP });
-                    }}
-                    isWindow={!selectedOrderPopupIng}
-                  >
-                    <IngredientDetails />
-                  </Modal>
+                  selectedOrderPopupIng ? (
+                    <Modal
+                      title="Детали ингредиента"
+                      visible={true}
+                      setVisible={() => {
+                        dispatch({ type: CLOSE_INFO_POPUP });
+                        sessionStorage.removeItem("modal");
+                      }}
+                    >
+                      <IngredientDetails />
+                    </Modal>
+                  ) : (
+                    <IngridientPage />
+                  )
                 }
               />
             </Route>
+
             <Route path="/login" element={<Login />} />
             <Route path="/login/registration" element={<Registration />} />
             <Route path="/login/fogote-password" element={<FogotPassword />} />

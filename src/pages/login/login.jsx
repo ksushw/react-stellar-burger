@@ -7,7 +7,7 @@ import styles from "./login.module.css";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useProvideAuth } from "../../components/useAuth/useAuth";
+import { useProvideAuth } from "../../components/UseAuth/useAuth";
 
 function sdfg(e, setFunction) {
   setFunction(e.target.value);
