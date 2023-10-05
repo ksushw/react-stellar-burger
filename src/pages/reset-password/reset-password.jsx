@@ -7,7 +7,7 @@ import {
 import styles from "./reset-password.module.css";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
-import { resetPassvordApi } from "../../components/api/api";
+import { resetPassvordApi } from "../../api/api";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
   profileDataChange,
@@ -42,7 +42,7 @@ export default function ResetPassword() {
       }
     }
   }
-  console.log(isPasswordChanged);
+
   if (!isPasswordChanged) {
     return <Navigate to="/login/fogote-password" />;
   }

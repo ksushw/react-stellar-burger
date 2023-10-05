@@ -9,10 +9,7 @@ import { useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useProvideAuth } from "../../components/useAuth/useAuth";
-import {
-  userInfoRequest,
-  userInfoChangeRequest,
-} from "../../components/api/api";
+import { userInfoRequest, userInfoChangeRequest } from "../../api/api";
 import { useDispatch, useSelector } from "react-redux";
 import { REGISTRATION_SET_DATA } from "../../services/actions/registration";
 
@@ -35,7 +32,7 @@ export default function Profile() {
 
   useEffect(() => {
     getData();
-  }, [getData]);
+  }, []);
 
   function sdfg(e, setter) {
     setIsEdited(true);

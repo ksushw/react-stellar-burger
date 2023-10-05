@@ -1,4 +1,4 @@
-import { logOut } from "../../components/api/api";
+import { logOut } from "../../api/api";
 import { REGISTRATION_OUT } from "../../services/actions/registration";
 
 import { setCookie } from "../../utils/setCookie";

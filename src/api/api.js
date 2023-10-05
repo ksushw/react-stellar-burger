@@ -1,7 +1,7 @@
-import { _getResponseData } from "../../utils/get-response-data";
-import { config } from "../../utils/config";
-import { getCookie } from "../../utils/getCookie";
-import { errorHandler } from "../../utils/erorHandler";
+import { _getResponseData } from "../utils/get-response-data";
+import { config } from "../utils/config";
+import { getCookie } from "../utils/getCookie";
+import { errorHandler } from "../utils/erorHandler";
 
 errorHandler();
 

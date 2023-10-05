@@ -1,13 +1,8 @@
+import { config } from "../../utils/config";
+
 export const SEND_ORDER_REQUEST = "SEND_ORDER_REQUEST";
 export const SEND_ORDER_SUCCESS = "SEND_ORDER_SUCCESS";
 export const SEND_ORDER_FAILED = "SEND_ORDER_FAILED";
-
-const config = {
-  baseUrl: "https://norma.nomoreparties.space/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
 
 const _getResponseData = (res) => {
   if (!res.ok) {
