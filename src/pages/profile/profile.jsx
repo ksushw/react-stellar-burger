@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
 import styles from "./profile.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
 import { userInfoRequest, userInfoChangeRequest } from "../../api/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +19,8 @@ export default function Profile() {
   const [isEdited, setIsEdited] = useState(false);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const userData = useSelector((store) => store.regisrationReducer.user);
 
@@ -52,8 +54,6 @@ export default function Profile() {
     setEmail(user.email);
     setIsEdited(false);
   }
-
-  const navigate = useNavigate();
 
   const { signOut } = useProvideAuth();
 

@@ -10,7 +10,6 @@ export default function IngridientPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const popup = location.state?.popup;
-  console.log(popup);
 
   return (
     <>

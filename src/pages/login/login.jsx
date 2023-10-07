@@ -4,7 +4,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
@@ -21,6 +21,8 @@ export default function Login() {
   const { signIn } = useProvideAuth();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.state?.path;
 
   async function makeRegistration(event) {
     event.preventDefault();
@@ -29,7 +31,11 @@ export default function Login() {
 
   useEffect(() => {
     if (user.name) {
-      navigate("/", { replace: "false" });
+      if (path) {
+        navigate(path, { replace: "false" });
+      } else {
+        navigate("/", { replace: "false" });
+      }
     }
   }, [user, navigate]);
 

@@ -26,9 +26,6 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const selectedOrderPopupIng = sessionStorage.getItem("modal");
-  console.log(selectedOrderPopupIng);
-
   return (
     <DndProvider backend={HTML5Backend}>
       <pre className={styles.container}>
