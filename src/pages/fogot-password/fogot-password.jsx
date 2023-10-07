@@ -7,10 +7,7 @@ import styles from "./fogot-password.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import {
-  profileDataChange,
-  RESTORE_PASSWORD_CLEAN,
-} from "../../services/actions/profile";
+import { profileDataChange } from "../../services/actions/profile";
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 

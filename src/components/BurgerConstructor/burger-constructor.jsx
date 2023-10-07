@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import {
   ConstructorElement,
   Button,
@@ -97,12 +96,12 @@ export default function BurgerConstructor() {
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
       ref={dropTarget}
     >
-      {!Object.keys(bun).length && !order.length && (
-        <p className={styles.tip + " text text_type_main-default mt-15"}>
-          Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
-        </p>
-      )}
       <div className={styles.order}>
+        {!Object.keys(bun).length && !order.length && (
+          <p className={styles.tip + " text text_type_main-default mt-15"}>
+            Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+          </p>
+        )}
         {!!Object.keys(bun).length && (
           <div className={styles.bun}>
             <ConstructorElement
@@ -159,7 +158,7 @@ export default function BurgerConstructor() {
         <p className="text text_type_digits-medium mr-2">{price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      {bun && order[0] && (
+      {!!Object.keys(bun).length && order[0] && (
         <div className="mt-5">
           <Button
             htmlType="button"
@@ -171,16 +170,9 @@ export default function BurgerConstructor() {
           </Button>
         </div>
       )}
-
-      {createPortal(
-        <Modal
-          visible={visibleOrderDetails}
-          setVisible={setVisibleOrderDetails}
-        >
-          <OrderDetails />
-        </Modal>,
-        document.body,
-      )}
+      <Modal visible={visibleOrderDetails} setVisible={setVisibleOrderDetails}>
+        <OrderDetails />
+      </Modal>
     </section>
   );
 }

@@ -13,6 +13,7 @@
   flex-direction: column;
   gap: 10px;
   max-height: 696px;
+  box-sizing: border-box;
   height: calc(100vh - 360px);
   width: 100%;
 }

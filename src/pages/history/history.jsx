@@ -1,7 +1,3 @@
-import {
-  FormattedDate,
-  CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./history.module.css";
 import { Link } from "react-router-dom";
 import { createPortal } from "react-dom";

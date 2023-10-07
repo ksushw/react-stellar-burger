@@ -8,10 +8,7 @@ import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { resetPassvordApi } from "../../api/api";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import {
-  profileDataChange,
-  RESTORE_PASSWORD_CLEAN,
-} from "../../services/actions/profile";
+import { RESTORE_PASSWORD_CLEAN } from "../../services/actions/profile";
 
 function sdfg(e, setFunction) {
   setFunction(e.target.value);

@@ -6,15 +6,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
 import styles from "./profile.module.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
 import { userInfoRequest, userInfoChangeRequest } from "../../api/api";
 import { useDispatch, useSelector } from "react-redux";
 import { REGISTRATION_SET_DATA } from "../../services/actions/registration";
+import Loader from "../../components/Loader/Loader";
 
 export default function Profile() {
-  const [name, setName] = useState("email");
-  const [email, setEmail] = useState("email");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEdited, setIsEdited] = useState(false);
 
@@ -105,50 +106,57 @@ export default function Profile() {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
+
         <form
           className={styles.form + " mb-20"}
           onSubmit={(e) => changeData(e)}
         >
-          <Input
-            type={"text"}
-            placeholder="Имя"
-            value={name}
-            onChange={(e) => sdfg(e, setName)}
-            name={"name"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon="EditIcon"
-          />
-          <EmailInput
-            onChange={(e) => sdfg(e, setEmail)}
-            value={email}
-            name={"email"}
-            placeholder="Логин"
-            isIcon={true}
-            extraClass="mt-6"
-          />
-          <PasswordInput
-            onChange={(e) => sdfg(e, setPassword)}
-            value={password}
-            name={"password"}
-            icon="EditIcon"
-            extraClass="mt-6"
-          />
-          {isEdited && (
-            <div className="mt-6">
-              <Button
-                type="secondary"
-                size="medium"
-                htmlType="reset"
-                onClick={reset}
-              >
-                Отмена
-              </Button>
-              <Button type="primary" size="medium" htmlType="submit">
-                Сохранить
-              </Button>
-            </div>
+          {name ? (
+            <>
+              <Input
+                type={"text"}
+                placeholder="Имя"
+                value={name}
+                onChange={(e) => sdfg(e, setName)}
+                name={"name"}
+                error={false}
+                errorText={"Ошибка"}
+                size={"default"}
+                icon="EditIcon"
+              />
+              <EmailInput
+                onChange={(e) => sdfg(e, setEmail)}
+                value={email}
+                name={"email"}
+                placeholder="Логин"
+                isIcon={true}
+                extraClass="mt-6"
+              />
+              <PasswordInput
+                onChange={(e) => sdfg(e, setPassword)}
+                value={password}
+                name={"password"}
+                icon="EditIcon"
+                extraClass="mt-6"
+              />
+              {isEdited && (
+                <div className="mt-6">
+                  <Button
+                    type="secondary"
+                    size="medium"
+                    htmlType="reset"
+                    onClick={reset}
+                  >
+                    Отмена
+                  </Button>
+                  <Button type="primary" size="medium" htmlType="submit">
+                    Сохранить
+                  </Button>
+                </div>
+              )}
+            </>
+          ) : (
+            <Loader />
           )}
         </form>
       </div>

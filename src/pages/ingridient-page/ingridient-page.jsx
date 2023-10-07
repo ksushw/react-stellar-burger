@@ -3,7 +3,7 @@ import IngredientDetails from "../../components/IngredientsDetails/ingredients-d
 import { useLocation, useNavigate } from "react-router-dom";
 import { CLOSE_INFO_POPUP } from "../../services/actions/infoPopup";
 import Modal from "../../components/Modal/modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function IngridientPage() {
   const dispatch = useDispatch();

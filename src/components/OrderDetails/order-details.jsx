@@ -1,6 +1,7 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
 import { useSelector } from "react-redux";
+import Loader from "../Loader/Loader";
 export default function OrderDetails() {
   const { order, orderRequest, orderFailed } = useSelector((store) => ({
     order: store.orderReducer.order,
@@ -25,6 +26,7 @@ export default function OrderDetails() {
           </p>
         </>
       )}
+      {orderRequest && <Loader />}
     </>
   );
 }
