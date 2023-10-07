@@ -18,9 +18,9 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
   REMOVE_ORDER,
   DELETE_FILLING,
-  ADD_FILLING,
   CHANGE_BUN,
   EDIT_ORDER_DND,
+  addIngridient,
 } from "../../services/actions/constructor";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function BurgerConstructor() {
     if (newIngredient.type === "bun") {
       dispatch({ type: CHANGE_BUN, bun: newIngredient });
     } else {
-      dispatch({ type: ADD_FILLING, item: newIngredient });
+      dispatch(addIngridient(newIngredient));
     }
   };
 
@@ -91,7 +91,6 @@ export default function BurgerConstructor() {
     },
     [order],
   );
-  console.log(bun !== {});
 
   return (
     <section
@@ -122,7 +121,7 @@ export default function BurgerConstructor() {
               return (
                 <li key={index}>
                   <DragAndDropWrapper
-                    id={ingredient._id}
+                    id={ingredient.uniqueId}
                     index={index}
                     className={styles.ingredient}
                     moveCard={moveCard}
