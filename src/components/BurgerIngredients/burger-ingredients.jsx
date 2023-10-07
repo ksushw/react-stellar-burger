@@ -32,12 +32,12 @@ export default function BurgerIngredients() {
     setBuns(items.filter((item) => item.type === "bun"));
     setMain(items.filter((item) => item.type === "main"));
     setSauses(items.filter((item) => item.type === "sauce"));
-    const defoultBun = items.find((elem) => {
-      return elem.type === "bun";
-    });
-    if (defoultBun) {
-      dispatch({ type: CHANGE_BUN, bun: defoultBun });
-    }
+    // const defoultBun = items.find((elem) => {
+    //   return elem.type === "bun";
+    // });
+    // if (defoultBun) {
+    //   dispatch({ type: CHANGE_BUN, bun: defoultBun });
+    // }
   }, [items, dispatch]);
   const navigate = useNavigate();
   function openPopup(ingredient) {

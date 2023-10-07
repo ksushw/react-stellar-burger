@@ -1,6 +1,5 @@
 .container {
   display: flex;
-
   flex-wrap: wrap;
   justify-content: flex-end;
   width: calc(50% - 40px);
@@ -49,4 +48,9 @@
 
 .element {
   white-space: break-spaces;
+}
+
+.tip {
+  white-space: break-spaces;
+  text-align: center;
 }

@@ -16,7 +16,7 @@ import { sendOrder } from "../../services/actions/order";
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
-  REMOVE_FILLING,
+  REMOVE_ORDER,
   DELETE_FILLING,
   ADD_FILLING,
   CHANGE_BUN,
@@ -68,7 +68,7 @@ export default function BurgerConstructor() {
       filling.map((ingredient) => orderIds.push(ingredient._id));
       dispatch(sendOrder(orderIds));
       setVisibleOrderDetails(true);
-      dispatch({ type: REMOVE_FILLING });
+      dispatch({ type: REMOVE_ORDER });
     } else {
       navigate("/login");
     }
@@ -91,14 +91,20 @@ export default function BurgerConstructor() {
     },
     [order],
   );
+  console.log(bun !== {});
 
   return (
     <section
       className={styles.container + " pt-4 pb-4 pl-5 pr-5 ml-5 mr-5 mt-20"}
       ref={dropTarget}
     >
+      {!Object.keys(bun).length && !order.length && (
+        <p className={styles.tip + " text text_type_main-default mt-15"}>
+          Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+        </p>
+      )}
       <div className={styles.order}>
-        {bun && (
+        {!!Object.keys(bun).length && (
           <div className={styles.bun}>
             <ConstructorElement
               type="top"
@@ -137,7 +143,7 @@ export default function BurgerConstructor() {
           </ul>
         )}
 
-        {bun && (
+        {!!Object.keys(bun).length && (
           <div className={styles.bun}>
             <ConstructorElement
               type="bottom"
@@ -154,16 +160,18 @@ export default function BurgerConstructor() {
         <p className="text text_type_digits-medium mr-2">{price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <div className="mt-5">
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={makeOrder}
-        >
-          Оформить заказ
-        </Button>
-      </div>
+      {bun && order[0] && (
+        <div className="mt-5">
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={makeOrder}
+          >
+            Оформить заказ
+          </Button>
+        </div>
+      )}
 
       {createPortal(
         <Modal

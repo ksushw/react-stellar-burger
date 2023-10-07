@@ -1,7 +1,7 @@
 import {
   ADD_FILLING,
   DELETE_FILLING,
-  REMOVE_FILLING,
+  REMOVE_ORDER,
   CHANGE_BUN,
   EDIT_ORDER_DND,
 } from "../actions/constructor";
@@ -40,11 +40,9 @@ export const constructorReducer = (state = initialState, action) => {
         price: state.price - action.price,
       };
     }
-    case REMOVE_FILLING: {
+    case REMOVE_ORDER: {
       return {
-        ...state,
-        fillings: [],
-        price: state.bun.price,
+        ...initialState,
       };
     }
     case EDIT_ORDER_DND: {
