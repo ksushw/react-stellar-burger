@@ -8,7 +8,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
 import { CHANGE_BUN } from "../../services/actions/constructor";
 import { useEffect } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, Navigate, useNavigate } from "react-router-dom";
 
 export default function BurgerIngredients() {
   const [position, setPosition] = useState("bun");
@@ -39,9 +39,10 @@ export default function BurgerIngredients() {
       dispatch({ type: CHANGE_BUN, bun: defoultBun });
     }
   }, [items, dispatch]);
+  const navigate = useNavigate();
   function openPopup(ingredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
-    sessionStorage.setItem("modal", "true");
+    navigate(`ingridients/${ingredient._id}`, { state: { popup: true } });
   }
 
   function changePosition() {
@@ -117,17 +118,12 @@ export default function BurgerIngredients() {
             <ul className={styles.division}>
               {buns.map((ingredient) => {
                 return (
-                  <NavLink
-                    to={`ingridients/${ingredient._id}`}
+                  <IngredientItem
+                    ingredient={ingredient}
                     key={ingredient._id}
-                  >
-                    <IngredientItem
-                      ingredient={ingredient}
-                      key={ingredient._id}
-                      count={ingredient.name === bun.name && 1}
-                      onClick={openPopup}
-                    />
-                  </NavLink>
+                    count={ingredient.name === bun.name && 1}
+                    onClick={openPopup}
+                  />
                 );
               })}
             </ul>
@@ -138,17 +134,12 @@ export default function BurgerIngredients() {
             <ul className={styles.division}>
               {sauses.map((ingredient) => {
                 return (
-                  <NavLink
-                    to={`ingridients/${ingredient._id}`}
+                  <IngredientItem
+                    ingredient={ingredient}
                     key={ingredient._id}
-                  >
-                    <IngredientItem
-                      ingredient={ingredient}
-                      key={ingredient._id}
-                      count={counter[ingredient.name]}
-                      onClick={openPopup}
-                    />
-                  </NavLink>
+                    count={counter[ingredient.name]}
+                    onClick={openPopup}
+                  />
                 );
               })}
             </ul>
@@ -159,17 +150,12 @@ export default function BurgerIngredients() {
             <ul className={styles.division}>
               {main.map((ingredient) => {
                 return (
-                  <NavLink
-                    to={`ingridients/${ingredient._id}`}
+                  <IngredientItem
+                    ingredient={ingredient}
                     key={ingredient._id}
-                  >
-                    <IngredientItem
-                      ingredient={ingredient}
-                      key={ingredient._id}
-                      count={counter[ingredient.name]}
-                      onClick={openPopup}
-                    />
-                  </NavLink>
+                    count={counter[ingredient.name]}
+                    onClick={openPopup}
+                  />
                 );
               })}
             </ul>

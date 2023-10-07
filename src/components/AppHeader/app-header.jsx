@@ -27,10 +27,11 @@ export default function AppHeader() {
             Лента заказов
           </p>
         </Link>
-        <div className={styles.logo}>
-          <Logo />
-        </div>
-
+        <Link to="/">
+          <div className={styles.logo}>
+            <Logo />
+          </div>
+        </Link>
         <Link
           to="/profile"
           className={styles.link + " p-4 pl-5 pr-5 " + styles.profile}

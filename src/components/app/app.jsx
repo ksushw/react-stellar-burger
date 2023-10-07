@@ -5,7 +5,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 
 import AppHeader from "../AppHeader/app-header";
 import BurgerIngredients from "../BurgerIngredients/burger-ingredients";
@@ -31,9 +36,6 @@ function App() {
 
   const selectedOrderPopupIng = sessionStorage.getItem("modal");
   console.log(selectedOrderPopupIng);
-  // useSelector(
-  //   (store) => store.infoPopupReducer.selectedOrderPopupIng
-  // );
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -57,22 +59,7 @@ function App() {
             >
               <Route
                 path="ingridients/:ingridientId"
-                element={
-                  selectedOrderPopupIng ? (
-                    <Modal
-                      title="Детали ингредиента"
-                      visible={true}
-                      setVisible={() => {
-                        dispatch({ type: CLOSE_INFO_POPUP });
-                        sessionStorage.removeItem("modal");
-                      }}
-                    >
-                      <IngredientDetails />
-                    </Modal>
-                  ) : (
-                    <IngridientPage />
-                  )
-                }
+                element={<IngridientPage />}
               />
             </Route>
 

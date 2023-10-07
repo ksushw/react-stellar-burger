@@ -14,13 +14,11 @@ export default function Modal({ children, title = "", visible, setVisible }) {
       document.removeEventListener("keyup", closeByEscape);
     };
   }, [visible, closeByEscape]);
-  const navigate = useNavigate();
+
   function close() {
     if (setVisible) {
       setVisible(false);
     }
-
-    navigate("/");
     document.removeEventListener("keyup", closeByEscape);
   }
 
