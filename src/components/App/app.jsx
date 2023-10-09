@@ -16,6 +16,7 @@ import FogotPassword from "../../pages/fogot-password/fogot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import History from "../../pages/history/history";
 import Profile from "../../pages/profile/profile";
+import Page404 from "../../pages/Page404/Page404";
 import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
@@ -68,6 +69,7 @@ function App() {
               path="/feed"
               element={<ProtectedRouteElement element={<Feed />} />}
             />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </Router>
       </pre>
