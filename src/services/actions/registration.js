@@ -9,13 +9,6 @@ export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const REGISTRATION_OUT = "REGISTRATION_OUT";
 export const REGISTRATION_SET_DATA = "REGISTRATION_SET_DATA";
 
-// const _getResponseData = (res) => {
-//   if (!res.ok) {
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   }
-//   return res.json();
-// };
-
 export function registrationRequest(email, password, name) {
   return function (dispatch) {
     dispatch({
