@@ -8,6 +8,7 @@ export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 export const REGISTRATION_OUT = "REGISTRATION_OUT";
 export const REGISTRATION_SET_DATA = "REGISTRATION_SET_DATA";
+export const REGISTRATION_AUTH_CHANGE = "REGISTRATION_AUTH_CHANGE";
 
 export function registrationRequest(email, password, name) {
   return function (dispatch) {
@@ -113,10 +114,11 @@ export async function refreshToken() {
           expires: 60 * 60 * 24 * 30,
         });
       }
+      return res;
     })
     .catch((err) => {
       console.error(err);
+      return err;
     });
-
   return res;
 }

@@ -1,26 +1,35 @@
 import { logOut } from "../../api/api";
-import { REGISTRATION_OUT } from "../../services/actions/registration";
+import {
+  REGISTRATION_OUT,
+  REGISTRATION_AUTH_CHANGE,
+} from "../../services/actions/registration";
 
 import { setCookie } from "../../utils/setCookie";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { useState } from "react";
-import { autorizationRequest } from "../../services/actions/registration";
+import { getCookie } from "../../utils/getCookie";
+import { useDispatch } from "react-redux";
+
+import {
+  autorizationRequest,
+  refreshToken,
+} from "../../services/actions/registration";
 
 export function useProvideAuth() {
-  const [user, setUser] = useState(null);
-
-  const { userData } = useSelector(
-    (store) => ({
-      userData: store.regisrationReducer.user,
-    }),
-    shallowEqual,
-  );
-
   const dispatch = useDispatch();
+
+  const isAuthorized = async () => {
+    if (getCookie("accessToken")) {
+      dispatch({ type: REGISTRATION_AUTH_CHANGE, status: true });
+    } else if (getCookie("refreshToken")) {
+      const res = await refreshToken();
+      res.success && dispatch({ type: REGISTRATION_AUTH_CHANGE, status: true });
+    } else {
+      dispatch({ type: REGISTRATION_OUT });
+    }
+    return true;
+  };
 
   const signIn = async (email, password) => {
     dispatch(autorizationRequest(email, password));
-    setUser(userData);
   };
 
   const signOut = async () => {
@@ -34,12 +43,11 @@ export function useProvideAuth() {
         expires: -1,
       });
     }
-    setUser(null);
   };
 
   return {
     signIn,
-    user,
     signOut,
+    isAuthorized,
   };
 }

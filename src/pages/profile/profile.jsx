@@ -60,7 +60,6 @@ export default function Profile() {
 
   async function logout() {
     await signOut();
-    navigate("/login", { replace: "false" });
   }
 
   return (

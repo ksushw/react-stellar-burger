@@ -4,11 +4,13 @@ import {
   REGISTRATION_FAILED,
   REGISTRATION_OUT,
   REGISTRATION_SET_DATA,
+  REGISTRATION_AUTH_CHANGE,
 } from "../actions/registration";
 
 const initialState = {
   user: {},
   isAuth: false,
+  tokenPending: false,
   autorizationRequest: false,
   autorizationFailed: false,
 };
@@ -19,6 +21,7 @@ export const regisrationReducer = (state = initialState, action) => {
       return {
         ...state,
         autorizationRequest: true,
+        tokenPending: true,
       };
     }
     case REGISTRATION_SUCCESS: {
@@ -26,6 +29,7 @@ export const regisrationReducer = (state = initialState, action) => {
         ...state,
         user: action.data.user,
         autorizationRequest: false,
+        tokenPending: false,
         isAuth: true,
       };
     }
@@ -35,10 +39,17 @@ export const regisrationReducer = (state = initialState, action) => {
         user: action.user,
       };
     }
+    case REGISTRATION_AUTH_CHANGE: {
+      return {
+        ...state,
+        isAuth: action.status,
+      };
+    }
     case REGISTRATION_FAILED: {
       return {
         ...initialState,
         autorizationFailed: true,
+        tokenPending: false,
       };
     }
     case REGISTRATION_OUT: {
