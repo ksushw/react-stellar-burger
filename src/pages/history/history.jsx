@@ -51,7 +51,10 @@ export default function History() {
         </div>
       </div>
 
-      {createPortal(<FeedDetails open={false} />, document.body)}
+      {createPortal(
+        <FeedDetails open={false} />,
+        document.getElementById("modals"),
+      )}
     </>
   );
 }

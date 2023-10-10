@@ -23,6 +23,7 @@ import {
 } from "../../services/actions/constructor";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid4 } from "uuid";
 export default function BurgerConstructor() {
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
@@ -120,7 +121,7 @@ export default function BurgerConstructor() {
               return (
                 <li key={index}>
                   <DragAndDropWrapper
-                    id={ingredient.uniqueId}
+                    id={uuid4()}
                     index={index}
                     className={styles.ingredient}
                     moveCard={moveCard}

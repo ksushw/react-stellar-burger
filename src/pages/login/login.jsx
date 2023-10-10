@@ -38,15 +38,20 @@ export default function Login() {
       }
     }
   }, [user, navigate]);
+  const { isAuthorized } = useProvideAuth();
+  async function getAuth() {
+    await isAuthorized();
+  }
+  useEffect(() => {
+    getAuth();
+  }, []);
 
   useEffect(() => {
     if (isAuth) {
-      return <Navigate to="/" replace />;
+      navigate(-1);
     }
   }, [isAuth]);
-  return isAuth ? (
-    <Navigate to="/" replace />
-  ) : (
+  return (
     <>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Вход</p>
