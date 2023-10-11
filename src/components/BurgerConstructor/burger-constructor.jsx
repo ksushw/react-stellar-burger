@@ -121,7 +121,7 @@ export default function BurgerConstructor() {
               return (
                 <li key={index}>
                   <DragAndDropWrapper
-                    id={uuid4()}
+                    id={ingredient.uniqueId}
                     index={index}
                     className={styles.ingredient}
                     moveCard={moveCard}
