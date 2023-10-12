@@ -1,1 +1,2 @@
 export const OPEN_INFO_POPUP = "OPEN_INFO_POPUP";
+export const CLOSE_INFO_POPUP = "CLOSE_INFO_POPUP";

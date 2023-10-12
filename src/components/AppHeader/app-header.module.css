@@ -1,0 +1,34 @@
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background: var(--interface-modal-bg, #1c1c21);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr max-content;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  justify-content: center;
+}
+
+.link {
+  display: flex;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.profile {
+  align-self: flex-end;
+}
+
+.logo {
+  translate: -85.5px;
+}
+
+.active {
+  color: white;
+}
