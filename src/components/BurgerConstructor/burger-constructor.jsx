@@ -118,7 +118,7 @@ export default function BurgerConstructor() {
           <ul className={styles.fill + " custom-scroll"}>
             {order.map((ingredient, index) => {
               return (
-                <li key={index}>
+                <li key={ingredient.uniqueId}>
                   <DragAndDropWrapper
                     id={ingredient.uniqueId}
                     index={index}

@@ -27,6 +27,11 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
+  ws.onopen = (event) => {
+    console.log(ws);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <pre className={styles.container}>
