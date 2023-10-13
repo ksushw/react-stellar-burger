@@ -34,12 +34,12 @@ export default function Cart({ order }) {
 
   const rewriteStatus = () => {
     const status =
-      (order.status === "proceed" && "Создан") ||
-      (order.status === "done" && "Готовится") ||
+      (order.status === "created" && "Создан") ||
+      (order.status === "pending" && "Готовится") ||
       (order.status === "done" && "Выполнен");
     setStatus(status);
   };
-  console.log(status);
+
   useEffect(() => {
     findIngridients();
     rewriteStatus();

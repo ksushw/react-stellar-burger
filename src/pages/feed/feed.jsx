@@ -1,7 +1,20 @@
 import styles from "./feed.module.css";
 import CartList from "../../components/CardList/card-list";
+import { useSelector, shallowEqual } from "react-redux";
 
 export default function Feed() {
+  const { orders, total, totalToday } = useSelector(
+    (store) => ({
+      orders: store.wsReducer.orders,
+      total: store.wsReducer.total,
+      totalToday: store.wsReducer.totalToday,
+    }),
+    shallowEqual,
+  );
+
+  const done = orders.filter((order) => order.status === "done");
+  const pending = orders.filter((order) => order.status === "pending");
+
   return (
     <>
       <div className={styles.container + " pl-5 pr-5"}>
@@ -20,43 +33,53 @@ export default function Feed() {
                   styles.digit_small + " text text_type_digits-small mt-2"
                 }
               >
-                234
+                {done[0]?.number}
               </p>
               <p
                 className={
                   styles.digit_small + " text text_type_digits-small mt-2"
                 }
               >
-                234
+                {done[1]?.number}
               </p>
               <p
                 className={
                   styles.digit_small + " text text_type_digits-small mt-2"
                 }
               >
-                234
+                {done[2]?.number}
               </p>
             </div>
-            <div>
-              <h3 className="text text_type_main-medium mb-6">В работе:</h3>
-              <p className="text text_type_digits-small mt-2">3456</p>
-              <p className="text text_type_digits-small mt-2">456</p>
-              <p className="text text_type_digits-small mt-2">54678</p>
-            </div>
+            {pending[0] ? (
+              <div>
+                <h3 className="text text_type_main-medium mb-6">В работе:</h3>
+                <p className="text text_type_digits-small mt-2">
+                  {pending[0]?.number}
+                </p>
+                <p className="text text_type_digits-small mt-2">
+                  {pending[1]?.number}
+                </p>
+                <p className="text text_type_digits-small mt-2">
+                  {pending[2]?.number}
+                </p>
+              </div>
+            ) : null}
           </div>
           <div>
             <h3 className="text text_type_main-medium">
               Выполнено за все время:
             </h3>
             <p className={styles.digit + " text text_type_digits-large"}>
-              28 752
+              {total}
             </p>
           </div>
           <div>
             <h3 className="text text_type_main-medium">
               Выполнено за сегодня:
             </h3>
-            <p className={styles.digit + " text text_type_digits-large"}>138</p>
+            <p className={styles.digit + " text text_type_digits-large"}>
+              {totalToday}
+            </p>
           </div>
         </div>
       </div>
