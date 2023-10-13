@@ -8,6 +8,8 @@ import {
 const initialState = {
   wsConnected: false,
   orders: [],
+  total: 0,
+  totalToday: 0,
   error: undefined,
 };
 

@@ -10,8 +10,11 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
 } from "./actions/orders";
+import { getCookie } from "../utils/getCookie";
 
-const wsUrl = "wss://norma.nomoreparties.space/orders/all";
+const wsUrl = `wss://norma.nomoreparties.space/orders?token=${getCookie(
+  "accessToken",
+)}`;
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,
