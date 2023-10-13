@@ -27,7 +27,6 @@ export default function Cart({ order, path }) {
       (wholePrice, ingridient) => wholePrice + ingridient.price,
       0,
     );
-
     setIngridients(ingridients);
     setPrice(price);
   };

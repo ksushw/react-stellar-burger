@@ -66,7 +66,7 @@ function App() {
               element={<ProtectedRouteElement element={<History />} />}
             >
               <Route
-                path="/profile/orders:orderId"
+                path="/profile/orders/:orderId"
                 element={<ProtectedRouteElement element={<FeedDetails />} />}
               />
             </Route>

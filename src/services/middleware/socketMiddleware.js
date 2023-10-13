@@ -7,7 +7,6 @@ export const socketMiddleware = (wsUrl) => {
       const { type, payload, url } = action;
 
       if (type === "WS_CONNECTION_START") {
-        console.log(url);
         socket = new WebSocket(url);
       }
       if (socket) {

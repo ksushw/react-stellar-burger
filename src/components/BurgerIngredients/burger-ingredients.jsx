@@ -6,9 +6,8 @@ import IngredientItem from "../IngredientItem/ingredient-item";
 
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
-import { CHANGE_BUN } from "../../services/actions/constructor";
 import { useEffect } from "react";
-import { Outlet, NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function BurgerIngredients() {
   const [position, setPosition] = useState("bun");
