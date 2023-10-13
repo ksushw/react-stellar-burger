@@ -19,6 +19,7 @@ import Profile from "../../pages/profile/profile";
 import Page404 from "../../pages/Page404/Page404";
 import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
+import FeedDetails from "../../components/FeedDetails/feed-details";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
 
 function App() {
@@ -63,11 +64,21 @@ function App() {
             <Route
               path="/profile/orders"
               element={<ProtectedRouteElement element={<History />} />}
-            />
+            >
+              <Route
+                path="/profile/orders:orderId"
+                element={<ProtectedRouteElement element={<FeedDetails />} />}
+              />
+            </Route>
             <Route
               path="/feed"
               element={<ProtectedRouteElement element={<Feed />} />}
-            />
+            >
+              <Route
+                path="/feed/:orderId"
+                element={<ProtectedRouteElement element={<FeedDetails />} />}
+              />
+            </Route>
             <Route path="*" element={<Page404 />} />
           </Routes>
         </Router>

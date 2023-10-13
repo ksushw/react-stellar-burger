@@ -8,6 +8,7 @@ import {
 } from "../../services/actions/orders";
 
 import { wsUrl } from "../../services/store";
+import { Outlet } from "react-router-dom";
 
 export default function Feed() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export default function Feed() {
           Лента заказов
         </h2>
         <div className={styles.feed}>
-          <CartList orders={orders} />
+          <CartList orders={orders} path="/feed/" />
         </div>
         <div className={styles.numbers + " ml-10"}>
           <div className={styles.state}>
@@ -100,6 +101,7 @@ export default function Feed() {
           </div>
         </div>
       </div>
+      <Outlet />
     </>
   );
 }

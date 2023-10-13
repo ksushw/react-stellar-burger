@@ -10,6 +10,7 @@ import {
 } from "../../services/actions/orders";
 import { useEffect } from "react";
 import { wsPersonalUrl } from "../../services/store";
+import { Outlet } from "react-router-dom";
 
 export default function History() {
   const dispatch = useDispatch();
@@ -66,14 +67,10 @@ export default function History() {
           </p>
         </div>
         <div className={styles.feed}>
-          <CartList orders={orders} />
+          <CartList orders={orders} path="/profile/orders/" />
         </div>
       </div>
-
-      {createPortal(
-        <FeedDetails open={false} />,
-        document.getElementById("modals"),
-      )}
+      <Outlet />
     </>
   );
 }

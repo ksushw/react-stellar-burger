@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect, useState } from "react";
 
-export default function Cart({ order }) {
+export default function Cart({ order, path }) {
   const [ingridients, setIngridients] = useState([]);
   const [price, setPrice] = useState([]);
   const [status, setStatus] = useState("");
@@ -46,7 +46,7 @@ export default function Cart({ order }) {
   }, []);
 
   return (
-    <Link to="/111" className={styles.cart + " mb-4"}>
+    <Link to={path} className={styles.cart + " mb-4"}>
       <p className="text text_type_digits-default">{"#" + order.number}</p>
       <FormattedDate
         date={new Date(order.createdAt)}
@@ -91,7 +91,7 @@ export default function Cart({ order }) {
                 styles.ingridient_number + " text text_type_digits-default"
               }
             >
-              {ingridients.length}
+              {"+" + (ingridients.length - 4)}
             </p>
           </div>
         )}
