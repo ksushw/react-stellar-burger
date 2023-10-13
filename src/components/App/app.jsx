@@ -21,13 +21,10 @@ import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
 
-import { WS_CONNECTION_START } from "../../services/actions/orders";
-
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
-    dispatch({ type: WS_CONNECTION_START });
   }, [dispatch]);
 
   return (
@@ -35,7 +32,6 @@ function App() {
       <pre className={styles.container}>
         <Router>
           <AppHeader />
-
           <Routes>
             <Route
               path="/"

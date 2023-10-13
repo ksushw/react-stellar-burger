@@ -1,19 +1,32 @@
 import styles from "./feed.module.css";
+import { useEffect } from "react";
 import CartList from "../../components/CardList/card-list";
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../../services/actions/orders";
+
+import { wsUrl } from "../../services/store";
 
 export default function Feed() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START, url: wsUrl });
+    return dispatch({ type: WS_CONNECTION_CLOSED });
+  }, []);
+
   const { orders, total, totalToday } = useSelector(
     (store) => ({
-      orders: store.wsReducer.orders,
-      total: store.wsReducer.total,
-      totalToday: store.wsReducer.totalToday,
+      orders: store.ordersReducer.orders,
+      total: store.ordersReducer.total,
+      totalToday: store.ordersReducer.totalToday,
     }),
     shallowEqual,
   );
 
-  const done = orders.filter((order) => order.status === "done");
-  const pending = orders.filter((order) => order.status === "pending");
+  const done = orders?.filter((order) => order.status === "done");
+  const pending = orders?.filter((order) => order.status === "pending");
 
   return (
     <>
@@ -22,35 +35,39 @@ export default function Feed() {
           Лента заказов
         </h2>
         <div className={styles.feed}>
-          <CartList />
+          <CartList orders={orders} />
         </div>
         <div className={styles.numbers + " ml-10"}>
           <div className={styles.state}>
             <div>
               <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
-              <p
-                className={
-                  styles.digit_small + " text text_type_digits-small mt-2"
-                }
-              >
-                {done[0]?.number}
-              </p>
-              <p
-                className={
-                  styles.digit_small + " text text_type_digits-small mt-2"
-                }
-              >
-                {done[1]?.number}
-              </p>
-              <p
-                className={
-                  styles.digit_small + " text text_type_digits-small mt-2"
-                }
-              >
-                {done[2]?.number}
-              </p>
+              {done ? (
+                <>
+                  <p
+                    className={
+                      styles.digit_small + " text text_type_digits-small mt-2"
+                    }
+                  >
+                    {done[0]?.number}
+                  </p>
+                  <p
+                    className={
+                      styles.digit_small + " text text_type_digits-small mt-2"
+                    }
+                  >
+                    {done[1]?.number}
+                  </p>
+                  <p
+                    className={
+                      styles.digit_small + " text text_type_digits-small mt-2"
+                    }
+                  >
+                    {done[2]?.number}
+                  </p>
+                </>
+              ) : null}
             </div>
-            {pending[0] ? (
+            {pending ? (
               <div>
                 <h3 className="text text_type_main-medium mb-6">В работе:</h3>
                 <p className="text text_type_digits-small mt-2">

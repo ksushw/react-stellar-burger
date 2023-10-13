@@ -1,15 +1,14 @@
-import { Middleware, MiddlewareAPI } from "redux";
-
 export const socketMiddleware = (wsUrl) => {
   return (store) => {
     let socket = null;
 
     return (next) => (action) => {
       const { dispatch, getState } = store;
-      const { type, payload } = action;
+      const { type, payload, url } = action;
 
       if (type === "WS_CONNECTION_START") {
-        socket = new WebSocket(wsUrl);
+        console.log(url);
+        socket = new WebSocket(url);
       }
       if (socket) {
         socket.onopen = (event) => {
@@ -20,7 +19,7 @@ export const socketMiddleware = (wsUrl) => {
         };
         socket.onmessage = (event) => {
           const { data } = event;
-          dispatch({ type: "WS_GET_MESSAGE", payload: JSON.parse(data) });
+          dispatch({ type: "WS_GET_ORDERS", payload: JSON.parse(data) });
         };
         socket.onclose = (event) => {
           dispatch({ type: "WS_CONNECTION_CLOSED", payload: event });

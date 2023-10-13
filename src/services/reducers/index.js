@@ -5,7 +5,7 @@ import { orderReducer } from "./order";
 import { infoPopupReducer } from "./infoPopup";
 import { changePasswordReducer } from "./profile";
 import { regisrationReducer } from "./registration";
-import { wsReducer } from "./orders";
+import { ordersReducer } from "./orders";
 
 export const rootReducer = combineReducers({
   ingredientReducer,
@@ -14,5 +14,5 @@ export const rootReducer = combineReducers({
   infoPopupReducer,
   changePasswordReducer,
   regisrationReducer,
-  wsReducer,
+  ordersReducer,
 });
