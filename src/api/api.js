@@ -52,7 +52,10 @@ export async function userInfoRequest() {
   return window
     .fetchAuth(`${config.baseUrl}/auth/user`, {
       method: "GET",
-      headers: config.headers,
+      headers: {
+        ...config.headers,
+        authorization: "Bearer " + getCookie("accessToken"),
+      },
     })
     .then(_getResponseData)
     .then((res) => {
@@ -67,7 +70,10 @@ export async function userInfoChangeRequest(info) {
   return window
     .fetchAuth(`${config.baseUrl}/auth/user`, {
       method: "PATCH",
-      headers: config.headers,
+      headers: {
+        ...config.headers,
+        authorization: "Bearer " + getCookie("accessToken"),
+      },
       body: JSON.stringify(info),
     })
     .then(_getResponseData)

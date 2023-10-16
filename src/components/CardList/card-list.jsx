@@ -13,6 +13,7 @@ export default function CartList({ orders, path, wsUrl }) {
     dispatch({ type: WS_CONNECTION_START, url: wsUrl });
     return () => dispatch({ type: WS_CONNECTION_CLOSED });
   }, []);
+
   return (
     <>
       {!!orders?.length && (
