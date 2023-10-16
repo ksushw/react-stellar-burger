@@ -20,6 +20,7 @@ import Page404 from "../../pages/Page404/Page404";
 import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
 import FeedDetails from "../../components/FeedDetails/feed-details";
+import OrderPage from "../../pages/orderPage/orderPage";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
 
 function App() {
@@ -67,7 +68,7 @@ function App() {
             >
               <Route
                 path="/profile/orders/:orderId"
-                element={<ProtectedRouteElement element={<FeedDetails />} />}
+                element={<ProtectedRouteElement element={<OrderPage />} />}
               />
             </Route>
             <Route
@@ -76,7 +77,7 @@ function App() {
             >
               <Route
                 path="/feed/:orderId"
-                element={<ProtectedRouteElement element={<FeedDetails />} />}
+                element={<ProtectedRouteElement element={<OrderPage />} />}
               />
             </Route>
             <Route path="*" element={<Page404 />} />

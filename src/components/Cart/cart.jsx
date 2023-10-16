@@ -3,7 +3,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./cart.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -45,7 +45,7 @@ export default function Cart({ order, path }) {
   }, []);
 
   return (
-    <Link to={path} className={styles.cart + " mb-4"}>
+    <Link state={{ popup: true }} to={path} className={styles.cart + " mb-4"}>
       <p className="text text_type_digits-default">{"#" + order.number}</p>
       <FormattedDate
         date={new Date(order.createdAt)}

@@ -17,11 +17,7 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(
-    thunk,
-    socketMiddleware(wsUrl),
-    socketMiddleware(wsPersonalUrl),
-  ),
+  applyMiddleware(thunk, socketMiddleware(wsUrl)),
 );
 
 export const store = createStore(rootReducer, enhancer);
