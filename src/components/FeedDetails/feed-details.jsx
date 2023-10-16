@@ -6,10 +6,12 @@ import styles from "./feed-details.module.css";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
+import { uniq } from "lodash";
 
 export default function FeedDetails() {
   const [order, setOrder] = useState({});
   const [ingridients, setIngridients] = useState([]);
+  const [amount, setAmount] = useState([]);
   const [price, setPrice] = useState([]);
   const { orderId } = useParams();
 
@@ -25,12 +27,12 @@ export default function FeedDetails() {
     const item = orders.find((item) => {
       return item._id === orderId;
     });
-
     setOrder(item);
   }, [orders, orderId]);
 
   useEffect(() => {
-    const ingridients = order?.ingredients?.map(
+    const inicId = uniq(order?.ingredients);
+    const ingridients = inicId?.map(
       (id) => items.filter((item) => item._id === id)[0],
     );
     const price = ingridients?.reduce(
@@ -39,6 +41,14 @@ export default function FeedDetails() {
     );
     setIngridients(ingridients);
     setPrice(price);
+
+    const count = order?.ingredients?.reduce((accumulator, value) => {
+      return {
+        ...accumulator,
+        [value]: (accumulator[value] || 0) + 1,
+      };
+    }, {});
+    setAmount(count);
   }, [order]);
 
   const rewriteStatus = () => {
@@ -77,7 +87,7 @@ export default function FeedDetails() {
                       {ingridient.name}
                     </p>
                     <p className="text text_type_digits-default">
-                      1 x {ingridient.price}
+                      {amount[ingridient._id]} x {ingridient.price}
                     </p>
                     <CurrencyIcon type="primary" />
                   </div>
