@@ -1,25 +1,11 @@
 import styles from "./history.module.css";
 import { Link } from "react-router-dom";
-import { createPortal } from "react-dom";
 import CartList from "../../components/CardList/card-list";
-import FeedDetails from "../../components/FeedDetails/feed-details";
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/actions/orders";
-import { useEffect } from "react";
+import { useSelector, shallowEqual } from "react-redux";
 import { wsPersonalUrl } from "../../services/store";
 import { Outlet } from "react-router-dom";
 
 export default function History() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, url: wsPersonalUrl });
-    return dispatch({ type: WS_CONNECTION_CLOSED });
-  }, []);
-
   const orders = useSelector(
     (store) => store.ordersReducer.orders,
     shallowEqual,
@@ -67,7 +53,11 @@ export default function History() {
           </p>
         </div>
         <div className={styles.feed}>
-          <CartList orders={orders} path="/profile/orders/" />
+          <CartList
+            orders={orders}
+            path="/profile/orders/"
+            wsUrl={wsPersonalUrl}
+          />
         </div>
       </div>
       <Outlet />

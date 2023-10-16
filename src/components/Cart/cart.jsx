@@ -3,8 +3,8 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./cart.module.css";
-import { Link, Navigate } from "react-router-dom";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector, shallowEqual } from "react-redux";
 import { useEffect, useState } from "react";
 
 export default function Cart({ order, path }) {

@@ -19,7 +19,6 @@ import Profile from "../../pages/profile/profile";
 import Page404 from "../../pages/Page404/Page404";
 import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
-import FeedDetails from "../../components/FeedDetails/feed-details";
 import OrderPage from "../../pages/orderPage/orderPage";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
 

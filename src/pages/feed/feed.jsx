@@ -1,22 +1,11 @@
 import styles from "./feed.module.css";
-import { useEffect } from "react";
 import CartList from "../../components/CardList/card-list";
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/actions/orders";
+import { useSelector, shallowEqual } from "react-redux";
 
 import { wsUrl } from "../../services/store";
 import { Outlet } from "react-router-dom";
 
 export default function Feed() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, url: wsUrl });
-    return dispatch({ type: WS_CONNECTION_CLOSED });
-  }, []);
-
   const { orders, total, totalToday } = useSelector(
     (store) => ({
       orders: store.ordersReducer.orders,
@@ -36,7 +25,7 @@ export default function Feed() {
           Лента заказов
         </h2>
         <div className={styles.feed}>
-          <CartList orders={orders} path="/feed/" />
+          <CartList orders={orders} path="/feed/" wsUrl={wsUrl} />
         </div>
         <div className={styles.numbers + " ml-10"}>
           <div className={styles.state}>

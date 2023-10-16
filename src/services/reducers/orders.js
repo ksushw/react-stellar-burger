@@ -29,8 +29,7 @@ export const ordersReducer = (state = initialState, action) => {
       };
     case WS_CONNECTION_CLOSED:
       return {
-        ...state,
-        error: undefined,
+        ...initialState,
         wsConnected: false,
       };
     case WS_GET_ORDERS:
