@@ -9,6 +9,7 @@ import {
 } from "../../services/actions/userOrders";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useProvideAuth } from "../../components/UseAuth/useAuth";
 
 export default function History() {
   const orders = useSelector(
@@ -20,7 +21,11 @@ export default function History() {
     dispatch({ type: WS_CONNECTION_USER_START });
     return () => dispatch({ type: WS_CONNECTION_USER_CLOSED });
   }, []);
+  const { signOut } = useProvideAuth();
 
+  async function logout() {
+    await signOut();
+  }
   return (
     <>
       <div className={styles.container + " pl-5 pr-5"}>
@@ -50,6 +55,7 @@ export default function History() {
               styles.link +
               " text text_type_main-medium text_color_inactive pt-4 pb-4"
             }
+            onClick={(e) => logout(e)}
           >
             Выход
           </Link>
