@@ -4,12 +4,24 @@ import CartList from "../../components/CardList/card-list";
 import { useSelector, shallowEqual } from "react-redux";
 import { wsPersonalUrl } from "../../services/store";
 import { Outlet } from "react-router-dom";
+import { wsUrl } from "../../services/store";
+import {
+  WS_CONNECTION_USER_START,
+  WS_CONNECTION_USER_CLOSED,
+} from "../../services/actions/userOrders";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 export default function History() {
   const orders = useSelector(
-    (store) => store.ordersReducer.orders,
+    (store) => store.ordersUserReducer.orders,
     shallowEqual,
   );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_USER_START });
+    return () => dispatch({ type: WS_CONNECTION_USER_CLOSED });
+  }, []);
 
   return (
     <>
@@ -53,11 +65,7 @@ export default function History() {
           </p>
         </div>
         <div className={styles.feed}>
-          <CartList
-            orders={orders}
-            path="/profile/orders/"
-            wsUrl={wsPersonalUrl}
-          />
+          <CartList orders={orders} path="/profile/orders/" />
         </div>
       </div>
       <Outlet />

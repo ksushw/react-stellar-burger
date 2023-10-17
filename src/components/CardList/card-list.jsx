@@ -1,19 +1,7 @@
 import styles from "./card-list.module.css";
 import Cart from "../Cart/cart";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/actions/orders";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 
-export default function CartList({ orders, path, wsUrl }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, url: wsUrl });
-    return () => dispatch({ type: WS_CONNECTION_CLOSED });
-  }, []);
-
+export default function CartList({ orders, path }) {
   return (
     <>
       {!!orders?.length && (

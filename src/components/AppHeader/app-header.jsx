@@ -6,10 +6,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
-export default function AppHeader({ constructor, feed, profile }) {
+export default function AppHeader() {
   const [active, setActive] = useState("");
 
   useEffect(() => {

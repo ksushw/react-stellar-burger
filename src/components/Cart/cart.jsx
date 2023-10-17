@@ -12,12 +12,7 @@ export default function Cart({ order, path }) {
   const [price, setPrice] = useState([]);
   const [status, setStatus] = useState("");
 
-  const { items } = useSelector(
-    (store) => ({
-      items: store.ingredientReducer.items,
-    }),
-    shallowEqual,
-  );
+  const items = useSelector((store) => store.ingredientReducer.items);
 
   const findIngridients = () => {
     const ingridients = order.ingredients.map(
