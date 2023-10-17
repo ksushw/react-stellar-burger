@@ -1,8 +1,6 @@
 import styles from "./feed.module.css";
 import CartList from "../../components/CardList/card-list";
 import { useSelector, shallowEqual } from "react-redux";
-
-import { wsUrl } from "../../services/store";
 import { Outlet } from "react-router-dom";
 import {
   WS_CONNECTION_START,

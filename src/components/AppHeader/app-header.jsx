@@ -15,7 +15,7 @@ export default function AppHeader() {
   useEffect(() => {
     setActive(window.location.pathname.split("/")[1] || "constructor");
   }, []);
-  console.log(active);
+
   return (
     <header className={styles.header + " pt-4 pb-4 mt-10"} id="h">
       <div className={styles.container}>

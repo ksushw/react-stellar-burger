@@ -21,12 +21,21 @@ import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
 import OrderPage from "../../pages/orderPage/orderPage";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
+import { useSelector, shallowEqual } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  const { orders, userOrders } = useSelector(
+    (store) => ({
+      userOrders: store.ordersUserReducer.orders,
+      orders: store.ordersReducer.orders,
+    }),
+    shallowEqual,
+  );
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -67,7 +76,11 @@ function App() {
             >
               <Route
                 path="/profile/orders/:orderId"
-                element={<ProtectedRouteElement element={<OrderPage />} />}
+                element={
+                  <ProtectedRouteElement
+                    element={<OrderPage orders={userOrders} />}
+                  />
+                }
               />
             </Route>
             <Route
@@ -76,7 +89,11 @@ function App() {
             >
               <Route
                 path="/feed/:orderId"
-                element={<ProtectedRouteElement element={<OrderPage />} />}
+                element={
+                  <ProtectedRouteElement
+                    element={<OrderPage orders={orders} />}
+                  />
+                }
               />
             </Route>
             <Route path="*" element={<Page404 />} />

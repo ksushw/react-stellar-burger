@@ -3,11 +3,11 @@ import FeedDetails from "../../components/FeedDetails/feed-details";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal/modal";
 
-export default function OrderPage() {
+export default function OrderPage({ orders }) {
   const navigate = useNavigate();
   const location = useLocation();
   const popup = location.state?.popup;
-
+  // console.log(orders);
   return (
     <>
       {popup ? (
@@ -17,11 +17,11 @@ export default function OrderPage() {
             navigate(-1);
           }}
         >
-          <FeedDetails />
+          <FeedDetails orders={orders} />
         </Modal>
       ) : (
         <div className={styles.page + " pt-30"}>
-          <FeedDetails />
+          <FeedDetails orders={orders} />
         </div>
       )}
     </>

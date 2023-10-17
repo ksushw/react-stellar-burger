@@ -2,9 +2,7 @@ import styles from "./history.module.css";
 import { Link } from "react-router-dom";
 import CartList from "../../components/CardList/card-list";
 import { useSelector, shallowEqual } from "react-redux";
-import { wsPersonalUrl } from "../../services/store";
 import { Outlet } from "react-router-dom";
-import { wsUrl } from "../../services/store";
 import {
   WS_CONNECTION_USER_START,
   WS_CONNECTION_USER_CLOSED,

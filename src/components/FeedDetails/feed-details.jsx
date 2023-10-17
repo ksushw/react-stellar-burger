@@ -8,20 +8,14 @@ import { useEffect, useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { uniq } from "lodash";
 
-export default function FeedDetails() {
+export default function FeedDetails({ orders }) {
   const [order, setOrder] = useState({});
   const [ingridients, setIngridients] = useState([]);
   const [amount, setAmount] = useState([]);
   const [price, setPrice] = useState([]);
   const { orderId } = useParams();
 
-  const { items, orders } = useSelector(
-    (store) => ({
-      orders: store.ordersReducer.orders,
-      items: store.ingredientReducer.items,
-    }),
-    shallowEqual,
-  );
+  const items = useSelector((store) => store.ingredientReducer.items);
 
   useEffect(() => {
     const item = orders.find((item) => {
