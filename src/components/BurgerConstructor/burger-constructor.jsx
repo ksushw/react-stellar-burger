@@ -54,7 +54,7 @@ export default function BurgerConstructor() {
   const handleDrop = (item) => {
     const newIngredient = items.filter((element) => element._id == item.id)[0];
     if (newIngredient.type === "bun") {
-      dispatch({ type: CHANGE_BUN, bun: newIngredient });
+      dispatch({ type: CHANGE_BUN, item: newIngredient });
     } else {
       dispatch(addIngridient(newIngredient));
     }

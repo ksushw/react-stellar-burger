@@ -24,10 +24,10 @@ export const constructorReducer = (state = initialState, action) => {
     case CHANGE_BUN: {
       return {
         ...state,
-        bun: action.bun,
+        bun: action.item,
         price:
           state.price +
-          action.bun.price -
+          action.item.price -
           (state.bun.price ? state.bun.price : 0),
       };
     }
