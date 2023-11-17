@@ -16,7 +16,6 @@ import {
   WS_CONNECTION_USER_ERROR,
   WS_CONNECTION_USER_CLOSED,
   WS_GET_USER_ORDERS,
-  WS_SEND_USER_MESSAGE,
 } from "./actions/userOrders";
 
 import { getCookie } from "../utils/getCookie";
@@ -38,7 +37,6 @@ const wsActions = {
 
 const wsUserActions = {
   wsInit: WS_CONNECTION_USER_START,
-  wsSendMessage: WS_SEND_USER_MESSAGE,
   onOpen: WS_CONNECTION_USER_SUCCESS,
   onClose: WS_CONNECTION_USER_CLOSED,
   onError: WS_CONNECTION_USER_ERROR,
