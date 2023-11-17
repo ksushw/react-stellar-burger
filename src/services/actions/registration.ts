@@ -2,16 +2,61 @@ import { getCookie } from "../../utils/getCookie";
 import { setCookie } from "../../utils/setCookie";
 import { config } from "../../utils/config";
 import { _getResponseData } from "../../utils/get-response-data";
+import { Dispatch } from "react";
 
-export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
-export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
-export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
-export const REGISTRATION_OUT = "REGISTRATION_OUT";
-export const REGISTRATION_SET_DATA = "REGISTRATION_SET_DATA";
-export const REGISTRATION_AUTH_CHANGE = "REGISTRATION_AUTH_CHANGE";
+export const REGISTRATION_REQUEST: "REGISTRATION_REQUEST" =
+  "REGISTRATION_REQUEST";
+export const REGISTRATION_SUCCESS: "REGISTRATION_SUCCESS" =
+  "REGISTRATION_SUCCESS";
+export const REGISTRATION_FAILED: "REGISTRATION_FAILED" = "REGISTRATION_FAILED";
+export const REGISTRATION_OUT: "REGISTRATION_OUT" = "REGISTRATION_OUT";
+export const REGISTRATION_SET_DATA: "REGISTRATION_SET_DATA" =
+  "REGISTRATION_SET_DATA";
+export const REGISTRATION_AUTH_CHANGE: "REGISTRATION_AUTH_CHANGE" =
+  "REGISTRATION_AUTH_CHANGE";
 
-export function registrationRequest(email, password, name) {
-  return function (dispatch) {
+export interface IRegistrationRequest {
+  readonly type: typeof REGISTRATION_REQUEST;
+}
+
+export interface IRegistrationSuccess {
+  readonly type: typeof REGISTRATION_SUCCESS;
+  readonly data: object;
+}
+
+export interface IRegistrationFailed {
+  readonly type: typeof REGISTRATION_FAILED;
+  readonly message?: any;
+}
+
+export interface IRegistrationOut {
+  readonly type: typeof REGISTRATION_OUT;
+}
+
+export interface IRegistrationSetData {
+  readonly type: typeof REGISTRATION_SET_DATA;
+  readonly user: object;
+}
+
+export interface IRegistrationAuthChange {
+  readonly type: typeof REGISTRATION_AUTH_CHANGE;
+  readonly status: boolean;
+}
+
+export type TUserOrdersActions =
+  | IRegistrationRequest
+  | IRegistrationSuccess
+  | IRegistrationFailed
+  | IRegistrationOut
+  | IRegistrationSetData
+  | IRegistrationAuthChange;
+
+export function registrationRequest(
+  email: string,
+  password: string,
+  name: string,
+) {
+  return function (dispatch: Dispatch<TUserOrdersActions>) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -53,8 +98,8 @@ export function registrationRequest(email, password, name) {
   };
 }
 
-export function autorizationRequest(email, password) {
-  return function (dispatch) {
+export function autorizationRequest(email: string, password: string) {
+  return function (dispatch: Dispatch<TUserOrdersActions>) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });

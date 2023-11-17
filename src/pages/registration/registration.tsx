@@ -6,27 +6,35 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./registration.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent, Dispatch } from "react";
 import { registrationRequest } from "../../services/actions/registration";
 import { useSelector, useDispatch } from "react-redux";
+import { IUser } from "../../utils/types";
 
-function sdfg(e, setFunction) {
+function sdfg(
+  e: ChangeEvent<HTMLInputElement>,
+  setFunction: Dispatch<string>,
+): void {
   setFunction(e.target.value);
 }
 
 export default function Registration() {
-  const [email, setNewEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [email, setNewEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
   const dispatch = useDispatch();
 
-  async function makeRegistration(event) {
+  async function makeRegistration(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
     dispatch(registrationRequest(email, password, name));
   }
 
-  const user = useSelector((store) => store.regisrationReducer.user);
+  const user: IUser = useSelector(
+    (store: any) => store.regisrationReducer.user,
+  );
 
   const navigate = useNavigate();
 
