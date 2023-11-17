@@ -12,20 +12,21 @@ import { useEffect } from "react";
 export default function Feed() {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector(
-    (store) => ({
+    (store: any) => ({
       orders: store.ordersReducer.orders,
       total: store.ordersReducer.total,
       totalToday: store.ordersReducer.totalToday,
     }),
     shallowEqual,
   );
+
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });
-    return () => dispatch({ type: WS_CONNECTION_CLOSED });
+    return (): any => dispatch({ type: WS_CONNECTION_CLOSED });
   }, []);
 
-  const done = orders?.filter((order) => order.status === "done");
-  const pending = orders?.filter((order) => order.status === "pending");
+  const done = orders?.filter((order: any) => order.status === "done");
+  const pending = orders?.filter((order: any) => order.status === "pending");
 
   return (
     <>

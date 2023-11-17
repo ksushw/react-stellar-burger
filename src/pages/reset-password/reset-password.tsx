@@ -5,30 +5,36 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, ChangeEvent, Dispatch, FormEvent } from "react";
 import { resetPassvordApi } from "../../api/api";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { RESTORE_PASSWORD_CLEAN } from "../../services/actions/profile";
 
-function sdfg(e, setFunction) {
+function sdfg(
+  e: ChangeEvent<HTMLInputElement>,
+  setFunction: Dispatch<string>,
+): void {
   setFunction(e.target.value);
 }
 
 export default function ResetPassword() {
-  const [newPassword, setNewPassword] = useState("");
-  const [code, setcode] = useState("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [code, setcode] = useState<string>("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { isPasswordChanged } = useSelector(
-    (store) => ({
+    (store: any) => ({
       isPasswordChanged: store.changePasswordReducer.isPasswordChanged,
     }),
     shallowEqual,
   );
-  async function addNewPassword(event) {
+
+  async function addNewPassword(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
-    const res = await resetPassvordApi(newPassword, code);
+    const res: any = await resetPassvordApi(newPassword, code);
     if (res.success) {
       dispatch({
         type: RESTORE_PASSWORD_CLEAN,
