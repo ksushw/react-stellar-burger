@@ -66,6 +66,7 @@ export default function BurgerConstructor() {
     if (isAuth) {
       const orderIds = [bun._id];
       filling.map((ingredient) => orderIds.push(ingredient._id));
+      console.log(orderIds);
       dispatch(sendOrder(orderIds));
       setVisibleOrderDetails(true);
       dispatch({ type: REMOVE_ORDER });

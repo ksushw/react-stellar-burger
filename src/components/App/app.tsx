@@ -30,7 +30,7 @@ function App() {
   }, [dispatch]);
 
   const { orders, userOrders } = useSelector(
-    (store) => ({
+    (store: any) => ({
       userOrders: store.ordersUserReducer.orders,
       orders: store.ordersReducer.orders,
     }),
