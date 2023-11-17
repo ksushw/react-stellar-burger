@@ -28,14 +28,14 @@ export interface IRestorePasswordClean {
   readonly type: typeof RESTORE_PASSWORD_CLEAN;
 }
 
-export type TUserOrdersActions =
+export type TRestorePasswordActions =
   | IRestorePasswordRequest
   | IRestorePasswordSuccess
   | IRestorePasswordFailed
   | IRestorePasswordClean;
 
 export function profileDataChange(email: string) {
-  return function (dispatch: Dispatch<TUserOrdersActions>) {
+  return function (dispatch: Dispatch<TRestorePasswordActions>) {
     dispatch({
       type: RESTORE_PASSWORD_REQUEST,
     });

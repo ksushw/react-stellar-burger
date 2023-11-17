@@ -6,7 +6,7 @@ import {
   REGISTRATION_SET_DATA,
   REGISTRATION_AUTH_CHANGE,
 } from "../actions/registration";
-import { TUserOrdersActions } from "../actions/registration";
+import { TRegistrationActions } from "../actions/registration";
 
 const initialState = {
   user: {},
@@ -18,7 +18,7 @@ const initialState = {
 
 export const regisrationReducer = (
   state = initialState,
-  action: TUserOrdersActions,
+  action: TRegistrationActions,
 ) => {
   switch (action.type) {
     case REGISTRATION_REQUEST: {

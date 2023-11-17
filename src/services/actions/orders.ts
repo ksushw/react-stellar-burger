@@ -35,7 +35,7 @@ export interface IGetOrders {
   };
 }
 
-export type TUserOrdersActions =
+export type TOrdersActions =
   | IConnectionStart
   | IConnectionSuccess
   | IConnectionError

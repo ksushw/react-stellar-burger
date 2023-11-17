@@ -13,7 +13,8 @@ import { useState, useCallback, useEffect } from "react";
 
 import { sendOrder } from "../../services/actions/order";
 
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import {
   REMOVE_ORDER,
   DELETE_FILLING,

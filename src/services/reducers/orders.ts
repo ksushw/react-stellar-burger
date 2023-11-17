@@ -4,7 +4,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
 } from "../actions/orders";
-import { TUserOrdersActions } from "../actions/orders";
+import { TOrdersActions } from "../actions/orders";
 import { IIngredient } from "../../utils/types";
 
 type TInitialState = {
@@ -27,10 +27,7 @@ const initialState: TInitialState = {
   error: undefined,
 };
 
-export const ordersReducer = (
-  state = initialState,
-  action: TUserOrdersActions,
-) => {
+export const ordersReducer = (state = initialState, action: TOrdersActions) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

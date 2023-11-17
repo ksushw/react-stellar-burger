@@ -3,7 +3,6 @@ import styles from "./app.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredients } from "../../services/actions/ingredients";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,7 +20,8 @@ import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
 import OrderPage from "../../pages/orderPage/orderPage";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
-import { useSelector, shallowEqual } from "react-redux";
+import { shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 
 function App() {
   const dispatch = useDispatch();

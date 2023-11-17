@@ -1,12 +1,12 @@
 import styles from "./feed.module.css";
 import CartList from "../../components/CardList/card-list";
-import { useSelector, shallowEqual } from "react-redux";
+import { shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { Outlet } from "react-router-dom";
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/actions/orders";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 export default function Feed() {

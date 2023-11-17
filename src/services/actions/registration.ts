@@ -43,7 +43,7 @@ export interface IRegistrationAuthChange {
   readonly status: boolean;
 }
 
-export type TUserOrdersActions =
+export type TRegistrationActions =
   | IRegistrationRequest
   | IRegistrationSuccess
   | IRegistrationFailed
@@ -56,7 +56,7 @@ export function registrationRequest(
   password: string,
   name: string,
 ) {
-  return function (dispatch: Dispatch<TUserOrdersActions>) {
+  return function (dispatch: Dispatch<TRegistrationActions>) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -99,7 +99,7 @@ export function registrationRequest(
 }
 
 export function autorizationRequest(email: string, password: string) {
-  return function (dispatch: Dispatch<TUserOrdersActions>) {
+  return function (dispatch: Dispatch<TRegistrationActions>) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
