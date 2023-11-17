@@ -5,14 +5,25 @@ import {
   CHANGE_BUN,
   EDIT_ORDER_DND,
 } from "../actions/constructor";
+import { IIngredient } from "../../utils/types";
+import { TConstructorActions } from "../actions/constructor";
 
-const initialState = {
-  bun: {},
+type TInitialState = {
+  bun: IIngredient | null;
+  fillings: ReadonlyArray<IIngredient>;
+  price: number;
+};
+
+const initialState: TInitialState = {
+  bun: null,
   fillings: [],
   price: 0,
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+  state = initialState,
+  action: TConstructorActions,
+) => {
   switch (action.type) {
     case ADD_FILLING: {
       return {
@@ -28,7 +39,7 @@ export const constructorReducer = (state = initialState, action) => {
         price:
           state.price +
           action.item.price -
-          (state.bun.price ? state.bun.price : 0),
+          (state.bun?.price ? state.bun?.price : 0),
       };
     }
     case DELETE_FILLING: {

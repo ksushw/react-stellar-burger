@@ -114,7 +114,7 @@ export default function BurgerIngredients() {
                   <IngredientItem
                     ingredient={ingredient}
                     key={ingredient._id}
-                    count={ingredient.name === bun.name && 1}
+                    count={ingredient.name === bun?.name && 1}
                     onClick={openPopup}
                   />
                 );

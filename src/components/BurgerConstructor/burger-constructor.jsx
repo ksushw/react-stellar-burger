@@ -64,9 +64,8 @@ export default function BurgerConstructor() {
   const navigate = useNavigate();
   const makeOrder = async () => {
     if (isAuth) {
-      const orderIds = [bun._id];
+      const orderIds = [bun?._id];
       filling.map((ingredient) => orderIds.push(ingredient._id));
-      console.log(orderIds);
       dispatch(sendOrder(orderIds));
       setVisibleOrderDetails(true);
       dispatch({ type: REMOVE_ORDER });
@@ -99,12 +98,12 @@ export default function BurgerConstructor() {
       ref={dropTarget}
     >
       <div className={styles.order}>
-        {!Object.keys(bun).length && !order.length && (
+        {!bun && !order.length && (
           <p className={styles.tip + " text text_type_main-default mt-15"}>
             Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
           </p>
         )}
-        {!!Object.keys(bun).length && (
+        {bun && (
           <div className={styles.bun}>
             <ConstructorElement
               type="top"
@@ -143,7 +142,7 @@ export default function BurgerConstructor() {
           </ul>
         )}
 
-        {!!Object.keys(bun).length && (
+        {bun && (
           <div className={styles.bun}>
             <ConstructorElement
               type="bottom"
@@ -160,7 +159,7 @@ export default function BurgerConstructor() {
         <p className="text text_type_digits-medium mr-2">{price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      {!!Object.keys(bun).length && order[0] && (
+      {bun && order[0] && (
         <div className="mt-5">
           <Button
             htmlType="button"

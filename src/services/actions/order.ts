@@ -16,7 +16,7 @@ export interface ISendOrderRequest {
 
 export interface ISendOrderSuccess {
   readonly type: typeof SEND_ORDER_SUCCESS;
-  readonly order: object;
+  readonly order: { number: number };
 }
 
 export interface ISendOrderFailed {
@@ -28,7 +28,7 @@ export type TSendOrderActions =
   | ISendOrderSuccess
   | ISendOrderFailed;
 
-export function sendOrder(order: ReadonlyArray<string>) {
+export function sendOrder(order: ReadonlyArray<string>): any {
   return function (dispatch: Dispatch<TSendOrderActions>) {
     dispatch({
       type: SEND_ORDER_REQUEST,

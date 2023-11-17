@@ -3,14 +3,24 @@ import {
   SEND_ORDER_SUCCESS,
   SEND_ORDER_FAILED,
 } from "../actions/order";
+import { TSendOrderActions } from "../actions/order";
 
-const initialState = {
-  order: {},
+type TInitialState = {
+  order: { number: number } | null;
+  orderRequest: boolean;
+  orderFailed: boolean;
+};
+
+const initialState: TInitialState = {
+  order: null,
   orderRequest: false,
   orderFailed: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (
+  state = initialState,
+  action: TSendOrderActions,
+) => {
   switch (action.type) {
     case SEND_ORDER_REQUEST: {
       return {
@@ -21,7 +31,7 @@ export const orderReducer = (state = initialState, action) => {
     case SEND_ORDER_SUCCESS: {
       return {
         ...state,
-        order: action.order.number,
+        order: action.order?.number,
         orderRequest: false,
       };
     }

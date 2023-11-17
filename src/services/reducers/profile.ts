@@ -4,6 +4,14 @@ import {
   RESTORE_PASSWORD_FAILED,
   RESTORE_PASSWORD_CLEAN,
 } from "../actions/profile";
+import { TUserOrdersActions } from "../actions/profile";
+
+type IInitialState = {
+  changePasswordMessage: string;
+  isPasswordChanged: boolean;
+  changePasswordRequest: boolean;
+  changePasswordFailed: boolean;
+};
 
 const initialState = {
   changePasswordMessage: "",
@@ -12,7 +20,10 @@ const initialState = {
   changePasswordFailed: false,
 };
 
-export const changePasswordReducer = (state = initialState, action) => {
+export const changePasswordReducer = (
+  state = initialState,
+  action: TUserOrdersActions,
+) => {
   switch (action.type) {
     case RESTORE_PASSWORD_REQUEST: {
       return {

@@ -7,7 +7,7 @@ export default function OrderPage({ orders }) {
   const navigate = useNavigate();
   const location = useLocation();
   const popup = location.state?.popup;
-  // console.log(orders);
+
   return (
     <>
       {popup ? (

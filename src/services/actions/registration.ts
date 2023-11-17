@@ -21,7 +21,7 @@ export interface IRegistrationRequest {
 
 export interface IRegistrationSuccess {
   readonly type: typeof REGISTRATION_SUCCESS;
-  readonly data: object;
+  readonly user: object;
 }
 
 export interface IRegistrationFailed {
@@ -74,7 +74,7 @@ export function registrationRequest(
         if (res && res.success) {
           dispatch({
             type: REGISTRATION_SUCCESS,
-            data: res,
+            user: res.data.user,
           });
           setCookie("accessToken", res.accessToken.replace(/Bearer /, ""), {
             expires: 60 * 19,
@@ -116,7 +116,7 @@ export function autorizationRequest(email: string, password: string) {
         if (res && res.success) {
           dispatch({
             type: REGISTRATION_SUCCESS,
-            data: res,
+            user: res.data.user,
           });
 
           setCookie("accessToken", res.accessToken.replace(/Bearer /, ""), {
@@ -141,7 +141,7 @@ export function autorizationRequest(email: string, password: string) {
   };
 }
 
-export async function refreshToken() {
+export async function refreshToken(): Promise<void> {
   const res = await fetch(`${config.baseUrl}/auth/token`, {
     method: "POST",
     headers: config.headers,

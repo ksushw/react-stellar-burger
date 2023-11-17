@@ -6,6 +6,7 @@ import {
   REGISTRATION_SET_DATA,
   REGISTRATION_AUTH_CHANGE,
 } from "../actions/registration";
+import { TUserOrdersActions } from "../actions/registration";
 
 const initialState = {
   user: {},
@@ -15,7 +16,10 @@ const initialState = {
   autorizationFailed: false,
 };
 
-export const regisrationReducer = (state = initialState, action) => {
+export const regisrationReducer = (
+  state = initialState,
+  action: TUserOrdersActions,
+) => {
   switch (action.type) {
     case REGISTRATION_REQUEST: {
       return {
@@ -27,7 +31,7 @@ export const regisrationReducer = (state = initialState, action) => {
     case REGISTRATION_SUCCESS: {
       return {
         ...state,
-        user: action.data.user,
+        user: action.user,
         autorizationRequest: false,
         tokenPending: false,
         isAuth: true,

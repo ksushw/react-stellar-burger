@@ -1,10 +1,18 @@
 import { OPEN_INFO_POPUP, CLOSE_INFO_POPUP } from "../actions/infoPopup";
+import { TInfoPopupActions } from "../actions/infoPopup";
 
-const initialState = {
+type TInitialState = {
+  selectedOrderPopupIng: boolean;
+};
+
+const initialState: TInitialState = {
   selectedOrderPopupIng: false,
 };
 
-export const infoPopupReducer = (state = initialState, action) => {
+export const infoPopupReducer = (
+  state = initialState,
+  action: TInfoPopupActions,
+) => {
   switch (action.type) {
     case OPEN_INFO_POPUP: {
       return {

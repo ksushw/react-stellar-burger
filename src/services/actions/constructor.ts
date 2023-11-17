@@ -28,6 +28,7 @@ export interface IRemoveOrder {
 
 export interface IEditOrderDnd {
   readonly type: typeof EDIT_ORDER_DND;
+  order: ReadonlyArray<IIngredient>;
 }
 
 export type TConstructorActions =
