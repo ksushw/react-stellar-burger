@@ -28,9 +28,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    console.log(isAuth);
-    if (user) {
-      console.log(path);
+    if (isAuth) {
       if (path) {
         navigate(path, { replace: false });
       } else {

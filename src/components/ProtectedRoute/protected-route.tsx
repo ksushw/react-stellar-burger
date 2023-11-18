@@ -15,12 +15,7 @@ export const ProtectedRouteElement = ({
   const currentPath = location.pathname;
   const { isAuthorized } = useProvideAuth();
 
-  const { isAuth } = useSelector(
-    (store) => ({
-      isAuth: store.regisrationReducer.isAuth,
-    }),
-    shallowEqual,
-  );
+  const isAuth = useSelector((store) => store.regisrationReducer.isAuth);
 
   async function getAuth() {
     await isAuthorized();

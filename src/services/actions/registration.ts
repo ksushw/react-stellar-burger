@@ -117,7 +117,6 @@ export const autorizationRequest: AppThunk = (
       .then(_getResponseData)
       .then((res) => {
         if (res && res.success) {
-          console.log(res.user);
           dispatch({
             type: REGISTRATION_SUCCESS,
             user: res.user,
