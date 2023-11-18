@@ -22,11 +22,10 @@ export default function Cart({ order, path }: { order: IOrder; path: string }) {
 
   const findIngridients = () => {
     const ingridients = order.ingredients.map(
-      (id: string) => items.filter((item: IIngredient) => item._id === id)[0],
+      (id) => items.filter((item) => item._id === id)[0],
     );
     const price = ingridients.reduce(
-      (wholePrice: number, ingridient: IIngredient) =>
-        wholePrice + ingridient.price,
+      (wholePrice, ingridient) => wholePrice + ingridient.price,
       0,
     );
     setIngridients(ingridients);

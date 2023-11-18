@@ -55,9 +55,7 @@ export default function BurgerConstructor() {
   });
 
   const handleDrop = (item: { id: string }) => {
-    const newIngredient = items.filter(
-      (element: IIngredient) => element._id == item.id,
-    )[0];
+    const newIngredient = items.filter((element) => element._id == item.id)[0];
     if (newIngredient.type === "bun") {
       dispatch({ type: CHANGE_BUN, item: newIngredient });
     } else {
@@ -70,7 +68,7 @@ export default function BurgerConstructor() {
   const makeOrder = async () => {
     if (isAuth && bun?._id) {
       const orderIds = [bun?._id];
-      filling.map((ingredient: IIngredient) => orderIds.push(ingredient._id));
+      filling.map((ingredient) => orderIds.push(ingredient._id));
       dispatch(sendOrder(orderIds));
       setVisibleOrderDetails(true);
       dispatch({ type: REMOVE_ORDER });

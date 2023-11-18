@@ -31,9 +31,9 @@ export default function BurgerIngredients() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setBuns(items.filter((item: IIngredient) => item.type === "bun"));
-    setMain(items.filter((item: IIngredient) => item.type === "main"));
-    setSauses(items.filter((item: IIngredient) => item.type === "sauce"));
+    setBuns(items.filter((item) => item.type === "bun"));
+    setMain(items.filter((item) => item.type === "main"));
+    setSauses(items.filter((item) => item.type === "sauce"));
   }, [items, dispatch]);
   const navigate = useNavigate();
   function openPopup(ingredient: IIngredient) {
@@ -74,7 +74,7 @@ export default function BurgerIngredients() {
   function count(): { [key: string]: number | null } {
     const amount: Record<string, number> = {};
     if (filling[0]) {
-      filling.map((ingredient: IIngredient) =>
+      filling.map((ingredient) =>
         amount[ingredient.name]
           ? (amount[ingredient.name] = amount[ingredient.name] + 1)
           : (amount[ingredient.name] = 1),
