@@ -19,7 +19,9 @@ import Profile from "../../pages/profile/profile";
 import Page404 from "../../pages/Page404/Page404";
 import Feed from "../../pages/feed/feed";
 import IngridientPage from "../../pages/ingridient-page/ingridient-page";
+import OrderPage from "../../pages/orderPage/orderPage";
 import { ProtectedRouteElement } from "../ProtectedRoute/protected-route";
+import { useSelector, shallowEqual } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,17 +29,21 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
-  ws.onopen = (event) => {
-    console.log(ws);
-  };
+
+  const { orders, userOrders } = useSelector(
+    (store) => ({
+      userOrders: store.ordersUserReducer.orders,
+      orders: store.ordersReducer.orders,
+    }),
+    shallowEqual,
+  );
+
 
   return (
     <DndProvider backend={HTML5Backend}>
       <pre className={styles.container}>
         <Router>
           <AppHeader />
-
           <Routes>
             <Route
               path="/"
@@ -69,11 +75,29 @@ function App() {
             <Route
               path="/profile/orders"
               element={<ProtectedRouteElement element={<History />} />}
-            />
+            >
+              <Route
+                path="/profile/orders/:orderId"
+                element={
+                  <ProtectedRouteElement
+                    element={<OrderPage orders={userOrders} />}
+                  />
+                }
+              />
+            </Route>
             <Route
               path="/feed"
               element={<ProtectedRouteElement element={<Feed />} />}
-            />
+            >
+              <Route
+                path="/feed/:orderId"
+                element={
+                  <ProtectedRouteElement
+                    element={<OrderPage orders={orders} />}
+                  />
+                }
+              />
+            </Route>
             <Route path="*" element={<Page404 />} />
           </Routes>
         </Router>

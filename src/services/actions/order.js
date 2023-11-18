@@ -1,6 +1,7 @@
 import { config } from "../../utils/config";
 import { _getResponseData } from "../../utils/get-response-data";
 import { errorHandler } from "../../utils/erorHandler";
+import { getCookie } from "../../utils/getCookie";
 
 errorHandler();
 
@@ -16,7 +17,10 @@ export function sendOrder(order) {
     window
       .fetchAuth(`${config.baseUrl}/orders`, {
         method: "POST",
-        headers: config.headers,
+        headers: {
+          ...config.headers,
+          authorization: "Bearer " + getCookie("accessToken"),
+        },
         body: JSON.stringify({
           ingredients: order,
         }),
