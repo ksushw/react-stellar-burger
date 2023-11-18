@@ -29,6 +29,7 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
+
   const { orders, userOrders } = useSelector(
     (store) => ({
       userOrders: store.ordersUserReducer.orders,
@@ -36,6 +37,7 @@ function App() {
     }),
     shallowEqual,
   );
+
 
   return (
     <DndProvider backend={HTML5Backend}>
