@@ -1,13 +1,21 @@
 import { getCookie } from "../../utils/getCookie";
 
-export const socketMiddleware = (
+import { Middleware } from "redux";
+import { RootState } from "../types";
+
+type socketMiddlewareProps = (
   wsUrl: string,
   wsActions: { [key: string]: string },
-) => {
-  return (store: any) => {
+) => Middleware<{}, any, any>;
+
+export const socketMiddleware: socketMiddlewareProps = (
+  wsUrl,
+  wsActions,
+): Middleware<{}, RootState> => {
+  return (store) => {
     let socket: WebSocket | null = null;
 
-    return (next: any) => (action: any) => {
+    return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
