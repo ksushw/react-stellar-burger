@@ -9,7 +9,7 @@ import {
 import { TRegistrationActions } from "../actions/registration";
 
 type IInitialState = {
-  user: {};
+  user: { name: string; email: string } | {};
   isAuth: boolean;
   tokenPending: boolean;
   autorizationRequest: boolean;

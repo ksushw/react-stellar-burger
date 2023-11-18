@@ -30,7 +30,7 @@ export interface IOrder {
 
 export interface IOrders {
   wsConected?: boolean;
-  orders: ReadonlyArray<IOrder> | null;
+  orders: ReadonlyArray<IOrder>;
   total: number;
   totalToday: number;
 }

@@ -8,8 +8,7 @@ import styles from "./registration.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, FormEvent, ChangeEvent, Dispatch } from "react";
 import { registrationRequest } from "../../services/actions/registration";
-import { useSelector, useDispatch } from "react-redux";
-import { IUser } from "../../utils/types";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 
 function sdfg(
   e: ChangeEvent<HTMLInputElement>,
@@ -32,12 +31,12 @@ export default function Registration() {
     dispatch(registrationRequest(email, password, name));
   }
 
-  const user: IUser = useSelector((store) => store.regisrationReducer.user);
+  const user = useSelector((store) => store.regisrationReducer.user);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.name) {
+    if (Object.keys(user).length === 0) {
       navigate("/");
     }
   }, [user, navigate]);

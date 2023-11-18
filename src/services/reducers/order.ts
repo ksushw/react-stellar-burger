@@ -6,7 +6,7 @@ import {
 import { TSendOrderActions } from "../actions/order";
 
 type TInitialState = {
-  order: { number: number } | null;
+  order: number | null;
   orderRequest: boolean;
   orderFailed: boolean;
 };
@@ -20,7 +20,7 @@ const initialState: TInitialState = {
 export const orderReducer = (
   state = initialState,
   action: TSendOrderActions,
-) => {
+): TInitialState => {
   switch (action.type) {
     case SEND_ORDER_REQUEST: {
       return {

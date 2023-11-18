@@ -7,7 +7,7 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from "../../services/actions/orders";
-import { useEffect } from "react";
+import { useEffect, Dispatch } from "react";
 
 export default function Feed() {
   const dispatch = useDispatch();
@@ -20,9 +20,9 @@ export default function Feed() {
     shallowEqual,
   );
 
-  useEffect(() => {
+  useEffect((): Dispatch<void> => {
     dispatch({ type: WS_CONNECTION_START });
-    return (): any => dispatch({ type: WS_CONNECTION_CLOSED });
+    return () => dispatch({ type: WS_CONNECTION_CLOSED });
   }, []);
 
   const done = orders?.filter((order) => order.status === "done");
