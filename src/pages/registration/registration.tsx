@@ -9,13 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, FormEvent, ChangeEvent, Dispatch } from "react";
 import { registrationRequest } from "../../services/actions/registration";
 import { useSelector, useDispatch } from "../../services/types/hooks";
-
-function sdfg(
-  e: ChangeEvent<HTMLInputElement>,
-  setFunction: Dispatch<string>,
-): void {
-  setFunction(e.target.value);
-}
+import handleChange from "../../utils/handleChange";
 
 export default function Registration() {
   const [email, setNewEmail] = useState<string>("");
@@ -49,7 +43,7 @@ export default function Registration() {
           <Input
             type={"text"}
             placeholder={"Имя"}
-            onChange={(e) => sdfg(e, setName)}
+            onChange={(e) => handleChange(e, setName)}
             name={"name"}
             error={false}
             errorText={"Ошибка"}
@@ -58,14 +52,14 @@ export default function Registration() {
             value={name}
           />
           <EmailInput
-            onChange={(e) => sdfg(e, setNewEmail)}
+            onChange={(e) => handleChange(e, setNewEmail)}
             name={"email"}
             isIcon={false}
             extraClass="mt-6"
             value={email}
           />
           <PasswordInput
-            onChange={(e) => sdfg(e, setPassword)}
+            onChange={(e) => handleChange(e, setPassword)}
             name={"password"}
             extraClass="mt-6"
             value={password}

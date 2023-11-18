@@ -9,13 +9,7 @@ import { useState, ChangeEvent, Dispatch, FormEvent } from "react";
 import { resetPassvordApi } from "../../api/api";
 import { useSelector, useDispatch } from "../../services/types/hooks";
 import { RESTORE_PASSWORD_CLEAN } from "../../services/actions/profile";
-
-function sdfg(
-  e: ChangeEvent<HTMLInputElement>,
-  setFunction: Dispatch<string>,
-): void {
-  setFunction(e.target.value);
-}
+import handleChange from "../../utils/handleChange";
 
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState<string>("");
@@ -52,7 +46,7 @@ export default function ResetPassword() {
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <form className={styles.form + " mb-20"} onSubmit={addNewPassword}>
           <PasswordInput
-            onChange={(e) => sdfg(e, setNewPassword)}
+            onChange={(e) => handleChange(e, setNewPassword)}
             placeholder="Введите новый пароль"
             name={"password"}
             extraClass="mt-6"
@@ -61,7 +55,7 @@ export default function ResetPassword() {
           <Input
             type={"text"}
             placeholder="Введите код из письма"
-            onChange={(e) => sdfg(e, setcode)}
+            onChange={(e) => handleChange(e, setcode)}
             name={"name"}
             error={false}
             errorText={"Ошибка"}
