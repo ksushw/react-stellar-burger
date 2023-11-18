@@ -114,9 +114,10 @@ export function autorizationRequest(email: string, password: string) {
       .then(_getResponseData)
       .then((res) => {
         if (res && res.success) {
+          console.log(res.user);
           dispatch({
             type: REGISTRATION_SUCCESS,
-            user: res.data.user,
+            user: res.user,
           });
 
           setCookie("accessToken", res.accessToken.replace(/Bearer /, ""), {
@@ -139,6 +140,7 @@ export function autorizationRequest(email: string, password: string) {
         console.error(err);
       });
   };
+  console.log(2);
 }
 
 export async function refreshToken(): Promise<{

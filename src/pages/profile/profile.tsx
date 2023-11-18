@@ -4,7 +4,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useEffect, ChangeEvent, Dispatch, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import styles from "./profile.module.css";
 import { Link } from "react-router-dom";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
@@ -12,6 +12,7 @@ import { userInfoRequest, userInfoChangeRequest } from "../../api/api";
 import { useDispatch, useSelector } from "../../services/types/hooks";
 import { REGISTRATION_SET_DATA } from "../../services/actions/registration";
 import Loader from "../../components/Loader/Loader";
+import handleChange from "../../utils/handleChange";
 
 export default function Profile() {
   const [name, setName] = useState<string>("");
@@ -35,14 +36,6 @@ export default function Profile() {
   useEffect(() => {
     getData();
   }, []);
-
-  function sdfg(
-    e: ChangeEvent<HTMLInputElement>,
-    setter: Dispatch<string>,
-  ): void {
-    setIsEdited(true);
-    setter(e.target.value);
-  }
 
   function reset() {
     if (userData) {
@@ -124,7 +117,7 @@ export default function Profile() {
                 type={"text"}
                 placeholder="Имя"
                 value={name}
-                onChange={(e) => sdfg(e, setName)}
+                onChange={(e) => handleChange(e, setName)}
                 name={"name"}
                 error={false}
                 errorText={"Ошибка"}
@@ -132,7 +125,7 @@ export default function Profile() {
                 icon="EditIcon"
               />
               <EmailInput
-                onChange={(e) => sdfg(e, setEmail)}
+                onChange={(e) => handleChange(e, setEmail)}
                 value={email}
                 name={"email"}
                 placeholder="Логин"
@@ -140,7 +133,7 @@ export default function Profile() {
                 extraClass="mt-6"
               />
               <PasswordInput
-                onChange={(e) => sdfg(e, setPassword)}
+                onChange={(e) => handleChange(e, setPassword)}
                 value={password}
                 name={"password"}
                 icon="EditIcon"

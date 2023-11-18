@@ -45,6 +45,7 @@ export default function BurgerIngredients() {
     const sause = document.getElementById(`#sauce`);
     const main = document.getElementById(`#main`);
     const scroll = document.getElementById("#container");
+    console.log(sause);
     if (sause && main && scroll) {
       const sausePosition = sause.offsetTop;
       const mainPosition = main.offsetTop;

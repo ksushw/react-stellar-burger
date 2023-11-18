@@ -5,13 +5,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect, ChangeEvent, Dispatch, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useSelector } from "../../services/types/hooks";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
+import handleChange from "../../utils/handleChange";
 
-function sdfg(e: ChangeEvent<HTMLInputElement>, setFunction: Dispatch<string>) {
-  setFunction(e.target.value);
-}
 export default function Login() {
   const [email, setNewEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -30,14 +28,16 @@ export default function Login() {
   }
 
   useEffect(() => {
+    console.log(isAuth);
     if (user) {
+      console.log(path);
       if (path) {
         navigate(path, { replace: false });
       } else {
         navigate("/", { replace: false });
       }
     }
-  }, [user, navigate]);
+  }, [isAuth, navigate]);
   const { isAuthorized } = useProvideAuth();
   async function getAuth() {
     await isAuthorized();
@@ -46,25 +46,20 @@ export default function Login() {
     getAuth();
   }, []);
 
-  useEffect(() => {
-    if (isAuth) {
-      navigate(-1);
-    }
-  }, [isAuth]);
   return (
     <>
       <div className={styles.container}>
         <p className="text text_type_main-medium">Вход</p>
         <form className={styles.form + " mb-20"} onSubmit={makeRegistration}>
           <EmailInput
-            onChange={(e) => sdfg(e, setNewEmail)}
+            onChange={(e) => handleChange(e, setNewEmail)}
             name={"email"}
             isIcon={false}
             extraClass="mt-6"
             value={email}
           />
           <PasswordInput
-            onChange={(e) => sdfg(e, setPassword)}
+            onChange={(e) => handleChange(e, setPassword)}
             value={password}
             name={"password"}
             extraClass="mt-6"
