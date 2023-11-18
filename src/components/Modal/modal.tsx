@@ -3,7 +3,7 @@ import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/modal-overlay";
 import { createPortal } from "react-dom";
-import { FC, Dispatch, KeyboardEvent } from "react";
+import { FC, Dispatch } from "react";
 
 interface IMovieProps {
   title?: string;
@@ -19,10 +19,10 @@ export const Modal: FC<IMovieProps> = ({
 }) => {
   useEffect(() => {
     if (visible) {
-      document.addEventListener("keyup", (e) => closeByEscape(e));
+      document.addEventListener("keyup", closeByEscape);
     }
     return () => {
-      document.removeEventListener("keyup", (e) => closeByEscape(e));
+      document.removeEventListener("keyup", closeByEscape);
     };
   }, [visible, closeByEscape]);
 
@@ -32,7 +32,7 @@ export const Modal: FC<IMovieProps> = ({
     }
   }
 
-  function closeByEscape(e: { bubbles: boolean; key: string }) {
+  function closeByEscape(e: KeyboardEvent) {
     if (e.key === "Escape") {
       close();
     }

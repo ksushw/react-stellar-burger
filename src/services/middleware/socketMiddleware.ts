@@ -1,9 +1,13 @@
 import { getCookie } from "../../utils/getCookie";
-export const socketMiddleware = (wsUrl, wsActions) => {
-  return (store) => {
-    let socket = null;
 
-    return (next) => (action) => {
+export const socketMiddleware = (
+  wsUrl: string,
+  wsActions: { [key: string]: string },
+) => {
+  return (store: any) => {
+    let socket: WebSocket | null = null;
+
+    return (next: any) => (action: any) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
