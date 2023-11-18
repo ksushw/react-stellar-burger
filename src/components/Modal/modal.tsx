@@ -3,14 +3,26 @@ import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/modal-overlay";
 import { createPortal } from "react-dom";
+import { FC, Dispatch, KeyboardEvent } from "react";
 
-export default function Modal({ children, title = "", visible, setVisible }) {
+interface IMovieProps {
+  title?: string;
+  visible: boolean;
+  setVisible?: Dispatch<boolean>;
+}
+
+export const Modal: FC<IMovieProps> = ({
+  children,
+  title = "",
+  visible,
+  setVisible,
+}) => {
   useEffect(() => {
     if (visible) {
-      document.addEventListener("keyup", closeByEscape);
+      document.addEventListener("keyup", (e) => closeByEscape(e));
     }
     return () => {
-      document.removeEventListener("keyup", closeByEscape);
+      document.removeEventListener("keyup", (e) => closeByEscape(e));
     };
   }, [visible, closeByEscape]);
 
@@ -20,15 +32,18 @@ export default function Modal({ children, title = "", visible, setVisible }) {
     }
   }
 
-  function closeByEscape(e) {
+  function closeByEscape(e: { bubbles: boolean; key: string }) {
     if (e.key === "Escape") {
       close();
     }
   }
 
+  const modal: HTMLElement | null = document.getElementById("modals");
+
   return (
     <>
       {visible &&
+        modal &&
         createPortal(
           <>
             <ModalOverlay onClick={close} />
@@ -40,8 +55,8 @@ export default function Modal({ children, title = "", visible, setVisible }) {
               {children}
             </div>
           </>,
-          document.getElementById("modals"),
+          modal,
         )}
     </>
   );
-}
+};

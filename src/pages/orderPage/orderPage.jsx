@@ -1,7 +1,7 @@
 import styles from "./orderPage.module.css";
-import FeedDetails from "../../components/FeedDetails/feed-details";
+import { FeedDetails } from "../../components/FeedDetails/feed-details";
 import { useLocation, useNavigate } from "react-router-dom";
-import Modal from "../../components/Modal/modal";
+import { Modal } from "../../components/Modal/modal";
 
 export default function OrderPage({ orders }) {
   const navigate = useNavigate();

@@ -20,7 +20,7 @@ export interface IConnectionUserSuccess {
 
 export interface IConnectionUserError {
   readonly type: typeof WS_CONNECTION_USER_ERROR;
-  readonly payload: any;
+  readonly payload: string;
 }
 
 export interface IConnectionUserOrders {

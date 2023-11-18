@@ -8,7 +8,15 @@ import {
 } from "../actions/registration";
 import { TRegistrationActions } from "../actions/registration";
 
-const initialState = {
+type IInitialState = {
+  user: {};
+  isAuth: boolean;
+  tokenPending: boolean;
+  autorizationRequest: boolean;
+  autorizationFailed: boolean;
+};
+
+const initialState: IInitialState = {
   user: {},
   isAuth: false,
   tokenPending: false,

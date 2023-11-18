@@ -28,7 +28,7 @@ export type TSendOrderActions =
   | ISendOrderSuccess
   | ISendOrderFailed;
 
-export function sendOrder(order: ReadonlyArray<string>): any {
+export function sendOrder(order: ReadonlyArray<string>) {
   return function (dispatch: Dispatch<TSendOrderActions>) {
     dispatch({
       type: SEND_ORDER_REQUEST,
@@ -52,16 +52,19 @@ export function sendOrder(order: ReadonlyArray<string>): any {
             type: SEND_ORDER_SUCCESS,
             order: res.order,
           });
+          return true;
         } else {
           dispatch({
             type: SEND_ORDER_FAILED,
           });
+          return false;
         }
       })
       .catch((err) => {
         dispatch({
           type: SEND_ORDER_FAILED,
         });
+        return false;
       });
   };
 }

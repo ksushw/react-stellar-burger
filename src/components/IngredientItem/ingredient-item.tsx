@@ -3,10 +3,21 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-item.module.css";
-import { ingredientPropType } from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
+import { IIngredient } from "../../utils/types";
+import { Dispatch, FC } from "react";
 
-export default function IngredientItem({ ingredient, count, onClick }) {
+interface IIngredientItem {
+  ingredient: IIngredient;
+  count: number | null;
+  onClick: (ingredient: IIngredient) => void;
+}
+
+export const IngredientItem: FC<IIngredientItem> = ({
+  ingredient,
+  count,
+  onClick,
+}) => {
   const id = ingredient._id;
 
   const [, useRef] = useDrag({
@@ -40,8 +51,4 @@ export default function IngredientItem({ ingredient, count, onClick }) {
       </p>
     </li>
   );
-}
-
-IngredientItem.propTypes = {
-  ingredient: ingredientPropType,
 };

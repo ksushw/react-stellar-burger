@@ -40,12 +40,12 @@ const wsUserActions = {
   onError: WS_CONNECTION_USER_ERROR,
   onMessage: WS_GET_USER_ORDERS,
 };
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+// const composeEnhancers =
+//   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+//     : compose;
 
-const enhancer = composeEnhancers(
+const enhancer = compose(
   applyMiddleware(
     thunk,
     socketMiddleware(wsUrl, wsActions),

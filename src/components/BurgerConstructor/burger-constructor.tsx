@@ -6,8 +6,9 @@ import {
 import styles from "./burger-constructor.module.css";
 import DragAndDropWrapper from "../DragAndDropWrapper/DragAndDropWrapper";
 import OrderDetails from "../OrderDetails/order-details";
-import Modal from "../Modal/modal";
+import { Modal } from "../Modal/modal";
 import update from "immutability-helper";
+import { IIngredient } from "../../utils/types";
 
 import { useState, useCallback, useEffect } from "react";
 
@@ -25,6 +26,7 @@ import {
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid4 } from "uuid";
+
 export default function BurgerConstructor() {
   const [visibleOrderDetails, setVisibleOrderDetails] = useState(false);
 
@@ -39,7 +41,7 @@ export default function BurgerConstructor() {
     shallowEqual,
   );
 
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState<ReadonlyArray<IIngredient>>([]);
 
   useEffect(() => {
     setOrder(filling);
@@ -47,13 +49,15 @@ export default function BurgerConstructor() {
 
   const [, dropTarget] = useDrop({
     accept: "ingredientItem",
-    drop(item) {
+    drop(item: { id: string }) {
       handleDrop(item);
     },
   });
 
-  const handleDrop = (item) => {
-    const newIngredient = items.filter((element) => element._id == item.id)[0];
+  const handleDrop = (item: { id: string }) => {
+    const newIngredient = items.filter(
+      (element: IIngredient) => element._id == item.id,
+    )[0];
     if (newIngredient.type === "bun") {
       dispatch({ type: CHANGE_BUN, item: newIngredient });
     } else {
@@ -64,9 +68,9 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const makeOrder = async () => {
-    if (isAuth) {
+    if (isAuth && bun?._id) {
       const orderIds = [bun?._id];
-      filling.map((ingredient) => orderIds.push(ingredient._id));
+      filling.map((ingredient: IIngredient) => orderIds.push(ingredient._id));
       dispatch(sendOrder(orderIds));
       setVisibleOrderDetails(true);
       dispatch({ type: REMOVE_ORDER });
@@ -75,7 +79,7 @@ export default function BurgerConstructor() {
     }
   };
 
-  function removeIngredient(ingredient, index) {
+  function removeIngredient(ingredient: IIngredient, index: number) {
     dispatch({ type: DELETE_FILLING, index: index, price: ingredient.price });
   }
   const moveCard = useCallback(
@@ -128,7 +132,6 @@ export default function BurgerConstructor() {
                     moveCard={moveCard}
                   >
                     <ConstructorElement
-                      type={ingredient.type}
                       isLocked={ingredient.type === "bun" ? true : false}
                       text={ingredient.name}
                       price={ingredient.price}

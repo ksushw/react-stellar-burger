@@ -26,7 +26,7 @@ export interface IRegistrationSuccess {
 
 export interface IRegistrationFailed {
   readonly type: typeof REGISTRATION_FAILED;
-  readonly message?: any;
+  readonly message?: string;
 }
 
 export interface IRegistrationOut {

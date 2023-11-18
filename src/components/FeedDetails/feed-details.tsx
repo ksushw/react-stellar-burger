@@ -4,15 +4,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./feed-details.module.css";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSelector, shallowEqual } from "react-redux";
+import { useEffect, useState, FC } from "react";
+import { useSelector } from "../../services/types/hooks";
 import { uniq } from "lodash";
+import { IIngredient, IOrder } from "../../utils/types";
 
-export default function FeedDetails({ orders }) {
-  const [order, setOrder] = useState({});
-  const [ingridients, setIngridients] = useState([]);
-  const [amount, setAmount] = useState([]);
-  const [price, setPrice] = useState([]);
+interface IFeedDetails {
+  orders: ReadonlyArray<IOrder>;
+}
+
+export const FeedDetails: FC<IFeedDetails> = ({ orders }) => {
+  const [order, setOrder] = useState<IOrder>();
+  const [ingridients, setIngridients] = useState<ReadonlyArray<IIngredient>>();
+  const [amount, setAmount] = useState<Record<string, number>>();
+  const [price, setPrice] = useState<number>();
   const { orderId } = useParams();
 
   const items = useSelector((store) => store.ingredientReducer.items);
@@ -21,7 +26,9 @@ export default function FeedDetails({ orders }) {
     const item = orders.find((item) => {
       return item._id === orderId;
     });
-    setOrder(item);
+    if (item) {
+      setOrder(item);
+    }
   }, [orders, orderId]);
 
   useEffect(() => {
@@ -36,20 +43,23 @@ export default function FeedDetails({ orders }) {
     setIngridients(ingridients);
     setPrice(price);
 
-    const count = order?.ingredients?.reduce((accumulator, value) => {
-      return {
-        ...accumulator,
-        [value]: (accumulator[value] || 0) + 1,
-      };
-    }, {});
+    const count = order?.ingredients?.reduce(
+      (accumulator, value) => {
+        return {
+          ...accumulator,
+          [value]: (accumulator[value] || 0) + 1,
+        };
+      },
+      {} as Record<string, number>,
+    );
     setAmount(count);
   }, [order]);
 
   const rewriteStatus = () => {
     const status =
-      (order.status === "created" && "Создан") ||
-      (order.status === "pending" && "Готовится") ||
-      (order.status === "done" && "Выполнен");
+      (order?.status === "created" && "Создан") ||
+      (order?.status === "pending" && "Готовится") ||
+      (order?.status === "done" && "Выполнен");
     return status;
   };
 
@@ -60,10 +70,10 @@ export default function FeedDetails({ orders }) {
           <div>
             <div className={styles.container + " custom-scroll"}>
               <p className={styles.number + " text text_type_digits-medium"}>
-                {"#" + order.number}
+                {"#" + order?.number}
               </p>
               <p className={styles.name + " text text_type_main-medium mt-10"}>
-                {order.name}
+                {order?.name}
               </p>
               <p className={styles.state + " text text_type_main-small mt-3"}>
                 {rewriteStatus()}
@@ -81,7 +91,7 @@ export default function FeedDetails({ orders }) {
                       {ingridient.name}
                     </p>
                     <p className="text text_type_digits-default">
-                      {amount[ingridient._id]} x {ingridient.price}
+                      {amount?.[ingridient._id]} x {ingridient.price}
                     </p>
                     <CurrencyIcon type="primary" />
                   </div>
@@ -101,4 +111,4 @@ export default function FeedDetails({ orders }) {
       </>
     </>
   );
-}
+};

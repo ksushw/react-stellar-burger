@@ -1,5 +1,5 @@
 import styles from "./feed.module.css";
-import CartList from "../../components/CardList/card-list";
+import { CartList } from "../../components/CardList/card-list";
 import { shallowEqual } from "react-redux";
 import { useSelector, useDispatch } from "../../services/types/hooks";
 import { Outlet } from "react-router-dom";
@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export default function Feed() {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector(
-    (store: any) => ({
+    (store) => ({
       orders: store.ordersReducer.orders,
       total: store.ordersReducer.total,
       totalToday: store.ordersReducer.totalToday,
@@ -25,8 +25,8 @@ export default function Feed() {
     return (): any => dispatch({ type: WS_CONNECTION_CLOSED });
   }, []);
 
-  const done = orders?.filter((order: any) => order.status === "done");
-  const pending = orders?.filter((order: any) => order.status === "pending");
+  const done = orders?.filter((order) => order.status === "done");
+  const pending = orders?.filter((order) => order.status === "pending");
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function Feed() {
           Лента заказов
         </h2>
         <div className={styles.feed}>
-          <CartList orders={orders} path="/feed/" />
+          <CartList orders={orders || []} path="/feed/" />
         </div>
         <div className={styles.numbers + " ml-10"}>
           <div className={styles.state}>

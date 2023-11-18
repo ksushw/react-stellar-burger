@@ -1,9 +1,15 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
+import { shallowEqual } from "react-redux";
+
 import { useProvideAuth } from "../UseAuth/useAuth";
 import { useState, useEffect } from "react";
 
-export const ProtectedRouteElement = ({ element }) => {
+export const ProtectedRouteElement = ({
+  element,
+}: {
+  element: JSX.Element;
+}) => {
   const [isUserLoaded, setUserLoaded] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;

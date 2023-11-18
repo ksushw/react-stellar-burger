@@ -1,7 +1,10 @@
 import styles from "./ingredients-details.module.css";
-import { useSelector, shallowEqual } from "react-redux";
+import { shallowEqual } from "react-redux";
+import { IIngredient } from "../../utils/types";
+import { useSelector } from "../../services/types/hooks";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 export default function IngredientDetails() {
   const { ingredients } = useSelector(
     (store) => ({
@@ -11,7 +14,7 @@ export default function IngredientDetails() {
     shallowEqual,
   );
   const { ingridientId } = useParams();
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState<IIngredient>();
 
   useEffect(() => {
     const item = ingredients.find((item) => {

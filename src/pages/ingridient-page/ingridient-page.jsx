@@ -2,7 +2,7 @@ import styles from "./ingridient-page.module.css";
 import IngredientDetails from "../../components/IngredientsDetails/ingredients-details";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CLOSE_INFO_POPUP } from "../../services/actions/infoPopup";
-import Modal from "../../components/Modal/modal";
+import { Modal } from "../../components/Modal/modal";
 import { useDispatch } from "react-redux";
 
 export default function IngridientPage() {

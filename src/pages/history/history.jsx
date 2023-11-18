@@ -1,6 +1,6 @@
 import styles from "./history.module.css";
 import { Link } from "react-router-dom";
-import CartList from "../../components/CardList/card-list";
+import { CartList } from "../../components/CardList/card-list";
 import { useSelector, shallowEqual } from "react-redux";
 import { Outlet } from "react-router-dom";
 import {

@@ -24,7 +24,7 @@ export default function ResetPassword() {
   const dispatch = useDispatch();
 
   const { isPasswordChanged } = useSelector(
-    (store: any) => ({
+    (store) => ({
       isPasswordChanged: store.changePasswordReducer.isPasswordChanged,
     }),
     shallowEqual,
@@ -34,8 +34,8 @@ export default function ResetPassword() {
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
-    const res: any = await resetPassvordApi(newPassword, code);
-    if (res.success) {
+    const res: boolean = await resetPassvordApi(newPassword, code);
+    if (res) {
       dispatch({
         type: RESTORE_PASSWORD_CLEAN,
       });

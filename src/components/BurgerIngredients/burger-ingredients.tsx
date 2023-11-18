@@ -2,18 +2,21 @@ import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import IngredientItem from "../IngredientItem/ingredient-item";
+import { IIngredient } from "../../utils/types";
 
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { IngredientItem } from "../IngredientItem/ingredient-item";
+import { shallowEqual } from "react-redux";
+
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { OPEN_INFO_POPUP } from "../../services/actions/infoPopup";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export default function BurgerIngredients() {
-  const [position, setPosition] = useState("bun");
-  const [buns, setBuns] = useState([]);
-  const [sauses, setSauses] = useState([]);
-  const [main, setMain] = useState([]);
+  const [position, setPosition] = useState<"bun" | "main" | "sauce">("bun");
+  const [buns, setBuns] = useState<ReadonlyArray<IIngredient>>([]);
+  const [sauses, setSauses] = useState<ReadonlyArray<IIngredient>>([]);
+  const [main, setMain] = useState<ReadonlyArray<IIngredient>>([]);
 
   const { items, itemsRequest, itemsFailed, filling, bun } = useSelector(
     (store) => ({
@@ -28,46 +31,56 @@ export default function BurgerIngredients() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setBuns(items.filter((item) => item.type === "bun"));
-    setMain(items.filter((item) => item.type === "main"));
-    setSauses(items.filter((item) => item.type === "sauce"));
+    setBuns(items.filter((item: IIngredient) => item.type === "bun"));
+    setMain(items.filter((item: IIngredient) => item.type === "main"));
+    setSauses(items.filter((item: IIngredient) => item.type === "sauce"));
   }, [items, dispatch]);
   const navigate = useNavigate();
-  function openPopup(ingredient) {
+  function openPopup(ingredient: IIngredient) {
     dispatch({ type: OPEN_INFO_POPUP, ingredient: ingredient });
     navigate(`ingridients/${ingredient._id}`, { state: { popup: true } });
   }
 
   function changePosition() {
-    const sausePosition = document.querySelector(`#sauce`).offsetTop;
-    const mainPosition = document.querySelector(`#main`).offsetTop;
-    const scrollPosition = document.querySelector("#container").scrollTop;
-    if (scrollPosition + 200 < sausePosition) {
-      setPosition("bun");
-    } else if (scrollPosition + 200 < mainPosition) {
-      setPosition("sauce");
-    } else {
-      setPosition("main");
+    const sause = document.getElementById(`#sauce`);
+    const main = document.getElementById(`#main`);
+    const scroll = document.getElementById("#container");
+    if (sause && main && scroll) {
+      const sausePosition = sause.offsetTop;
+      const mainPosition = main.offsetTop;
+      const scrollPosition = document.querySelector("#container")?.scrollTop;
+      if (sausePosition && mainPosition && scrollPosition) {
+        if (scrollPosition + 200 < sausePosition) {
+          setPosition("bun");
+        } else if (scrollPosition + 200 < mainPosition) {
+          setPosition("sauce");
+        } else {
+          setPosition("main");
+        }
+      }
     }
   }
 
-  function scroll(id) {
-    document.querySelector(`#${id}`).scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+  function scroll(id: string): void {
+    const divScrolledTo = document.querySelector(`#${id}`);
+    if (divScrolledTo) {
+      divScrolledTo.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   }
 
-  function count() {
-    if (filling !== []) {
-      const amount = {};
-      filling.map((ingredient) =>
+  function count(): { [key: string]: number | null } {
+    const amount: Record<string, number> = {};
+    if (filling[0]) {
+      filling.map((ingredient: IIngredient) =>
         amount[ingredient.name]
           ? (amount[ingredient.name] = amount[ingredient.name] + 1)
           : (amount[ingredient.name] = 1),
       );
-      return amount;
     }
+    return amount;
   }
 
   const counter = count();
@@ -114,7 +127,7 @@ export default function BurgerIngredients() {
                   <IngredientItem
                     ingredient={ingredient}
                     key={ingredient._id}
-                    count={ingredient.name === bun?.name && 1}
+                    count={ingredient.name === bun?.name ? 1 : null}
                     onClick={openPopup}
                   />
                 );

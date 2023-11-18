@@ -32,9 +32,7 @@ export default function Registration() {
     dispatch(registrationRequest(email, password, name));
   }
 
-  const user: IUser = useSelector(
-    (store: any) => store.regisrationReducer.user,
-  );
+  const user: IUser = useSelector((store) => store.regisrationReducer.user);
 
   const navigate = useNavigate();
 

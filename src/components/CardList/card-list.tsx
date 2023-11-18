@@ -1,7 +1,14 @@
 import styles from "./card-list.module.css";
 import Cart from "../Cart/cart";
+import { IOrder } from "../../utils/types";
+import { FC } from "react";
 
-export default function CartList({ orders, path }) {
+interface ICartList {
+  orders: ReadonlyArray<IOrder>;
+  path: string;
+}
+
+export const CartList: FC<ICartList> = ({ orders, path }) => {
   return (
     <>
       {!!orders?.length && (
@@ -13,4 +20,4 @@ export default function CartList({ orders, path }) {
       )}
     </>
   );
-}
+};
