@@ -27,9 +27,11 @@ export default function Profile() {
 
   async function getData() {
     const user = await userInfoRequest();
-    dispatch({ type: REGISTRATION_SET_DATA, user: user });
-    setName(user.name);
-    setEmail(user.email);
+    if (user) {
+      dispatch({ type: REGISTRATION_SET_DATA, user: user });
+      setName(user.name);
+      setEmail(user.email);
+    }
   }
 
   useEffect(() => {
@@ -50,10 +52,12 @@ export default function Profile() {
   async function changeData(e) {
     e.preventDefault();
     const user = await userInfoChangeRequest({ name: name, email: email });
-    dispatch({ type: REGISTRATION_SET_DATA, user: user });
-    setName(user.name);
-    setEmail(user.email);
-    setIsEdited(false);
+    if (user) {
+      dispatch({ type: REGISTRATION_SET_DATA, user: user });
+      setName(user.name);
+      setEmail(user.email);
+      setIsEdited(false);
+    }
   }
 
   const { signOut } = useProvideAuth();

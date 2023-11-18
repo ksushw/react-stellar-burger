@@ -5,15 +5,11 @@ import {
   WS_GET_ORDERS,
 } from "../actions/orders";
 import { TOrdersActions } from "../actions/orders";
-import { IIngredient } from "../../utils/types";
+import { IOrder } from "../../utils/types";
 
 type TInitialState = {
   wsConnected: boolean;
-  orders: ReadonlyArray<{
-    orders: ReadonlyArray<IIngredient>;
-    total: number;
-    totalToday: number;
-  }>;
+  orders: ReadonlyArray<IOrder> | null;
   total: number;
   totalToday: number;
   error: string | undefined;
@@ -21,7 +17,7 @@ type TInitialState = {
 
 const initialState: TInitialState = {
   wsConnected: false,
-  orders: [],
+  orders: null,
   total: 0,
   totalToday: 0,
   error: undefined,

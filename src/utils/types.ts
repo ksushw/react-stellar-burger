@@ -17,3 +17,20 @@ export interface IUser {
   email: string;
   name: string;
 }
+
+export interface IOrder {
+  _id: string;
+  ingredients: ReadonlyArray<string>;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: 26472;
+}
+
+export interface IOrders {
+  wsConected?: boolean;
+  orders: ReadonlyArray<IOrder> | null;
+  total: number;
+  totalToday: number;
+}

@@ -5,7 +5,10 @@ import { errorHandler } from "../utils/erorHandler";
 
 errorHandler();
 
-export async function resetPassvordApi(newPassword, code) {
+export async function resetPassvordApi(
+  newPassword: string,
+  code: string,
+): Promise<boolean> {
   return fetch(`${config.baseUrl}/password-reset/reset`, {
     method: "POST",
     headers: config.headers,
@@ -24,10 +27,11 @@ export async function resetPassvordApi(newPassword, code) {
     })
     .catch((err) => {
       console.log(err);
+      return false;
     });
 }
 
-export async function logOut() {
+export async function logOut(): Promise<boolean> {
   return fetch(`${config.baseUrl}/auth/logout`, {
     method: "POST",
     headers: config.headers,
@@ -45,10 +49,11 @@ export async function logOut() {
     })
     .catch((err) => {
       console.log(err);
+      return false;
     });
 }
 
-export async function userInfoRequest() {
+export async function userInfoRequest(): Promise<boolean> {
   return window
     .fetchAuth(`${config.baseUrl}/auth/user`, {
       method: "GET",
@@ -59,14 +64,21 @@ export async function userInfoRequest() {
     })
     .then(_getResponseData)
     .then((res) => {
-      return res.user;
+      return true;
     })
     .catch((err) => {
       console.log(err);
+      return false;
     });
 }
 
-export async function userInfoChangeRequest(info) {
+export async function userInfoChangeRequest(info: {
+  name: string;
+  email: string;
+}): Promise<{
+  name: string;
+  email: string;
+}> {
   return window
     .fetchAuth(`${config.baseUrl}/auth/user`, {
       method: "PATCH",
@@ -82,5 +94,6 @@ export async function userInfoChangeRequest(info) {
     })
     .catch((err) => {
       console.log(err);
+      return null;
     });
 }

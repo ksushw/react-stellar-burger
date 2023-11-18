@@ -4,22 +4,29 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./cart.module.css";
 import { Link } from "react-router-dom";
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import { useEffect, useState } from "react";
+import { IIngredient } from "../../utils/types";
+import { IOrder } from "../../utils/types";
 
-export default function Cart({ order, path }) {
-  const [ingridients, setIngridients] = useState([]);
-  const [price, setPrice] = useState([]);
-  const [status, setStatus] = useState("");
+export default function Cart({ order, path }: { order: IOrder; path: string }) {
+  const [ingridients, setIngridients] = useState<ReadonlyArray<IIngredient>>(
+    [],
+  );
+  const [price, setPrice] = useState<number>(0);
+  const [status, setStatus] = useState<"Создан" | "Готовится" | "Выполнен">(
+    "Создан",
+  );
 
   const items = useSelector((store) => store.ingredientReducer.items);
 
   const findIngridients = () => {
     const ingridients = order.ingredients.map(
-      (id) => items.filter((item) => item._id === id)[0],
+      (id: string) => items.filter((item: any) => item._id === id)[0],
     );
     const price = ingridients.reduce(
-      (wholePrice, ingridient) => wholePrice + ingridient.price,
+      (wholePrice: number, ingridient: IIngredient) =>
+        wholePrice + ingridient.price,
       0,
     );
     setIngridients(ingridients);
@@ -31,7 +38,9 @@ export default function Cart({ order, path }) {
       (order.status === "created" && "Создан") ||
       (order.status === "pending" && "Готовится") ||
       (order.status === "done" && "Выполнен");
-    setStatus(status);
+    if (status) {
+      setStatus(status);
+    }
   };
 
   useEffect(() => {
@@ -62,7 +71,7 @@ export default function Cart({ order, path }) {
         {ingridients.slice(0, 4).map((ingridient) => (
           <img
             src={ingridient.image}
-            alt={ingridients.name}
+            alt={ingridient.name}
             className={styles.ingridient}
           />
         ))}

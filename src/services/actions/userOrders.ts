@@ -1,4 +1,4 @@
-import { IIngredient } from "../../utils/types";
+import { IOrders } from "../../utils/types";
 
 export const WS_CONNECTION_USER_START: "WS_CONNECTION_USER_START" =
   "WS_CONNECTION_USER_START";
@@ -25,16 +25,7 @@ export interface IConnectionUserError {
 
 export interface IConnectionUserOrders {
   readonly type: typeof WS_GET_USER_ORDERS;
-  readonly payload: {
-    orders: ReadonlyArray<{
-      orders: ReadonlyArray<IIngredient>;
-      total: number;
-      totalToday: number;
-    }>;
-    total: number;
-    totalToday: number;
-    error: string | undefined;
-  };
+  readonly payload: IOrders;
 }
 
 export interface IConnectionUserClosed {

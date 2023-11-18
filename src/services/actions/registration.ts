@@ -141,7 +141,11 @@ export function autorizationRequest(email: string, password: string) {
   };
 }
 
-export async function refreshToken(): Promise<void> {
+export async function refreshToken(): Promise<{
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+}> {
   const res = await fetch(`${config.baseUrl}/auth/token`, {
     method: "POST",
     headers: config.headers,

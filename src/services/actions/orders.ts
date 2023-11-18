@@ -1,4 +1,4 @@
-import { IIngredient } from "../../utils/types";
+import { IOrders } from "../../utils/types";
 
 export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS: "WS_CONNECTION_SUCCESS" =
@@ -28,11 +28,7 @@ export interface IConnectionClosed {
 
 export interface IGetOrders {
   readonly type: typeof WS_GET_ORDERS;
-  readonly payload: {
-    orders: ReadonlyArray<IIngredient>;
-    total: number;
-    totalToday: number;
-  };
+  readonly payload: IOrders;
 }
 
 export type TOrdersActions =
