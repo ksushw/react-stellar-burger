@@ -117,7 +117,10 @@ export default function Profile() {
                 type={"text"}
                 placeholder="Имя"
                 value={name}
-                onChange={(e) => handleChange(e, setName)}
+                onChange={(e) => {
+                  handleChange(e, setName);
+                  setIsEdited(true);
+                }}
                 name={"name"}
                 error={false}
                 errorText={"Ошибка"}
@@ -125,7 +128,10 @@ export default function Profile() {
                 icon="EditIcon"
               />
               <EmailInput
-                onChange={(e) => handleChange(e, setEmail)}
+                onChange={(e) => {
+                  handleChange(e, setEmail);
+                  setIsEdited(true);
+                }}
                 value={email}
                 name={"email"}
                 placeholder="Логин"
@@ -133,7 +139,10 @@ export default function Profile() {
                 extraClass="mt-6"
               />
               <PasswordInput
-                onChange={(e) => handleChange(e, setPassword)}
+                onChange={(e) => {
+                  handleChange(e, setPassword);
+                  setIsEdited(true);
+                }}
                 value={password}
                 name={"password"}
                 icon="EditIcon"

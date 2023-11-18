@@ -59,7 +59,7 @@ export async function userInfoRequest(): Promise<
     .then(_getResponseData)
     .then((res) => {
       if (res && res.success) {
-        return { name: res.name, email: res.email };
+        return { name: res.user.name, email: res.user.email };
       } else {
         return false;
       }

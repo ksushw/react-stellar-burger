@@ -23,7 +23,7 @@ const initialState = {
 export const changePasswordReducer = (
   state = initialState,
   action: TRestorePasswordActions,
-) => {
+): IInitialState => {
   switch (action.type) {
     case RESTORE_PASSWORD_REQUEST: {
       return {
@@ -43,7 +43,7 @@ export const changePasswordReducer = (
     case RESTORE_PASSWORD_FAILED: {
       return {
         ...initialState,
-        orderFailed: true,
+        changePasswordFailed: true,
       };
     }
     case RESTORE_PASSWORD_CLEAN: {

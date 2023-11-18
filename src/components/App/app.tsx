@@ -83,10 +83,7 @@ function App() {
                 }
               />
             </Route>
-            <Route
-              path="/feed"
-              element={<ProtectedRouteElement element={<Feed />} />}
-            >
+            <Route path="/feed" element={<Feed />}>
               <Route
                 path="/feed/:orderId"
                 element={
