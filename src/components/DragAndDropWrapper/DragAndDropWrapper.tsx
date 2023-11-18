@@ -1,16 +1,23 @@
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
-import { useRef } from "react";
+import { useRef, FC } from "react";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function DragAndDropWrapper({
+interface IDragAndDropWrapper {
+  id: string;
+  index: number;
+  moveCard: any;
+  className: string;
+}
+
+export const DragAndDropWrapper: FC<IDragAndDropWrapper> = ({
   children,
   id,
   index,
   moveCard,
   className,
-}) {
-  const ref = useRef(null);
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop({
     accept: ItemTypes.CARD,
@@ -19,7 +26,7 @@ export default function DragAndDropWrapper({
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
@@ -32,7 +39,11 @@ export default function DragAndDropWrapper({
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      let hoverClientY = 0;
+      if (clientOffset) {
+        hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      }
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -71,4 +82,4 @@ export default function DragAndDropWrapper({
       {children}
     </div>
   );
-}
+};

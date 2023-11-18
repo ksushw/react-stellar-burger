@@ -5,34 +5,31 @@ import {
 
 import styles from "./fogot-password.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 
 import { profileDataChange } from "../../services/actions/profile";
-
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 
 export default function FogotPassword() {
   const [email, setEmail] = useState("");
-  const { isPasswordChanged } = useSelector(
-    (store) => ({
-      isPasswordChanged: store.changePasswordReducer.isPasswordChanged,
-    }),
-    shallowEqual,
+  const isPasswordChanged = useSelector(
+    (store) => store.changePasswordReducer.isPasswordChanged,
   );
-  function changeEmail(e) {
+
+  function changeEmail(e: ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value);
   }
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sendEmail = async (event) => {
+  const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(profileDataChange(email));
   };
 
   useEffect(() => {
     if (isPasswordChanged) {
-      navigate("/login/reset-password", { replace: "true" });
+      navigate("/login/reset-password", { replace: true });
     }
   }, [isPasswordChanged, dispatch, navigate]);
 
@@ -44,7 +41,6 @@ export default function FogotPassword() {
           <EmailInput
             onChange={changeEmail}
             name={"e-mail"}
-            errorText={"Введите e-mail корректно"}
             isIcon={false}
             extraClass="mt-6"
             value={email}

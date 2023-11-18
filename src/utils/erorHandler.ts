@@ -3,7 +3,7 @@ import { getCookie } from "./getCookie";
 
 export async function errorHandler() {
   const { fetch } = window;
-  window.fetchAuth = async (...args) => {
+  window.fetchAuth = async (...args): Promise<Response> => {
     let [link, config] = args;
     let response = await fetch(link, config);
     if (!response.ok && (response.status === 404 || response.status === 403)) {

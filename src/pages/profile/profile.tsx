@@ -4,20 +4,20 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, Dispatch, FormEvent } from "react";
 import styles from "./profile.module.css";
 import { Link } from "react-router-dom";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
 import { userInfoRequest, userInfoChangeRequest } from "../../api/api";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { REGISTRATION_SET_DATA } from "../../services/actions/registration";
 import Loader from "../../components/Loader/Loader";
 
 export default function Profile() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isEdited, setIsEdited] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isEdited, setIsEdited] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -36,18 +36,23 @@ export default function Profile() {
     getData();
   }, []);
 
-  function sdfg(e, setter) {
+  function sdfg(
+    e: ChangeEvent<HTMLInputElement>,
+    setter: Dispatch<string>,
+  ): void {
     setIsEdited(true);
     setter(e.target.value);
   }
 
   function reset() {
-    setName(userData.name);
-    setEmail(userData.email);
-    setIsEdited(false);
+    if (userData) {
+      setName(userData.name);
+      setEmail(userData.email);
+      setIsEdited(false);
+    }
   }
 
-  async function changeData(e) {
+  async function changeData(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const user = await userInfoChangeRequest({ name: name, email: email });
     if (user) {
@@ -89,11 +94,12 @@ export default function Profile() {
           </Link>
 
           <Link
+            to="#"
             className={
               styles.link +
               " text text_type_main-medium text_color_inactive pt-4 pb-4"
             }
-            onClick={(e) => logout(e)}
+            onClick={(e) => logout()}
           >
             Выход
           </Link>

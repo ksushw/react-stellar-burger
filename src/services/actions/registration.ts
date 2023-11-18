@@ -21,7 +21,7 @@ export interface IRegistrationRequest {
 
 export interface IRegistrationSuccess {
   readonly type: typeof REGISTRATION_SUCCESS;
-  readonly user: object;
+  readonly user: { name: string; email: string };
 }
 
 export interface IRegistrationFailed {
@@ -35,7 +35,7 @@ export interface IRegistrationOut {
 
 export interface IRegistrationSetData {
   readonly type: typeof REGISTRATION_SET_DATA;
-  readonly user: object;
+  readonly user: { name: string; email: string };
 }
 
 export interface IRegistrationAuthChange {

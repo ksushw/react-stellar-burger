@@ -4,7 +4,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import DragAndDropWrapper from "../DragAndDropWrapper/DragAndDropWrapper";
+import { DragAndDropWrapper } from "../DragAndDropWrapper/DragAndDropWrapper";
 import OrderDetails from "../OrderDetails/order-details";
 import { Modal } from "../Modal/modal";
 import update from "immutability-helper";

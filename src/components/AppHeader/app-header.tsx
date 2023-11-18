@@ -21,7 +21,6 @@ export default function AppHeader() {
       <div className={styles.container}>
         <Link
           to="/"
-          href="#"
           className={
             styles.link +
             " p-4 pl-5 pr-5 text_color_inactive " +

@@ -91,7 +91,7 @@ function App() {
                 path="/feed/:orderId"
                 element={
                   <ProtectedRouteElement
-                    element={<OrderPage orders={orders} />}
+                    element={<OrderPage orders={orders || []} />}
                   />
                 }
               />

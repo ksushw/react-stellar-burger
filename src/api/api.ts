@@ -53,7 +53,9 @@ export async function logOut(): Promise<boolean> {
     });
 }
 
-export async function userInfoRequest(): Promise<boolean> {
+export async function userInfoRequest(): Promise<
+  false | { name: string; email: string }
+> {
   return window
     .fetchAuth(`${config.baseUrl}/auth/user`, {
       method: "GET",
@@ -64,7 +66,7 @@ export async function userInfoRequest(): Promise<boolean> {
     })
     .then(_getResponseData)
     .then((res) => {
-      return true;
+      return { name: res.name, email: res.email };
     })
     .catch((err) => {
       console.log(err);

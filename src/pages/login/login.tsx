@@ -4,17 +4,17 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect, ChangeEvent, Dispatch, FormEvent } from "react";
+import { useSelector } from "../../services/types/hooks";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
 
-function sdfg(e, setFunction) {
+function sdfg(e: ChangeEvent<HTMLInputElement>, setFunction: Dispatch<string>) {
   setFunction(e.target.value);
 }
 export default function Login() {
-  const [email, setNewEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setNewEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const { user, isAuth } = useSelector((store) => store.regisrationReducer);
 
@@ -24,17 +24,17 @@ export default function Login() {
   const location = useLocation();
   const path = location.state?.path;
 
-  async function makeRegistration(event) {
+  async function makeRegistration(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     signIn(email, password);
   }
 
   useEffect(() => {
-    if (user.name) {
+    if (user) {
       if (path) {
-        navigate(path, { replace: "false" });
+        navigate(path, { replace: false });
       } else {
-        navigate("/", { replace: "false" });
+        navigate("/", { replace: false });
       }
     }
   }, [user, navigate]);

@@ -36,7 +36,7 @@ export default function Registration() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (Object.keys(user).length === 0) {
+    if (user) {
       navigate("/");
     }
   }, [user, navigate]);

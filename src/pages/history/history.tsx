@@ -1,14 +1,14 @@
 import styles from "./history.module.css";
 import { Link } from "react-router-dom";
 import { CartList } from "../../components/CardList/card-list";
-import { useSelector, shallowEqual } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { Outlet } from "react-router-dom";
 import {
   WS_CONNECTION_USER_START,
   WS_CONNECTION_USER_CLOSED,
 } from "../../services/actions/userOrders";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useSelector, useDispatch } from "../../services/types/hooks";
+import { Dispatch, useEffect } from "react";
 import { useProvideAuth } from "../../components/UseAuth/useAuth";
 
 export default function History() {
@@ -17,7 +17,7 @@ export default function History() {
     shallowEqual,
   );
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect((): Dispatch<void> => {
     dispatch({ type: WS_CONNECTION_USER_START });
     return () => dispatch({ type: WS_CONNECTION_USER_CLOSED });
   }, []);
@@ -55,7 +55,7 @@ export default function History() {
               styles.link +
               " text text_type_main-medium text_color_inactive pt-4 pb-4"
             }
-            onClick={(e) => logout(e)}
+            onClick={logout}
           >
             Выход
           </Link>

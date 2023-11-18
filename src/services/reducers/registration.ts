@@ -9,7 +9,7 @@ import {
 import { TRegistrationActions } from "../actions/registration";
 
 type IInitialState = {
-  user: { name: string; email: string } | {};
+  user: { name: string; email: string } | null;
   isAuth: boolean;
   tokenPending: boolean;
   autorizationRequest: boolean;
@@ -17,7 +17,7 @@ type IInitialState = {
 };
 
 const initialState: IInitialState = {
-  user: {},
+  user: null,
   isAuth: false,
   tokenPending: false,
   autorizationRequest: false,
@@ -27,7 +27,7 @@ const initialState: IInitialState = {
 export const regisrationReducer = (
   state = initialState,
   action: TRegistrationActions,
-) => {
+): IInitialState => {
   switch (action.type) {
     case REGISTRATION_REQUEST: {
       return {
