@@ -1,7 +1,7 @@
 import { _getResponseData } from "../../utils/get-response-data";
 import { config } from "../../utils/config";
-import { Dispatch } from "react";
 import { IIngredient } from "../../utils/types";
+import { AppThunk } from "../types/index";
 
 export const GET_ITEMS_REQUEST: "GET_ITEMS_REQUEST" = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_SUCCESS: "GET_ITEMS_SUCCESS" = "GET_ITEMS_SUCCESS";
@@ -25,8 +25,8 @@ export type TGetItemActions =
   | IGetItemSuccess
   | IGetItemFailed;
 
-export function getIngredients() {
-  return function (dispatch: Dispatch<TGetItemActions>) {
+export const getIngredients: AppThunk = () => {
+  return function (dispatch) {
     dispatch({
       type: GET_ITEMS_REQUEST,
     });
@@ -50,4 +50,4 @@ export function getIngredients() {
         });
       });
   };
-}
+};

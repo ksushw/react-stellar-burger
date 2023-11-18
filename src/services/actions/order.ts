@@ -2,7 +2,7 @@ import { config } from "../../utils/config";
 import { _getResponseData } from "../../utils/get-response-data";
 import { errorHandler } from "../../utils/erorHandler";
 import { getCookie } from "../../utils/getCookie";
-import { Dispatch } from "react";
+import { AppThunk } from "../types/index";
 
 errorHandler();
 
@@ -28,8 +28,8 @@ export type TSendOrderActions =
   | ISendOrderSuccess
   | ISendOrderFailed;
 
-export function sendOrder(order: ReadonlyArray<string>) {
-  return function (dispatch: Dispatch<TSendOrderActions>) {
+export const sendOrder: AppThunk = (order: ReadonlyArray<string>) => {
+  return function (dispatch) {
     dispatch({
       type: SEND_ORDER_REQUEST,
     });
@@ -67,4 +67,4 @@ export function sendOrder(order: ReadonlyArray<string>) {
         return false;
       });
   };
-}
+};

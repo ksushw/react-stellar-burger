@@ -2,7 +2,7 @@ import { getCookie } from "../../utils/getCookie";
 import { setCookie } from "../../utils/setCookie";
 import { config } from "../../utils/config";
 import { _getResponseData } from "../../utils/get-response-data";
-import { Dispatch } from "react";
+import { AppThunk } from "../types/index";
 
 export const REGISTRATION_REQUEST: "REGISTRATION_REQUEST" =
   "REGISTRATION_REQUEST";
@@ -51,12 +51,12 @@ export type TRegistrationActions =
   | IRegistrationSetData
   | IRegistrationAuthChange;
 
-export function registrationRequest(
+export const registrationRequest: AppThunk = (
   email: string,
   password: string,
   name: string,
-) {
-  return function (dispatch: Dispatch<TRegistrationActions>) {
+) => {
+  return function (dispatch) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -96,10 +96,13 @@ export function registrationRequest(
         console.error(err);
       });
   };
-}
+};
 
-export function autorizationRequest(email: string, password: string) {
-  return function (dispatch: Dispatch<TRegistrationActions>) {
+export const autorizationRequest: AppThunk = (
+  email: string,
+  password: string,
+) => {
+  return function (dispatch) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -140,8 +143,7 @@ export function autorizationRequest(email: string, password: string) {
         console.error(err);
       });
   };
-  console.log(2);
-}
+};
 
 export async function refreshToken(): Promise<{
   success: boolean;

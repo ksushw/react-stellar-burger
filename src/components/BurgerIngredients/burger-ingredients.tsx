@@ -42,9 +42,10 @@ export default function BurgerIngredients() {
   }
 
   function changePosition() {
-    const sause = document.getElementById(`#sauce`);
-    const main = document.getElementById(`#main`);
-    const scroll = document.getElementById("#container");
+    const sause: HTMLParagraphElement | null = document.querySelector(`#sauce`);
+    const main: HTMLParagraphElement | null = document.querySelector(`#main`);
+    const scroll: HTMLParagraphElement | null =
+      document.querySelector("#container");
     console.log(sause);
     if (sause && main && scroll) {
       const sausePosition = sause.offsetTop;

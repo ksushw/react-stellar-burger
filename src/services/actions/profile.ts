@@ -1,6 +1,6 @@
 import { config } from "../../utils/config";
 import { _getResponseData } from "../../utils/get-response-data";
-import { Dispatch } from "react";
+import { AppThunk } from "../types/index";
 
 export const RESTORE_PASSWORD_REQUEST: "RESTORE_PASSWORD_REQUEST" =
   "RESTORE_PASSWORD_REQUEST";
@@ -34,8 +34,8 @@ export type TRestorePasswordActions =
   | IRestorePasswordFailed
   | IRestorePasswordClean;
 
-export function profileDataChange(email: string) {
-  return function (dispatch: Dispatch<TRestorePasswordActions>) {
+export const profileDataChange: AppThunk = (email: string) => {
+  return function (dispatch) {
     dispatch({
       type: RESTORE_PASSWORD_REQUEST,
     });
@@ -66,4 +66,4 @@ export function profileDataChange(email: string) {
         console.error(err);
       });
   };
-}
+};
