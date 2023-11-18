@@ -1,4 +1,8 @@
-export function setCookie(name, value, props) {
+export function setCookie(
+  name: string,
+  value: string,
+  props: Record<string, any>,
+) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
