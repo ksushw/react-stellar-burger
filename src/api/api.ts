@@ -24,10 +24,6 @@ export async function resetPassvordApi(
       } else {
         return false;
       }
-    })
-    .catch((err) => {
-      console.log(err);
-      return false;
     });
 }
 
@@ -46,10 +42,6 @@ export async function logOut(): Promise<boolean> {
       } else {
         return false;
       }
-    })
-    .catch((err) => {
-      console.log(err);
-      return false;
     });
 }
 
@@ -66,11 +58,11 @@ export async function userInfoRequest(): Promise<
     })
     .then(_getResponseData)
     .then((res) => {
-      return { name: res.name, email: res.email };
-    })
-    .catch((err) => {
-      console.log(err);
-      return false;
+      if (res && res.success) {
+        return { name: res.name, email: res.email };
+      } else {
+        return false;
+      }
     });
 }
 
@@ -92,10 +84,10 @@ export async function userInfoChangeRequest(info: {
     })
     .then(_getResponseData)
     .then((res) => {
-      return res.user;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null;
+      if (res && res.success) {
+        return res.user;
+      } else {
+        return null;
+      }
     });
 }
