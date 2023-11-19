@@ -38,6 +38,7 @@ export function useProvideAuth() {
 
   const signOut = async (): Promise<void> => {
     const res = await logOut();
+    console.log("hjkl;");
     if (res) {
       dispatch({ type: REGISTRATION_OUT });
       setCookie("accessToken", "", {

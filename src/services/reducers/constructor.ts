@@ -7,10 +7,11 @@ import {
 } from "../actions/constructor";
 import { IIngredient } from "../../utils/types";
 import { TConstructorActions } from "../actions/constructor";
+import { v4 as uuid4 } from "uuid";
 
 type TInitialState = {
   bun: IIngredient | null;
-  fillings: ReadonlyArray<IIngredient>;
+  fillings: ReadonlyArray<IIngredient & { uniqueId: string }>;
   price: number;
 };
 
@@ -23,12 +24,12 @@ const initialState: TInitialState = {
 export const constructorReducer = (
   state = initialState,
   action: TConstructorActions,
-) => {
+): TInitialState => {
   switch (action.type) {
     case ADD_FILLING: {
       return {
         ...state,
-        fillings: [...state.fillings, action.item],
+        fillings: [...state.fillings, { ...action.item, uniqueId: uuid4() }],
         price: state.price + action.item.price,
       };
     }

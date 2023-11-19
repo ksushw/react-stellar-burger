@@ -19,11 +19,10 @@ import {
 
 import { getCookie } from "../utils/getCookie";
 
-export const wsUrl = `wss://norma.nomoreparties.space/orders/all`;
+export const wsUrl = () => `wss://norma.nomoreparties.space/orders/all`;
 
-export const wsPersonalUrl = `wss://norma.nomoreparties.space/orders?token=${getCookie(
-  "accessToken",
-)}`;
+export const wsPersonalUrl = () =>
+  `wss://norma.nomoreparties.space/orders?token=${getCookie("accessToken")}`;
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,

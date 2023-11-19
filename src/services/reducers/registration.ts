@@ -67,7 +67,6 @@ export const regisrationReducer = (
     case REGISTRATION_OUT: {
       return {
         ...initialState,
-        isAuth: false,
       };
     }
 

@@ -1,10 +1,9 @@
 import { getCookie } from "../../utils/getCookie";
-
 import { Middleware } from "redux";
 import { RootState } from "../types";
 
 type socketMiddlewareProps = (
-  wsUrl: string,
+  wsUrl: () => string,
   wsActions: { [key: string]: string },
 ) => Middleware<{}, any, any>;
 
@@ -21,7 +20,7 @@ export const socketMiddleware: socketMiddlewareProps = (
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
         wsActions;
       if (type === wsInit) {
-        socket = new WebSocket(wsUrl);
+        socket = new WebSocket(wsUrl());
       }
       if (socket) {
         socket.onopen = (event) => {

@@ -86,11 +86,7 @@ function App() {
             <Route path="/feed" element={<Feed />}>
               <Route
                 path="/feed/:orderId"
-                element={
-                  <ProtectedRouteElement
-                    element={<OrderPage orders={orders || []} />}
-                  />
-                }
+                element={<OrderPage orders={orders || []} />}
               />
             </Route>
             <Route path="*" element={<Page404 />} />
