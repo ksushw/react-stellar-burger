@@ -67,8 +67,9 @@ export default function Cart({ order, path }: { order: IOrder; path: string }) {
         {status}
       </p>
       <div className={styles.ingridients}>
-        {ingridients.slice(0, 4).map((ingridient) => (
+        {ingridients.slice(0, 4).map((ingridient, index) => (
           <img
+            key={ingridient._id + order._id + index}
             src={ingridient.image}
             alt={ingridient.name}
             className={styles.ingridient}

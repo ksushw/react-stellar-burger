@@ -81,7 +81,10 @@ export const FeedDetails: FC<IFeedDetails> = ({ orders }) => {
               <p className="text text_type_main-medium mt-15">Состав:</p>
               <div className={styles.ingridients + " mt-6 pr-6 custom-scroll"}>
                 {ingridients.map((ingridient) => (
-                  <div className={styles.ingridient + " mb-3"}>
+                  <div
+                    className={styles.ingridient + " mb-3"}
+                    key={ingridient._id + order?._id}
+                  >
                     <img
                       src={ingridient.image}
                       alt={ingridient.name}

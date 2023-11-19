@@ -1,6 +1,4 @@
 export function getCookie(name: string) {
-  console.log(name);
-
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -8,7 +6,6 @@ export function getCookie(name: string) {
         "=([^;]*)",
     ),
   );
-  console.log(matches ? decodeURIComponent(matches[1]) : undefined);
 
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
