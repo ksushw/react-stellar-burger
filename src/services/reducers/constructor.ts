@@ -29,7 +29,7 @@ export const constructorReducer = (
     case ADD_FILLING: {
       return {
         ...state,
-        fillings: [...state.fillings, { ...action.item, uniqueId: uuid4() }],
+        fillings: [...state.fillings, action.item],
         price: state.price + action.item.price,
       };
     }

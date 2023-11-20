@@ -3,6 +3,7 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { v4 as uuid4 } from "uuid";
 import styles from "./burger-constructor.module.css";
 import { DragAndDropWrapper } from "../DragAndDropWrapper/DragAndDropWrapper";
 import OrderDetails from "../OrderDetails/order-details";
@@ -60,7 +61,7 @@ export default function BurgerConstructor() {
     if (newIngredient.type === "bun") {
       dispatch({ type: CHANGE_BUN, item: newIngredient });
     } else {
-      dispatch(addIngridient(newIngredient));
+      dispatch(addIngridient({ ...newIngredient, uniqueId: uuid4() }));
     }
   };
 

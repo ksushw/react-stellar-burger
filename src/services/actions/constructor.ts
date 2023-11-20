@@ -13,7 +13,7 @@ export interface IChangeBun {
 
 export interface IAddFilling {
   readonly type: typeof ADD_FILLING;
-  readonly item: IIngredient;
+  readonly item: IIngredient & { uniqueId: string };
 }
 
 export interface IDeleteFilling {
@@ -38,7 +38,9 @@ export type TConstructorActions =
   | IRemoveOrder
   | IEditOrderDnd;
 
-export const addIngridient = (item: IIngredient): IAddFilling => {
+export const addIngridient = (
+  item: IIngredient & { uniqueId: string },
+): IAddFilling => {
   return {
     type: ADD_FILLING,
     item: {
