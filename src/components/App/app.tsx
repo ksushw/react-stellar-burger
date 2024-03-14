@@ -40,7 +40,7 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <pre className={styles.container}>
-        <Router>
+        <Router basename="/react-stellar-burger">
           <AppHeader />
           <Routes>
             <Route
